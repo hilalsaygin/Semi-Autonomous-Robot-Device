@@ -1,0 +1,16 @@
+Kaynak ve hedef bilgisayarların IP adreslerini ve host numaralarını bulmak için aşağıdaki adımları takip edebilirsiniz:
+
+Raspberry Pi'de IP adresini bulma:
+
+Raspberry Pi'yi açın ve komut istemcisini başlatın.
+ifconfig komutunu çalıştırın.
+Komut istemcisindeki çıktıda, Raspberry Pi'nin bağlı olduğu ağ arayüzünün IP adresini bulun. Genellikle "eth0" veya "wlan0" gibi bir arayüz adı kullanılır.
+Ubuntu'da IP adresini bulma:
+
+Ubuntu'da Terminal'i açın.
+ifconfig veya ip addr show komutunu çalıştırın.
+Komut istemcisindeki çıktıda, Ubuntu'nun bağlı olduğu ağ arayüzünün IP adresini bulun. Benzer şekilde, genellikle "eth0" veya "wlan0" gibi bir arayüz adı kullanılır.
+Host numarasını belirleme:
+
+Host numarası, belirli bir TCP/IP bağlantısı üzerinde işlem yapacak olan hedef cihazın port numarasını temsil eder. Bu port numarası, kaynak ve hedef bilgisayarlar arasındaki anlaşmaya dayanır. Örneğin, 5000 portu gibi bir numara belirleyebilirsiniz. Bu numarayı kaynak ve hedef bilgisayarlar arasında paylaşmanız gerekecektir.
+Kaynak bilgisayar (Raspberry Pi) IP adresini ve hedef bilgisayar (Ubuntu) IP adresini ve host numarasını elde ettikten sonra, kod örneklerinde host değişkenine Raspberry Pi'nin IP adresini ve port değişkenine de belirlediğiniz host numarasını atayabilirsiniz.
