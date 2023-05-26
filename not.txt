@@ -14,3 +14,8 @@ Host numarasını belirleme:
 
 Host numarası, belirli bir TCP/IP bağlantısı üzerinde işlem yapacak olan hedef cihazın port numarasını temsil eder. Bu port numarası, kaynak ve hedef bilgisayarlar arasındaki anlaşmaya dayanır. Örneğin, 5000 portu gibi bir numara belirleyebilirsiniz. Bu numarayı kaynak ve hedef bilgisayarlar arasında paylaşmanız gerekecektir.
 Kaynak bilgisayar (Raspberry Pi) IP adresini ve hedef bilgisayar (Ubuntu) IP adresini ve host numarasını elde ettikten sonra, kod örneklerinde host değişkenine Raspberry Pi'nin IP adresini ve port değişkenine de belirlediğiniz host numarasını atayabilirsiniz.
+
+
+
+// Raspberry kamerasından görüntünün Linux tarafına aktarılması için Raspberry terminalde aşağıdaki komut çalıştırılır:
+raspivid -o - -t 0 -n -w 640 -h 480 | cvlc -vvv stream:///dev/stdin --sout '#standard{access=http,mux=ts,dst=:8090}' :demux=h264^C
