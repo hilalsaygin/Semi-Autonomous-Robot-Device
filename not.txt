@@ -1,4 +1,4 @@
-raspivid -o - -t 0 -n -w 640 -h 480 -fps 30 -b 1000000 -vf -hf -ih -fl | cvlc -vvv stream:///dev/stdin --sout '#standard{access=http,mux=ts,dst=:8090}' :demux=h264
+
 
 Kaynak ve hedef bilgisayarların IP adreslerini ve host numaralarını bulmak için aşağıdaki adımları takip edebilirsiniz:
 
@@ -22,7 +22,8 @@ Kaynak bilgisayar (Raspberry Pi) IP adresini ve hedef bilgisayar (Ubuntu) IP adr
 // Raspberry kamerasından görüntünün Linux tarafına aktarılması için Raspberry terminalde aşağıdaki komut çalıştırılır:
 1. sudo apt-get update
 2. sudo apt-get install python3-opencv
-3. raspivid -o - -t 0 -n -w 640 -h 480 | cvlc -vvv stream:///dev/stdin --sout '#standard{access=http,mux=ts,dst=:8090}' :demux=h264^C
+3. raspivid -o - -t 0 -n -w 640 -h 480 -fps 30 -b 1000000 -fl | cvlc -vvv stream:///dev/stdin --sout '#standard{access=http,mux=ts,dst=:8090}' :demux=h264
+
 // Linux tarafında ise 
 1.sudo apt-get install python3-opencv
 2. GetCameraVideo.py kodu çalıştırılır. (IP adresinin doğruluğu kontrol edilmelidir.)
