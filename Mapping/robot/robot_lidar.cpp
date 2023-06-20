@@ -236,8 +236,8 @@ int main(int argc, char *argv[])
     }
 
     if (laser.doProcessSimple(scan))
-    {   
-
+    {   std::stringstream ss;
+    
         // Parse robot location
         char* robot_rl_token = strtok(buffer_rl,",");
         printf("x:%s\n",robot_rl_token);
