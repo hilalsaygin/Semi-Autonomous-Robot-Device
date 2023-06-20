@@ -9,6 +9,7 @@
 #include <cctype>
 #include <core/base/timer.h>
 #include <cmath>
+#include <sstream>
 
 constexpr int BUFFER_SIZE = 100000;
 
@@ -67,14 +68,37 @@ bool startServer(int port)
 
     char buffer[BUFFER_SIZE];
 
-    // Create an SFML window
-    sf::RenderWindow window(sf::VideoMode(1920, 1080), "Group 3 Mapping");
+    
+    double point_x_d = -1;
+    double point_y_d = -1;
+    double robot_x = -1;
+    double robot_y = -1;
     double camera_x = 0;
     double camera_y = 0;
     int zoom = 5;
+    char* clickedLocation[30];
+
+
+    // Create an SFML window
+    sf::RenderWindow window(sf::VideoMode(1920, 1080), "Group 3 Mapping");
+
+    // Clicked Location Text
+    sf::Font font;
+    if (!font.loadFromFile("arial.ttf"))
+    {
+        std::cout << "Error loading font." << std::endl;
+        return -1;
+    }
+
+    sf::Text clickText;
+    clickText.setFont(font);
+    clickText.setCharacterSize(20);
+    clickText.setPosition(10.f, 10.f);
+
     // Main loop
     while (window.isOpen())
     {   
+
         // Get the center of the window
         sf::Vector2f windowCenter = sf::Vector2f(window.getSize().x / 2.0f, window.getSize().y / 2.0f);
 
@@ -84,6 +108,40 @@ bool startServer(int port)
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+            
+            if (event.type == sf::Event::MouseButtonPressed)
+            {
+                if (event.mouseButton.button == sf::Mouse::Left)
+                {
+                    sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+                    std::ostringstream oss;
+                    oss << "Clicked Position: (" << mousePosition.x - camera_x << ", " << mousePosition.y - camera_y << ")";
+                    clickText.setString(oss.str());
+                }
+            }
+            else if(event.type == sf::Event::KeyPressed)
+            {
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+                {
+                    camera_x += 100;
+                    printf("Sol\n");
+                } 
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+                {
+                    camera_x -= 100;
+                    printf("Sağ\n");
+                }
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+                {
+                    camera_y += 100;
+                    printf("Yukarı\n");
+                }
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+                {
+                    camera_y -= 100;
+                    printf("Aşağıya\n");
+                }  
+            }
         }
 
         // Clear the window
@@ -98,12 +156,10 @@ bool startServer(int port)
             continue;
         }
         
-
         char* buffer_2 = (char*) malloc(strlen(buffer) + 1);
         strcpy(buffer_2,buffer);
 
-        double robot_x = -1;
-        double robot_y = -1;
+        
         
         // Get robot location
         char* input = strtok(buffer,"\n");
@@ -129,40 +185,12 @@ bool startServer(int port)
         robot_y = atof(robot_y_c) * 100; // to cm
 
 
-        //printf("ROBOT X : %f\n",robot_x);
-        //printf("ROBOT Y : %f\n",robot_y);
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        {
-            camera_x += 100;
-            printf("Sol\n");
-        } 
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        {
-            camera_x -= 100;
-            printf("Sağ\n");
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-        {
-            camera_y += 100;
-            printf("Yukarı\n");
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        {
-            camera_y -= 100;
-            printf("Aşağıya\n");
-        }  
-
-
+        // Draw robot
         sf::CircleShape center(10.0f); // Create a small circle shape for each point
                 center.setFillColor(sf::Color::Red);
                 center.setPosition(robot_x * zoom + camera_x, robot_y  * zoom + camera_y);
                 window.draw(center); // Draw the circle
 
-    
-        double point_x_d = -1;
-        double point_y_d = -1;
-        
 
         char* input2 = strtok(buffer_2,"\n");
         input2 = strtok(NULL,"\n");
@@ -195,6 +223,8 @@ bool startServer(int port)
         free(robot_info_x);
         free(robot_info_y);
         free(buffer_2);
+
+        window.draw(clickText);
 
         // Display the window
         window.display();
