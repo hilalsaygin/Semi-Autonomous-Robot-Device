@@ -10,6 +10,8 @@
 #include <cstring>
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 
 using namespace ydlidar;
@@ -208,57 +210,93 @@ int main(int argc, char *argv[])
   double robot_x = 0;
   double robot_y = 0;
 
+  int fd = open("./robot_location.txt",O_RDWR);
+
+  if (fd == -1) {
+      std::cerr << "Failed to open the file." << std::endl;
+      return 1;
+  }
+
+  const int bufferSize_rl = 30;  // Set an appropriate buffer size
+  char buffer_rl[bufferSize_rl];
+
+  
   // Main loop
-  while (ydlidar::os_isOk())
-  {
-      LaserScan scan;
-      if (laser.doProcessSimple(scan))
-      { 
+  while (ydlidar::os_isOk()){
+    LaserScan scan;
 
-          std::stringstream ss;
-          
-          // Put robot location
-          ss << "robot_x: " << robot_x << ",robot_y: " << robot_y << "\n";
+    
+    // Read the robot location file
+    ssize_t bytesRead = read(fd, buffer_rl, bufferSize_rl);
 
-          // Draw the points
-          for (size_t i = 0; i < scan.points.size(); ++i)
-          {   
-              const LaserPoint& p = scan.points.at(i);
+    if (bytesRead == -1) {
+        std::cerr << "Failed to read the file." << std::endl;
+        close(fd);
+        return 1;
+    }
 
-              // Calculate X, Y coordinates from polar coordinates
-              double angle_rad = p.angle;  // Angle in radians
-              double distance = p.range;   // Distance in meters
+    if (laser.doProcessSimple(scan))
+    {   
 
-              double x = distance * cos(angle_rad);
-              double y = distance * sin(angle_rad);
+        // Parse robot location
+        char* robot_rl_token = strtok(buffer_rl,",");
+        printf("x:%s\n",robot_rl_token);
+        robot_x = atof(robot_rl_token);
+        robot_rl_token = strtok(NULL,"\n");
+        printf("y:%s\n",robot_rl_token);
+        robot_y = atof(robot_rl_token);
 
-              //printf("X: %f Y: %f\n", x, y);
+        // Return the start of the file
+        memset(buffer_rl,0,bufferSize_rl);
+        lseek(fd,0,SEEK_SET);
 
-              // Convert x and y to string
-              ss << "x: " << x << ", y: " << y << "\n";
-              
-          } 
-          
-          std::string data = ss.str();        
-          
-          // Send points to the server
-          ssize_t bytesSent = send(sock, data.c_str(), data.size(), 0);
-          if (bytesSent == -1) {
-              std::cerr << "Failed to send data" << std::endl;
-              close(sock);
-              return false;
-          }         
-          
-          fflush(stdout);
-      }
-      else {
-        fprintf(stderr, "Failed to get Lidar Data\n");
-        fflush(stderr);
-      }
+        
+        
+        // Put robot location
+        ss << "robot_x: " << robot_x << ",robot_y: " << robot_y << "\n";
+
+        // Draw the points
+        for (size_t i = 0; i < scan.points.size(); ++i)
+        {   
+          const LaserPoint& p = scan.points.at(i);
+
+          // Calculate X, Y coordinates from polar coordinates
+          double angle_rad = p.angle;  // Angle in radians
+          double distance = p.range;   // Distance in meters
+
+          double x = distance * cos(angle_rad);
+          double y = distance * sin(angle_rad);
+
+          //printf("X: %f Y: %f\n", x, y);
+
+          // Convert x and y to string
+          ss << "x: " << x << ", y: " << y << "\n";
+            
+        } 
+        
+        std::string data = ss.str();        
+        
+        // Send points to the server
+        ssize_t bytesSent = send(sock, data.c_str(), data.size(), 0);
+        if (bytesSent == -1) {
+          std::cerr << "Failed to send data" << std::endl;
+          close(sock);
+          return false;
+        }         
+  
+        fflush(stdout);
+    }
+    else {
+      fprintf(stderr, "Failed to get Lidar Data\n");
+      fflush(stderr);
+    }
   }
 
   laser.turnOff();
   laser.disconnecting();
+
+  // Close the file using close() function
+  close(fd);
 
   return 0;
 }

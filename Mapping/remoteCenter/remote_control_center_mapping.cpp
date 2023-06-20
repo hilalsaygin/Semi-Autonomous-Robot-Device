@@ -10,25 +10,17 @@
 #include <core/base/timer.h>
 #include <cmath>
 #include <sstream>
+#include <vector>
+
+using namespace std;
 
 constexpr int BUFFER_SIZE = 100000;
 
-void removeLeadingSpace(char* str) {
-    if (str == nullptr || *str == '\0') {
-        // Empty string or null pointer
-        return;
-    }
+typedef struct  {
+    double x;
+    double y;
+} point_c;
 
-    char* firstNonSpace = str;
-    while (*firstNonSpace == ' ') {
-        ++firstNonSpace;
-    }
-
-    if (firstNonSpace != str) {
-        // Shift the string to remove the leading space
-        memmove(str, firstNonSpace, strlen(firstNonSpace) + 1);
-    }
-}
 
 // Function to start the server and listen for incoming connections
 bool startServer(int port)
@@ -66,15 +58,17 @@ bool startServer(int port)
         return false;
     }
 
-    char buffer[BUFFER_SIZE];
 
-    
+    // Points vector
+    vector<point_c> points;
+
+    char buffer[BUFFER_SIZE];
     double point_x_d = -1;
     double point_y_d = -1;
     double robot_x = -1;
     double robot_y = -1;
-    double camera_x = 0;
-    double camera_y = 0;
+    double camera_x = 800;
+    double camera_y = 500;
     int zoom = 5;
     char* clickedLocation[30];
 
@@ -95,6 +89,16 @@ bool startServer(int port)
     clickText.setCharacterSize(20);
     clickText.setPosition(10.f, 10.f);
 
+    //Refresh Button
+    sf::RectangleShape refresh_button(sf::Vector2f(100.0f, 50.0f));
+    refresh_button.setPosition(10.0f, 50.0f);
+    refresh_button.setFillColor(sf::Color::Blue);
+
+    //Refresh button text
+    sf::Text refresh_buttonText("Refresh", font, 18);
+    refresh_buttonText.setPosition(refresh_button.getPosition().x + 20.0f, refresh_button.getPosition().y + 20.0f);
+    refresh_buttonText.setFillColor(sf::Color::White);
+
     // Main loop
     while (window.isOpen())
     {   
@@ -114,9 +118,14 @@ bool startServer(int port)
                 if (event.mouseButton.button == sf::Mouse::Left)
                 {
                     sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
-                    std::ostringstream oss;
-                    oss << "Clicked Position: (" << mousePosition.x - camera_x << ", " << mousePosition.y - camera_y << ")";
-                    clickText.setString(oss.str());
+                    if (refresh_button.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosition)))
+                    {
+                        points.clear(); // Truncate the vector
+                    }else{
+                        std::ostringstream oss;
+                        oss << "Clicked Position: (" << mousePosition.x - camera_x << ", " << mousePosition.y - camera_y << ")";
+                        clickText.setString(oss.str());
+                    }
                 }
             }
             else if(event.type == sf::Event::KeyPressed)
@@ -124,22 +133,18 @@ bool startServer(int port)
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
                 {
                     camera_x += 100;
-                    printf("Sol\n");
                 } 
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
                 {
                     camera_x -= 100;
-                    printf("Sağ\n");
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                 {
                     camera_y += 100;
-                    printf("Yukarı\n");
                 }
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
                 {
                     camera_y -= 100;
-                    printf("Aşağıya\n");
                 }  
             }
         }
@@ -159,11 +164,10 @@ bool startServer(int port)
         char* buffer_2 = (char*) malloc(strlen(buffer) + 1);
         strcpy(buffer_2,buffer);
 
-        
-        
+
         // Get robot location
         char* input = strtok(buffer,"\n");
-        
+
         // Get X
         char* robot_info_x = NULL;
         robot_info_x = (char*) malloc(strlen(input) + 1);
@@ -184,7 +188,7 @@ bool startServer(int port)
         robot_y_c = strtok(NULL,"\n");
         robot_y = atof(robot_y_c) * 100; // to cm
 
-
+     
         // Draw robot
         sf::CircleShape center(10.0f); // Create a small circle shape for each point
                 center.setFillColor(sf::Color::Red);
@@ -192,30 +196,50 @@ bool startServer(int port)
                 window.draw(center); // Draw the circle
 
 
+        // Get points and put the array
         char* input2 = strtok(buffer_2,"\n");
         input2 = strtok(NULL,"\n");
         while(input2 != NULL){
-            
+          
             input2 = strtok(NULL,":");
-            input2 = strtok(NULL,",");
-            point_x_d = atof(input2) * 100; // to cm
+            if(input2 != NULL){
+                input2 = strtok(NULL,",");
+                if(input2 != NULL){
+                    point_x_d = atof(input2) * 100; // to cm
+                }
+                else{
+                    break;
+                }
+            }
+            else{
+                break;
+            }
 
             input2 = strtok(NULL,":");
-            input2 = strtok(NULL,"\n");
-            point_y_d = atof(input2) * 100; // to cm
+            if(input2 != NULL){
+                input2 = strtok(NULL,"\n");
+                if(input2 != NULL){
+                    point_y_d = atof(input2) * 100; // to cm
+                }
+                else{
+                    break;
+                }
+            }
+            else{
+                break;
+            }
+            
 
             //printf("X : %f Y : %f\n",point_x_d,point_y_d);
             
             point_x_d += robot_x;
-            point_x_d *= zoom;
-            point_x_d += camera_x;
             point_y_d += robot_y;
-            point_y_d *= zoom;
-            point_y_d += camera_y;
 
-            sf::CircleShape circle(2.0f); // Create a small circle shape for each point
-            circle.setPosition(point_x_d, point_y_d);
-            window.draw(circle);// Draw the circle
+            point_c point;
+
+            point.x = point_x_d;
+            point.y = point_y_d;
+            points.push_back(point);
 
             input2 = strtok(NULL,"\n");                       
         }
@@ -224,7 +248,26 @@ bool startServer(int port)
         free(robot_info_y);
         free(buffer_2);
 
+        // Draw clicked location text
         window.draw(clickText);
+
+        // Draw refresh button
+        window.draw(refresh_button);
+        window.draw(refresh_buttonText);
+
+        // Draw points
+        for(int i = 0; i < points.size(); i++){
+            double point_on_window_x = points.at(i).x;
+            point_on_window_x *= zoom;
+            point_on_window_x += camera_x;
+            double point_on_window_y = points.at(i).y;
+            point_on_window_y *= zoom;
+            point_on_window_y += camera_y;
+
+            sf::CircleShape circle(2.0f); // Create a small circle shape for each point
+            circle.setPosition(point_on_window_x, point_on_window_y);
+            window.draw(circle);// Draw the circle
+        }
 
         // Display the window
         window.display();
