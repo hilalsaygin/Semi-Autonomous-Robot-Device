@@ -23,41 +23,32 @@ typedef struct  {
 
 
 // Function to start the server and listen for incoming connections
-bool startServer(int port)
+bool startClient(std::string ipAddress, int remote_port)
 {
-    int serverSock = socket(AF_INET, SOCK_STREAM, 0);
-    if (serverSock == -1) {
+
+    //Open socket
+    int sock = socket(AF_INET, SOCK_STREAM, 0);
+    if (sock == -1) {
         std::cerr << "Failed to create socket" << std::endl;
-        return false;
+        return 1;
     }
 
+    //Set server
     sockaddr_in serverAddr{};
     serverAddr.sin_family = AF_INET;
-    serverAddr.sin_addr.s_addr = INADDR_ANY;
-    serverAddr.sin_port = htons(port);
-
-    if (bind(serverSock, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0) {
-        std::cerr << "Binding failed" << std::endl;
-        close(serverSock);
-        return false;
+    serverAddr.sin_port = htons(remote_port);
+    if (inet_pton(AF_INET, ipAddress.c_str(), &(serverAddr.sin_addr)) <= 0) {
+        std::cerr << "Invalid address or address not supported" << std::endl;
+        close(sock);
+        return 1;
     }
 
-    if (listen(serverSock, 1) < 0) {
-        std::cerr << "Listening failed" << std::endl;
-        close(serverSock);
-        return false;
+    // Connect
+    if (connect(sock, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0) {
+        std::cerr << "Connection failed" << std::endl;
+        close(sock);
+        return 1;
     }
-
-    std::cout << "Server listening on port " << port << std::endl;
-
-    sockaddr_in clientAddr{};
-    socklen_t addrLen = sizeof(clientAddr);
-    int clientSock = accept(serverSock, (struct sockaddr*)&clientAddr, &addrLen);
-    if (clientSock < 0) {
-        std::cerr << "Failed to accept connection" << std::endl;
-        return false;
-    }
-
 
     // Points vector
     vector<point_c> points;
@@ -69,7 +60,7 @@ bool startServer(int port)
     double robot_y = -1;
     double camera_x = 800;
     double camera_y = 500;
-    int zoom = 5;
+    int zoom = 2;
     char* clickedLocation[30];
 
 
@@ -154,10 +145,10 @@ bool startServer(int port)
 
         memset(buffer, 0, BUFFER_SIZE);
 
-        ssize_t bytesRead = recv(clientSock, buffer, BUFFER_SIZE - 1, 0);
+        ssize_t bytesRead = recv(sock, buffer, BUFFER_SIZE - 1, 0);
         if (bytesRead <= 0) {
             std::cerr << "Failed to receive data" << std::endl;
-            close(clientSock);
+            close(sock);
             continue;
         }
         
@@ -274,15 +265,15 @@ bool startServer(int port)
     }
 
 
-    close(clientSock);
-    close(serverSock);
+    close(sock);
     return true;
 }
 
 int main()
-{
+{   
+    std::string ipAddress = "10.1.228.253"; 
     int port = 8080;  // Port number to listen on
-    bool success = startServer(port);
+    bool success = startClient(ipAddress,port);
     if (!success) {
         std::cerr << "Failed to start the server" << std::endl;
         return -1;

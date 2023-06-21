@@ -12,6 +12,7 @@
 #include <arpa/inet.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <signal.h>
 
 
 using namespace ydlidar;
@@ -20,10 +21,22 @@ using namespace ydlidar;
 #pragma comment(lib, "ydlidar_sdk.lib")
 #endif
 
+// Function to handle the SIGPIPE signal
+void sigpipeHandler(int signal)
+{
+
+    // Print a message to indicate the signal handling
+    std::cerr << "Received SIGPIPE signal" << std::endl;
+}
 
 int main(int argc, char *argv[])
 {
+  // Register the signal handler for SIGPIPE
+  signal(SIGPIPE, sigpipeHandler);
 
+  int remote_port = 8080;
+
+  // Set lidar usb port
   std::string port;
   ydlidar::os_init();
 
@@ -95,6 +108,7 @@ int main(int argc, char *argv[])
     return 0;
   }
 
+  //Set lidar settings
   CYdLidar laser;
   //////////////////////string property/////////////////
   /// lidar port
@@ -179,34 +193,35 @@ int main(int argc, char *argv[])
     return -1;
   }
 
-  // Connect to the remote control center
-  std::string ipAddress = "192.168.1.115";  // IP address of the receiving computer
-  int remote_port = 8080;  // Port number of the receiving computer
 
-  //Open socket
-  int sock = socket(AF_INET, SOCK_STREAM, 0);
-  if (sock == -1) {
+  // Create server socket
+  int serverSock = socket(AF_INET, SOCK_STREAM, 0);
+  if (serverSock == -1) {
       std::cerr << "Failed to create socket" << std::endl;
-      return 1;
+      return false;
   }
 
-  //Set server
   sockaddr_in serverAddr{};
   serverAddr.sin_family = AF_INET;
+  serverAddr.sin_addr.s_addr = INADDR_ANY;
   serverAddr.sin_port = htons(remote_port);
-  if (inet_pton(AF_INET, ipAddress.c_str(), &(serverAddr.sin_addr)) <= 0) {
-      std::cerr << "Invalid address or address not supported" << std::endl;
-      close(sock);
-      return 1;
+
+  if (bind(serverSock, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0) {
+      std::cerr << "Binding failed" << std::endl;
+      close(serverSock);
+      return false;
   }
 
-  // Connect
-  if (connect(sock, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0) {
-      std::cerr << "Connection failed" << std::endl;
-      close(sock);
-      return 1;
+  if (listen(serverSock, 1) < 0) {
+      std::cerr << "Listening failed" << std::endl;
+      close(serverSock);
+      return false;
   }
 
+  std::cout << "Server listening on port " << remote_port << std::endl;
+
+
+  // Main things start
   double robot_x = 0;
   double robot_y = 0;
 
@@ -217,80 +232,89 @@ int main(int argc, char *argv[])
       return 1;
   }
 
-  const int bufferSize_rl = 30;  // Set an appropriate buffer size
+  const int bufferSize_rl = 30;
   char buffer_rl[bufferSize_rl];
 
-  
-  // Main loop
   while (ydlidar::os_isOk()){
-    LaserScan scan;
-
-    
-    // Read the robot location file
-    ssize_t bytesRead = read(fd, buffer_rl, bufferSize_rl);
-
-    if (bytesRead == -1) {
-        std::cerr << "Failed to read the file." << std::endl;
-        close(fd);
-        return 1;
+    sockaddr_in clientAddr{};
+    socklen_t addrLen = sizeof(clientAddr);
+    int clientSock = accept(serverSock, (struct sockaddr*)&clientAddr, &addrLen);
+    if (clientSock < 0) {
+        std::cerr << "Failed to accept connection" << std::endl;
+        return false;
     }
 
-    if (laser.doProcessSimple(scan))
-    {   std::stringstream ss;
+    // Main loop
+    while (true){
+      LaserScan scan;
+
+      // Read the robot location file
+      ssize_t bytesRead = read(fd, buffer_rl, bufferSize_rl);
+
+      if (bytesRead == -1) {
+          std::cerr << "Failed to read the file." << std::endl;
+          close(fd);
+          return 1;
+      }
+
+      if (laser.doProcessSimple(scan))
+      {   std::stringstream ss;
+      
+          // Parse robot location
+          char* robot_rl_token = strtok(buffer_rl,",");
+          printf("x:%s\n",robot_rl_token);
+          robot_x = atof(robot_rl_token);
+          robot_rl_token = strtok(NULL,"\n");
+          printf("y:%s\n",robot_rl_token);
+          robot_y = atof(robot_rl_token);
+
+          // Return the start of the file
+          memset(buffer_rl,0,bufferSize_rl);
+          lseek(fd,0,SEEK_SET);
+
+          
+          
+          // Put robot location
+          ss << "robot_x: " << robot_x << ",robot_y: " << robot_y << "\n";
+
+          // Draw the points
+          for (size_t i = 0; i < scan.points.size(); ++i)
+          {   
+            const LaserPoint& p = scan.points.at(i);
+
+            // Calculate X, Y coordinates from polar coordinates
+            double angle_rad = p.angle;  // Angle in radians
+            double distance = p.range;   // Distance in meters
+
+            double x = distance * cos(angle_rad);
+            double y = distance * sin(angle_rad);
+
+            //printf("X: %f Y: %f\n", x, y);
+
+            // Convert x and y to string
+            ss << "x: " << x << ", y: " << y << "\n";
+              
+          } 
+          
+          std::string data = ss.str();        
+          
+          // Send points to the server
+          ssize_t bytesSent = send(clientSock, data.c_str(), data.size(), 0);
+          if (bytesSent == -1) {
+            std::cerr << "Failed to send data" << std::endl;
+            close(clientSock);
+            break;
+          }         
     
-        // Parse robot location
-        char* robot_rl_token = strtok(buffer_rl,",");
-        printf("x:%s\n",robot_rl_token);
-        robot_x = atof(robot_rl_token);
-        robot_rl_token = strtok(NULL,"\n");
-        printf("y:%s\n",robot_rl_token);
-        robot_y = atof(robot_rl_token);
-
-        // Return the start of the file
-        memset(buffer_rl,0,bufferSize_rl);
-        lseek(fd,0,SEEK_SET);
-
-        
-        
-        // Put robot location
-        ss << "robot_x: " << robot_x << ",robot_y: " << robot_y << "\n";
-
-        // Draw the points
-        for (size_t i = 0; i < scan.points.size(); ++i)
-        {   
-          const LaserPoint& p = scan.points.at(i);
-
-          // Calculate X, Y coordinates from polar coordinates
-          double angle_rad = p.angle;  // Angle in radians
-          double distance = p.range;   // Distance in meters
-
-          double x = distance * cos(angle_rad);
-          double y = distance * sin(angle_rad);
-
-          //printf("X: %f Y: %f\n", x, y);
-
-          // Convert x and y to string
-          ss << "x: " << x << ", y: " << y << "\n";
-            
-        } 
-        
-        std::string data = ss.str();        
-        
-        // Send points to the server
-        ssize_t bytesSent = send(sock, data.c_str(), data.size(), 0);
-        if (bytesSent == -1) {
-          std::cerr << "Failed to send data" << std::endl;
-          close(sock);
-          return false;
-        }         
-  
-        fflush(stdout);
-    }
-    else {
-      fprintf(stderr, "Failed to get Lidar Data\n");
-      fflush(stderr);
+          fflush(stdout);
+      }
+      else {
+        fprintf(stderr, "Failed to get Lidar Data\n");
+        fflush(stderr);
+      }
     }
   }
+  
 
   laser.turnOff();
   laser.disconnecting();
