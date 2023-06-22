@@ -27,3 +27,61 @@ Kaynak bilgisayar (Raspberry Pi) IP adresini ve hedef bilgisayar (Ubuntu) IP adr
 // Linux tarafında ise 
 1.sudo apt-get install python3-opencv
 2. GetCameraVideo.py kodu çalıştırılır. (IP adresinin doğruluğu kontrol edilmelidir.)
+
+
+import io
+import socket
+import struct
+import time
+import picamera
+
+# Raspberry Pi IP address
+RASPBERRY_PI_IP = 'YOUR_RASPBERRY_PI_IP_ADDRESS'
+PORT = 8000
+
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client_socket.connect((RASPBERRY_PI_IP, PORT))
+connection = client_socket.makefile('wb')
+
+try:
+    with picamera.PiCamera() as camera:
+        camera.resolution = (640, 480)
+        camera.framerate = 30
+        time.sleep(2)  # Allow camera to warm up
+        start = time.time()
+        stream = io.BytesIO()
+
+        # Send video stream in a loop
+        for _ in camera.capture_continuous(stream, 'jpeg', use_video_port=True):
+            stream.seek(0)
+            data = stream.read()
+
+            # Send frame length and frame data
+            client_socket.sendall(struct.pack('<L', len(data)) + data)
+            stream.seek(0)
+            stream.truncate()
+
+        # Send termination signal
+        client_socket.sendall(struct.pack('<L', 0))
+finally:
+    connection.close()
+    client_socket.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
