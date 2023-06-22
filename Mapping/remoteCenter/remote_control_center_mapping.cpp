@@ -14,7 +14,6 @@
 
 using namespace std;
 
-constexpr int BUFFER_SIZE = 100000;
 
 typedef struct  {
     double x;
@@ -50,17 +49,20 @@ bool startClient(std::string ipAddress, int remote_port)
         return 1;
     }
 
+    printf("Bağlandı\n");
+
     // Points vector
     vector<point_c> points;
-
-    char buffer[BUFFER_SIZE];
+    
+    int point_count = 0;
+    double robot_location_buffer[2];
     double point_x_d = -1;
     double point_y_d = -1;
     double robot_x = -1;
     double robot_y = -1;
     double camera_x = 800;
     double camera_y = 500;
-    int zoom = 2;
+    int zoom = 50;
     char* clickedLocation[30];
 
 
@@ -142,110 +144,78 @@ bool startClient(std::string ipAddress, int remote_port)
 
         // Clear the window
         window.clear();
+        printf("a\n");
+        // Point sayısını al
+        point_count = 0;
+        ssize_t bytesRead_pc = recv(sock, &point_count, sizeof(point_count), 0);
+        if (bytesRead_pc <= 0) {
+            std::cerr << "Failed to receive data" << std::endl;
+            close(sock);
+            continue;
+        }
+        printf("point_count : %d\n",point_count);
 
-        memset(buffer, 0, BUFFER_SIZE);
+        //sleep(1);
+        //usleep(500000);
+        // Robot konumunu al
+        ssize_t bytesRead_rl = recv(sock, robot_location_buffer , sizeof(robot_location_buffer), 0);
+        if (bytesRead_rl <= 0) {
+            std::cerr << "Failed to receive data" << std::endl;
+            close(sock);
+            continue;
+        }
 
-        ssize_t bytesRead = recv(sock, buffer, BUFFER_SIZE - 1, 0);
+        robot_x = robot_location_buffer[0];
+        robot_y = robot_location_buffer[1];
+
+        printf("robot_x : %f\n",robot_x);
+        printf("robot_y : %f\n",robot_y);
+
+        memset(robot_location_buffer,0,sizeof(robot_location_buffer));
+
+
+        // Draw robot
+        
+        sf::CircleShape center(10.0f); // Create a small circle shape for each point
+                center.setFillColor(sf::Color::Red);
+                center.setPosition(robot_x * zoom + camera_x, robot_y  * zoom + camera_y);
+                window.draw(center); // Draw the circle
+        
+
+        usleep(100000);
+
+
+        double point_buffer[point_count][2];
+
+        // Pointleri  al
+        ssize_t bytesRead = recv(sock, point_buffer , sizeof(point_buffer), 0);
         if (bytesRead <= 0) {
             std::cerr << "Failed to receive data" << std::endl;
             close(sock);
             continue;
         }
-        
-        char* buffer_2 = (char*) malloc(strlen(buffer) + 1);
-        strcpy(buffer_2,buffer);
 
 
-        // Get robot location
-        char* input = strtok(buffer,"\n");
-
-        // Get X
-        char* robot_info_x = NULL;
-        robot_info_x = (char*) malloc(strlen(input) + 1);
-        strcpy(robot_info_x,input);
-      
-        char* robot_x_c = strtok(robot_info_x,":");
-        robot_x_c = strtok(NULL,",");
-        robot_x = atof(robot_x_c) * 100; // to cm
-
-        // Get Y
-        char* robot_info_y = NULL;
-        robot_info_y = (char*) malloc(strlen(input) + 1);
-        strcpy(robot_info_y,input);
-  
-        char* robot_y_c = strtok(robot_info_y,":");
-        robot_y_c = strtok(NULL,",");
-        robot_y_c = strtok(NULL,":");
-        robot_y_c = strtok(NULL,"\n");
-        robot_y = atof(robot_y_c) * 100; // to cm
-
-     
-        // Draw robot
-        sf::CircleShape center(10.0f); // Create a small circle shape for each point
-                center.setFillColor(sf::Color::Red);
-                center.setPosition(robot_x * zoom + camera_x, robot_y  * zoom + camera_y);
-                window.draw(center); // Draw the circle
-
-
-        // Get points and put the array
-        char* input2 = strtok(buffer_2,"\n");
-        input2 = strtok(NULL,"\n");
-        while(input2 != NULL){
-          
-            input2 = strtok(NULL,":");
-            if(input2 != NULL){
-                input2 = strtok(NULL,",");
-                if(input2 != NULL){
-                    point_x_d = atof(input2) * 100; // to cm
-                }
-                else{
-                    break;
-                }
-            }
-            else{
-                break;
-            }
-
-            input2 = strtok(NULL,":");
-            if(input2 != NULL){
-                input2 = strtok(NULL,"\n");
-                if(input2 != NULL){
-                    point_y_d = atof(input2) * 100; // to cm
-                }
-                else{
-                    break;
-                }
-            }
-            else{
-                break;
-            }
-            
-
-            //printf("X : %f Y : %f\n",point_x_d,point_y_d);
-            
-            point_x_d += robot_x;
-            point_y_d += robot_y;
-
+        for(int i = 0; i < point_count; i++){
             point_c point;
 
-            point.x = point_x_d;
-            point.y = point_y_d;
+            point.x = point_buffer[i][0] + robot_x;
+            point.y = point_buffer[i][1] + robot_y;
+            //printf("x : %f , y : %f\n" , point.x , point.y);
             points.push_back(point);
-
-            input2 = strtok(NULL,"\n");                       
+            
         }
-
-        free(robot_info_x);
-        free(robot_info_y);
-        free(buffer_2);
+                           
 
         // Draw clicked location text
         window.draw(clickText);
+ 
 
         // Draw refresh button
         window.draw(refresh_button);
         window.draw(refresh_buttonText);
 
+    
         // Draw points
         for(int i = 0; i < points.size(); i++){
             double point_on_window_x = points.at(i).x;
@@ -262,6 +232,7 @@ bool startClient(std::string ipAddress, int remote_port)
 
         // Display the window
         window.display();
+    
     }
 
 
@@ -271,8 +242,8 @@ bool startClient(std::string ipAddress, int remote_port)
 
 int main()
 {   
-    std::string ipAddress = "10.1.228.253"; 
-    int port = 8080;  // Port number to listen on
+    std::string ipAddress = "192.168.165.156"; 
+    int port = 8086;  // Port number to listen on
     bool success = startClient(ipAddress,port);
     if (!success) {
         std::cerr << "Failed to start the server" << std::endl;
