@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <signal.h>
 
-
+constexpr int BUFFER_SIZE = 50000;
 using namespace ydlidar;
 
 #if defined(_MSC_VER)
@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
   // Register the signal handler for SIGPIPE
   signal(SIGPIPE, sigpipeHandler);
 
-  int remote_port = 8080;
+  int remote_port = 8086;
 
   // Set lidar usb port
   std::string port;
@@ -244,6 +244,8 @@ int main(int argc, char *argv[])
         return false;
     }
 
+    printf("Bağlandı\n");
+
     // Main loop
     while (true){
       LaserScan scan;
@@ -258,28 +260,44 @@ int main(int argc, char *argv[])
       }
 
       if (laser.doProcessSimple(scan))
-      {   std::stringstream ss;
-      
-          // Parse robot location
-          char* robot_rl_token = strtok(buffer_rl,",");
-          printf("x:%s\n",robot_rl_token);
-          robot_x = atof(robot_rl_token);
-          robot_rl_token = strtok(NULL,"\n");
-          printf("y:%s\n",robot_rl_token);
-          robot_y = atof(robot_rl_token);
-
-          // Return the start of the file
-          memset(buffer_rl,0,bufferSize_rl);
-          lseek(fd,0,SEEK_SET);
-
+      {   
+    
           
+          double robot_location_buffer[2];
           
-          // Put robot location
-          ss << "robot_x: " << robot_x << ",robot_y: " << robot_y << "\n";
 
-          // Draw the points
+          memset(robot_location_buffer,0,sizeof(robot_location_buffer));
+          
+
+          // Point sayısını client'a gönder
+          int point_count = scan.points.size();
+          ssize_t bytesSent_pc = send(clientSock, &point_count, sizeof(point_count), 0);
+          if (bytesSent_pc == -1) {
+            std::cerr << "Failed to send data" << std::endl;
+            close(clientSock);
+            break;
+          } 
+
+          //usleep(500000);
+
+          // Robot konumunu gönder
+          robot_location_buffer[0] = robot_x;
+          robot_location_buffer[1] = robot_y;
+          ssize_t bytesSent_rl = send(clientSock, robot_location_buffer, sizeof(robot_location_buffer), 0);
+          if (bytesSent_rl == -1) {
+            std::cerr << "Failed to send data" << std::endl;
+            close(clientSock);
+            break;
+          } 
+
+          memset(robot_location_buffer,0,sizeof(robot_location_buffer));
+
+          char buffer[10];
+          double point_buffer[point_count][2];
           for (size_t i = 0; i < scan.points.size(); ++i)
-          {   
+          { 
+            memset(point_buffer[i],0,sizeof(point_buffer[i]));
+
             const LaserPoint& p = scan.points.at(i);
 
             // Calculate X, Y coordinates from polar coordinates
@@ -289,23 +307,21 @@ int main(int argc, char *argv[])
             double x = distance * cos(angle_rad);
             double y = distance * sin(angle_rad);
 
-            //printf("X: %f Y: %f\n", x, y);
+            point_buffer[i][0] = x;
+            point_buffer[i][1] = y;
 
-            // Convert x and y to string
-            ss << "x: " << x << ", y: " << y << "\n";
-              
-          } 
-          
-          std::string data = ss.str();        
-          
-          // Send points to the server
-          ssize_t bytesSent = send(clientSock, data.c_str(), data.size(), 0);
+          }    
+
+          // Point bilgilerini gönder
+          ssize_t bytesSent = send(clientSock, point_buffer, sizeof(point_buffer), 0);
           if (bytesSent == -1) {
             std::cerr << "Failed to send data" << std::endl;
             close(clientSock);
             break;
-          }         
-    
+          }
+
+          memset(point_buffer , 0 , sizeof(point_buffer)); 
+
           fflush(stdout);
       }
       else {
