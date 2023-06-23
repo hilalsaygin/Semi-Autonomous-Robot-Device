@@ -71,7 +71,7 @@ bool startClient(std::string ipAddress, int remote_port)
 
     // Clicked Location Text
     sf::Font font;
-    if (!font.loadFromFile("arial.ttf"))
+    if (!font.loadFromFile("./Mapping/remoteCenter/build/arial.ttf"))
     {
         std::cout << "Error loading font." << std::endl;
         return -1;
@@ -182,7 +182,7 @@ bool startClient(std::string ipAddress, int remote_port)
                 window.draw(center); // Draw the circle
         
 
-        usleep(100000);
+        usleep(200000);
 
 
         double point_buffer[point_count][2];
@@ -242,8 +242,8 @@ bool startClient(std::string ipAddress, int remote_port)
 
 int main()
 {   
-    std::string ipAddress = "192.168.165.156"; 
-    int port = 8086;  // Port number to listen on
+    std::string ipAddress = "192.168.148.221"; 
+    int port = 8080;  // Port number to listen on
     bool success = startClient(ipAddress,port);
     if (!success) {
         std::cerr << "Failed to start the server" << std::endl;

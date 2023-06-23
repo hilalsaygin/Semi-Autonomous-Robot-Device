@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys
+import os
 from ui_led import Ui_led
 from ui_face import Ui_Face
 from ui_client import Ui_client
@@ -10,6 +11,7 @@ from PyQt5.QtGui import *
 from Client import *
 from Calibration import *
 import CnnModelTest
+import multiprocessing
 
 class MyWindow(QMainWindow,Ui_client):
     def __init__(self):
@@ -62,7 +64,7 @@ class MyWindow(QMainWindow,Ui_client):
         self.Button_Step_Left.released.connect(self.stop)
         self.Button_Step_Right.pressed.connect(self.step_right)
         self.Button_Step_Right.released.connect(self.stop)
-        self.Button_Video.clicked.connect(self.video)
+        self.Button_Mapping.clicked.connect(self.mapping)
         self.Button_Cnn.clicked.connect(self.cnn)
     
         
@@ -94,12 +96,6 @@ class MyWindow(QMainWindow,Ui_client):
             self.connect()
         if(event.key() == Qt.Key_V):
             print("V")
-            if self.Button_Video.text() == 'Open Video':
-                self.timer.start(10)
-                self.Button_Video.setText('Close Video')
-            else:
-                self.timer.stop()
-                self.Button_Video.setText('Open Video')
            
         if(event.key() == Qt.Key_R):
             print("R")
@@ -376,6 +372,14 @@ class MyWindow(QMainWindow,Ui_client):
         self.client.move_speed=str(self.slider_speed.value())
         self.label_speed.setText(str(self.slider_speed.value()))
 
+    def createMapping(self):
+        os.system("./Mapping/remoteCenter/build/remote_control_center_mapping")
+
+    def mapping(self):
+        process = multiprocessing.Process(target=self.createMapping)
+        # Start the process
+        process.start()
+        
     #relax
     def relax(self):
         if self.Button_Relax.text() == 'Relax':
