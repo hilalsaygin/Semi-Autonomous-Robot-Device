@@ -13,7 +13,6 @@ from Command import COMMAND as cmd
 
 class Client:
     def __init__(self):
-        self.face = Face()
         self.pid=Incremental_PID(1,0,0.0025)
         self.tcp_flag=False
         self.video_flag=True
