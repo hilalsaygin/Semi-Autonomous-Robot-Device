@@ -1,1 +1,0 @@
-/usr/bin/c++  -std=c++14 -rdynamic CMakeFiles/robot_lidar.dir/robot_lidar.cpp.o -o robot_lidar  -lydlidar_sdk -lpthread -lrt 
