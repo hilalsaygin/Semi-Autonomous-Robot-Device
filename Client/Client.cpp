@@ -25,6 +25,11 @@ void Client::turn_on_client(std::string ip){
     cout << "turned on client" << endl;
     clientsocket1 = socket(AF_INET, SOCK_STREAM, 0);
     clientsocket = socket(AF_INET, SOCK_STREAM, 0);
+    if(clientsocket1 ==-1 || clientsocket ==-1){
+        cout << "Socket connection failed" << endl;
+        return;
+    }
+        
     std::cout << ip << std::endl;
 }
 
