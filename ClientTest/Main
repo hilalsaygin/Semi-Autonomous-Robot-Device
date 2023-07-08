@@ -1,0 +1,100 @@
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <unistd.h>
+#include "Client.h"
+
+#define PORT 8080
+#define IP_ADDRESS 8080
+
+
+
+class MyWindow{
+    public:
+        Client clientObject;
+        int clientSocketNo ;
+        MyWindow();
+        void receive_instruction();
+        boolean connectSocket();
+    
+    };
+
+void receive_instruction(){
+    //use open socket variable clientObject.clientsocket1 for data recieve 
+    
+    std::string receivedData;
+    int currentSocket=clientObject.socket1();
+
+    if(connectSocket(currentSocket)){
+        
+            try:
+                alldata=self.client.receive_data()
+            except:
+                self.client.tcp_flag=False
+                break
+
+             #print(alldata)
+            if alldata=='':
+                break
+            else:
+                cmdArray=alldata.split('\n')
+                #print(cmdArray)
+                if cmdArray[-1] !="":
+                    cmdArray==cmdArray[:-1]   
+
+        while (true){
+            try{
+            receivedData=clientObject.rcv_data();
+            std::cout << "Received data from the server:" << std::endl;
+            std::cout << receivedData << std::endl;
+            
+            }catch (...)  {
+                cout << "Data cannot be read\n";
+                break;
+            }
+            if receivedData ==NULL{
+                break
+            }
+            else{
+                //parse the input 
+
+            }
+
+        }      
+        
+
+    }
+        
+
+    
+    }
+
+boolean connectSocket(int socket){
+    struct sockaddr_in serverAddress;  
+//turns on both sockets declared
+    clientObject.turn_on_client(IP_ADDRESS);         
+
+    serverAddress.sin_family = AF_INET;  
+    serverAddress.sin_port = htons(PORT); 
+
+    if (inet_pton(AF_INET, IP_ADDRESS.c_str(), &(serverAddress.sin_addr)) <= 0) {
+        std::cerr << "Invalid address or address not supported" << std::endl;
+        clientObject.turn_off_client();
+        return;
+    }
+
+    // Connection to socket given as parameter
+    if (status=connect(socket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0) {
+        std::cerr << "Connection failed" << std::endl;
+        clientObject.turn_off_client();
+        return;
+    } 
+    cout << "Socket connection done" << endl;
+
+}
+
+
+
