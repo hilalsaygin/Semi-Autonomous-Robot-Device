@@ -79,7 +79,7 @@ std::string Client::rcv_data(){
     else{
         std::cout << "Client read any data"<< std::endl;
 
-        return NULL;
+        return "";
 
     }
     /*
