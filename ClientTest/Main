@@ -5,10 +5,11 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <bits/stdc++.h>
 #include "Client.h"
 
 #define PORT 8080
-#define IP_ADDRESS 8080
+#define IP_ADDRESS "10.10.10.10"
 
 
 
@@ -29,21 +30,6 @@ void receive_instruction(){
     int currentSocket=clientObject.socket1();
 
     if(connectSocket(currentSocket)){
-        
-            try:
-                alldata=self.client.receive_data()
-            except:
-                self.client.tcp_flag=False
-                break
-
-             #print(alldata)
-            if alldata=='':
-                break
-            else:
-                cmdArray=alldata.split('\n')
-                #print(cmdArray)
-                if cmdArray[-1] !="":
-                    cmdArray==cmdArray[:-1]   
 
         while (true){
             try{
@@ -55,22 +41,57 @@ void receive_instruction(){
                 cout << "Data cannot be read\n";
                 break;
             }
-            if receivedData ==NULL{
-                break
+            if receivedData ==""{
+                break;
             }
             else{
                 //parse the input 
+                vector<string> cmdArray = split(receivedData, "\n");
+                cout << cmdArray << endl;
+                
+                for(int i=0; i< cmdArray.size(); i++){
+                    std::string data=cmdArray[i].split("#");
+                    if(data == ""){
+                        break;
+                        clientObject.tcpFlag=False;
+                    }
+                    cout << "Line:  ";
 
+                    cout << data << endl;
+
+
+                }
             }
 
         }      
         
 
     }
-        
+}
 
-    
+vector<string> split(string str, string delimiter)
+{
+    vector<string> vecOut;
+    if (!str.empty()) {
+        int start = 0;
+        do {
+            // Find the index of occurrence
+            int idx = str.find(delimiter, start);
+            if (idx == string::npos) {
+                break;
+            }
+ 
+            // If found add the substring till occurrence in the vector
+            int length = idx - start;
+            vecOut.push_back(str.substr(start, length));
+            start += (length + delimiter.size());
+        } while (true);
+
+        vecOut.push_back(str.substr(start));
     }
+ 
+    return vecOut;
+}
 
 boolean connectSocket(int socket){
     struct sockaddr_in serverAddress;  
@@ -95,6 +116,3 @@ boolean connectSocket(int socket){
     cout << "Socket connection done" << endl;
 
 }
-
-
-
