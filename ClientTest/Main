@@ -108,7 +108,7 @@ bool connectSocket(int socket){
     }
 
     // Connection to socket given as parameter
-    if (status=connect(socket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0) {
+    if (connect(socket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0) {
         std::cerr << "Connection failed" << std::endl;
         clientObject.turn_off_client();
         return;
