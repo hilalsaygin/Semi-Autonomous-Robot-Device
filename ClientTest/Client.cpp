@@ -32,11 +32,7 @@ int socket(){
 void Client::turn_on_client(std::string ip){
     cout << "turned on client" << endl;
     clientsocket1 = socket(AF_INET, SOCK_STREAM, 0);
-    cli/* The `connectSocket` function is responsible for establishing a connection with a server using
-    a client socket. It sets up the server address and port, converts the IP address to the
-    appropriate format, and then attempts to connect to the server using the `connect` function.
-    If the connection is successful, it returns `true`, otherwise it returns `false`. */
-    entsocket = socket(AF_INET, SOCK_STREAM, 0);
+    clientsocket = socket(AF_INET, SOCK_STREAM, 0);
     if(clientsocket1 ==-1 || clientsocket ==-1){
         cout << "Socket connection failed" << endl;
         return;
