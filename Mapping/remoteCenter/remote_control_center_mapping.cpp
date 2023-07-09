@@ -26,7 +26,7 @@
 
 using namespace std;
 
-std::string ipAddress = "192.168.1.153";
+std::string ipAddress = "10.1.233.208";
 int remote_port = 8086;
 
 typedef struct  {
@@ -117,6 +117,13 @@ public:
                         QMutexLocker locker(&mutex);
                         points.push_back(point);
                     }
+
+                    //printf("Total point count : %ld\n",points.size());
+                    QMutexLocker locker(&mutex);
+                    while(points.size() > 75000){
+                        points.erase(points.begin());
+                    }
+                    //printf("Total point count : %ld\n",points.size());
                 }
             }
         }
@@ -147,7 +154,8 @@ private :
 
             // Eğer refresh butonuna tıklandıysa pointleri sil
             if (refresh_button.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosition)))
-            {
+            {   
+                QMutexLocker locker(&receiverThread->mutex);
                 points.clear();
                 clickText.setString("");
             }
