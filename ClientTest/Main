@@ -93,7 +93,7 @@ vector<string> split(string str, string delimiter)
     return vecOut;
 }
 
-boolean connectSocket(int socket){
+bool connectSocket(int socket){
     struct sockaddr_in serverAddress;  
 //turns on both sockets declared
     clientObject.turn_on_client(IP_ADDRESS);         
