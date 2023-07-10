@@ -320,6 +320,8 @@ int main(int argc, char *argv[])
 
               point_buffer[i][0] = x;
               point_buffer[i][1] = y;
+              FILE *dosya = fopen("veriler.txt", "w");
+              fprintf(dosya, "%lf,%lf\n", angle_rad, distance);
 
             }   
             
