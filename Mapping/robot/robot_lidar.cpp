@@ -330,7 +330,8 @@ int main(int argc, char *argv[])
               point_buffer[i][1] = y;
 
                 if(angle_rad >= 30 || angle_rad <= 150){
-                    fprintf(dosya, "%lf,%lf\n", angle_rad, distance);
+                    if( angle_rad <= 85 || angle_rad >=95)
+                        fprintf(dosya, "%lf,%lf\n", angle_rad, distance);
                 }
 
             }   
