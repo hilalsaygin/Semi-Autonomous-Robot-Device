@@ -306,6 +306,7 @@ class Control:
         file4 = open("./Mapping/robot/build/robot_location.txt","w")
         file4.write(str(x) + "," + str(y))
         file4.close() 
+        
     def forWard(self):
         for i in range(90,451,self.speed):
             X1=12*math.cos(i*math.pi/180)
@@ -342,7 +343,48 @@ class Control:
                 else:
                     self.forWard()
                     counter+=1
+                    
         print("cikti")
+        
+    def otoLidar(self):
+        counter=2
+        while True:
+            distance = self.sonic.getDistance()
+            if (distance <8 and distance>0):
+                break
+            elif distance < 20 and distance > 8:
+
+                with open('./Mapping/lidardata.txt',"r") as f:
+                    lines = f.readlines()
+                    lineData=list()
+                    #access each angle distance pair in text file 
+                    for line in lines:
+                        lineData.append(tuple(line.strip().split(",")))
+                        
+                sortedData=sorted(lineData)
+                longest=sortedData[-1]
+                #assume left side of robot is 30 to 90, right side is 90 to 150
+                #longest[0] is the farest point distance, [1] is angle.
+                gap = longest[1]-90
+                if(gap>0):
+                    stepCount=gap/10 +1
+                    while(stepCount>=0):
+                        self.turnRight()
+                        stepCount -=1
+                #turn left operation        
+                else:  
+                    stepCount=gap/10 +1
+                    while(stepCount>=0):
+                        self.turnLeft()
+                        stepCount -=1   
+            else:
+                if(counter%9==0) :
+                    self.turnRight()
+                    counter+=1
+                else:
+                    self.forWard()
+                    counter+=1               
+            
         
     def otoRight(self):
         distance=self.sonic.getDistance()
