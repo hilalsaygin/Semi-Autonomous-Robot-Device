@@ -3,7 +3,7 @@ import threading
 from ctypes import c_int, c_double
 from queue import Queue
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget , QPushButton
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget , QPushButton , QLabel
 from PyQt5.QtGui import QPainter, QColor, QPen
 from PyQt5.QtCore import Qt, QPoint , QThread, pyqtSignal , QMutex , pyqtSlot , QMutexLocker
 
@@ -88,8 +88,8 @@ class DataReceiverThread(QThread):
             sock.close()
 
 class MapWidget(QWidget):
-    camera_x = 300
-    camera_y = 200
+    camera_x = 0
+    camera_y = 0
     robot_x = 0
     robot_y = 0
     zoom = 45
@@ -99,12 +99,16 @@ class MapWidget(QWidget):
         self.points = points
         self.robot_x = robot_x
         self.robot_y = robot_y
-
+        
+        self.clicked_coordinate_label = QLabel("",self)
+        self.clicked_coordinate_label.setGeometry(10,self.geometry().height(),200,50)
+        
     def paintEvent(self, event):
         #print(self.points)
         painter = QPainter(self)
         painter.setRenderHint(QPainter.Antialiasing)
-
+        
+        # Ekranı temizle
         painter.eraseRect(self.rect())
 
         # Pointleri çiz
@@ -115,12 +119,33 @@ class MapWidget(QWidget):
         # Robotu çiz
         painter.setPen(QPen(Qt.green, self.zoom / 10))
         painter.drawPoint(QPoint(int((self.robot_x * self.zoom) + self.camera_x), int((self.robot_y * self.zoom) + self.camera_y)))
+    
+    # Mouse tıklandığında koordinatı yaz
+    def mouseReleaseEvent(self,event):
+        if event.button() == Qt.LeftButton:
+            pos = event.pos()
+            relative_pos = self.mapFromGlobal(pos)
+            clicked_x = (relative_pos.x() - self.camera_x) / self.zoom
+            clicked_y = (relative_pos.y() - self.camera_y) / self.zoom
+            self.clicked_coordinate_label.setText("Clicked Coordinates \nX : " + str(format(clicked_x,".2f")) + " Y : " + str(format(clicked_y,".2f")))
+            self.clicked_coordinate_label.update()
+            self.send_move_instruction(clicked_x, clicked_y)
+    
+    # TODO
+    # Tıklanan yerin ve robotun konumu kullanılarak gidilecek yön ve mesafe hesaplanıp,
+    # robota hareket instruction u gönderilecek
+    def send_move_instruction(self,clicked_x,clicked_y):
+        pass
+
 
 class MainWindow(QMainWindow):
+    window_width = 1920
+    window_height = 1080
+
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Map Example")
-        self.setGeometry(0, 0, 1920, 1080)
+        self.setGeometry(0, 0, self.window_width, self.window_height)
 
         self.points = []
         self.robot_x = 0
