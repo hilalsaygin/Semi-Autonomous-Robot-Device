@@ -201,6 +201,7 @@ int main(int argc, char *argv[])
       return false;
   }
 
+  // Bind socket
   sockaddr_in serverAddr{};
   serverAddr.sin_family = AF_INET;
   serverAddr.sin_addr.s_addr = INADDR_ANY;
@@ -212,6 +213,7 @@ int main(int argc, char *argv[])
       return false;
   }
 
+  // Listen the server
   if (listen(serverSock, 1) < 0) {
       std::cerr << "Listening failed" << std::endl;
       close(serverSock);
@@ -224,14 +226,6 @@ int main(int argc, char *argv[])
   // Main things start
   double robot_x = 0;
   double robot_y = 0;
-
-  int fd = open("./robot_location.txt",O_RDWR);
-
-  if (fd == -1) {
-      std::cerr << "Failed to open the file." << std::endl;
-      return 1;
-  }
-
   const int bufferSize_rl = 30;
   char buffer_rl[bufferSize_rl];
 
@@ -249,9 +243,21 @@ int main(int argc, char *argv[])
     // Main loop
     while (true){
       LaserScan scan;
+      FILE *dosya = fopen("./Mapping/lidardata.txt", "w+");
+      if (dosya == NULL) { printf("Lİdar data file failed to open!"); return 1; }
+      // Open the robot location file
+      int fd = open("./robot_location.txt",O_RDWR);
 
+      if (fd == -1) {
+          std::cerr << "Failed to open the file." << std::endl;
+          return 1;
+      }
+      
       // Read the robot location file
       ssize_t bytesRead = read(fd, buffer_rl, bufferSize_rl);
+
+      // Close the file using close() function
+      close(fd);
 
       if (bytesRead == -1) {
           std::cerr << "Failed to read the file." << std::endl;
@@ -260,9 +266,7 @@ int main(int argc, char *argv[])
       }
 
       if (laser.doProcessSimple(scan))
-      {   
-    
-          
+      {             
           double robot_location_buffer[2];
           
 
@@ -277,50 +281,62 @@ int main(int argc, char *argv[])
             close(clientSock);
             break;
           } 
+          
+          //printf("Point count : %d\n",point_count);
+          //printf("bytesSent_pc : %lu\n",bytesSent_pc);
 
-          //usleep(500000);
+          // Eğer point sayısı valid ise
+          if(point_count > 0 && point_count < 20000) {
 
-          // Robot konumunu gönder
-          robot_location_buffer[0] = robot_x;
-          robot_location_buffer[1] = robot_y;
-          ssize_t bytesSent_rl = send(clientSock, robot_location_buffer, sizeof(robot_location_buffer), 0);
-          if (bytesSent_rl == -1) {
-            std::cerr << "Failed to send data" << std::endl;
-            close(clientSock);
-            break;
-          } 
+            // Robot konumunu gönder
+            robot_location_buffer[0] = robot_x;
+            robot_location_buffer[1] = robot_y;
+            ssize_t bytesSent_rl = send(clientSock, robot_location_buffer, sizeof(robot_location_buffer), 0);
+            if (bytesSent_rl == -1) {
+              std::cerr << "Failed to send data" << std::endl;
+              close(clientSock);
+              break;
+            } 
 
-          memset(robot_location_buffer,0,sizeof(robot_location_buffer));
+            memset(robot_location_buffer,0,sizeof(robot_location_buffer));
 
-          char buffer[10];
-          double point_buffer[point_count][2];
-          for (size_t i = 0; i < scan.points.size(); ++i)
-          { 
-            memset(point_buffer[i],0,sizeof(point_buffer[i]));
+            // Bulunan pointleri gönder
 
-            const LaserPoint& p = scan.points.at(i);
+            char buffer[10];
+            double point_buffer[point_count][2];
 
-            // Calculate X, Y coordinates from polar coordinates
-            double angle_rad = p.angle;  // Angle in radians
-            double distance = p.range;   // Distance in meters
+            for (size_t i = 0; i < scan.points.size(); ++i)
+            { 
+              memset(point_buffer[i],0,sizeof(point_buffer[i]));
 
-            double x = distance * cos(angle_rad);
-            double y = distance * sin(angle_rad);
+              const LaserPoint& p = scan.points.at(i);
 
-            point_buffer[i][0] = x;
-            point_buffer[i][1] = y;
+              double angle_rad = p.angle;
+              double distance = p.range;
 
-          }    
+              double x = distance * cos(angle_rad);
+              double y = distance * sin(angle_rad);
 
-          // Point bilgilerini gönder
-          ssize_t bytesSent = send(clientSock, point_buffer, sizeof(point_buffer), 0);
-          if (bytesSent == -1) {
-            std::cerr << "Failed to send data" << std::endl;
-            close(clientSock);
-            break;
+              point_buffer[i][0] = x;
+              point_buffer[i][1] = y;
+
+              //write angle and distance info to text file 
+              if(angle_rad >= 30 || angle_rad <= 150){
+                    if( angle_rad <= 85 || angle_rad >=95)
+                        fprintf(dosya, "%lf,%lf\n", distance, angle_rad);
+                }
+
+            }   
+            
+            ssize_t bytesSent = send(clientSock, point_buffer, sizeof(point_buffer), 0);
+            if (bytesSent == -1) {
+              std::cerr << "Failed to send data" << std::endl;
+              close(clientSock);
+              break;
+            }
+
+            memset(point_buffer , 0 , sizeof(point_buffer)); 
           }
-
-          memset(point_buffer , 0 , sizeof(point_buffer)); 
 
           fflush(stdout);
       }
@@ -335,8 +351,7 @@ int main(int argc, char *argv[])
   laser.turnOff();
   laser.disconnecting();
 
-  // Close the file using close() function
-  close(fd);
+  
 
   return 0;
 }
