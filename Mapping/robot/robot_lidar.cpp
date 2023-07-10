@@ -331,7 +331,7 @@ int main(int argc, char *argv[])
 
                 if(angle_rad >= 30 || angle_rad <= 150){
                     if( angle_rad <= 85 || angle_rad >=95)
-                        fprintf(dosya, "%lf,%lf\n", angle_rad, distance);
+                        fprintf(dosya, "%lf,%lf\n", distance, angle_rad);
                 }
 
             }   
