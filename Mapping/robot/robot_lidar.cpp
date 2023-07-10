@@ -11,6 +11,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <fcntl.h>
+$include <stdio.h>
 #include <unistd.h>
 #include <signal.h>
 
@@ -240,13 +241,20 @@ int main(int argc, char *argv[])
 
     printf("Bağlandı\n");
 
+
     // Main loop
     while (true){
+        
+
       LaserScan scan;
 
       // Open the robot location file
       int fd = open("./robot_location.txt",O_RDWR);
-
+        
+      FILE *dosya = fopen("./Mapping/lidardata.txt", "w+");
+      if (dosya == NULL) { printf("Lİdar data file failed to open!"); return 1; }
+      
+        
       if (fd == -1) {
           std::cerr << "Failed to open the file." << std::endl;
           return 1;
@@ -320,8 +328,10 @@ int main(int argc, char *argv[])
 
               point_buffer[i][0] = x;
               point_buffer[i][1] = y;
-              FILE *dosya = fopen("veriler.txt", "w");
-              fprintf(dosya, "%lf,%lf\n", angle_rad, distance);
+
+                if(angle_rad >= 30 || angle_rad <= 150){
+                    fprintf(dosya, "%lf,%lf\n", angle_rad, distance);
+                }
 
             }   
             
