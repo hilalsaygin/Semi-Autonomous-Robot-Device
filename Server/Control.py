@@ -321,6 +321,7 @@ class Control:
         self.y = float(self.y)+0.1
         self.writeRobotCoordinate(self.x,self.y)
             #time.sleep(0.01)
+ """
     def oto(self):
         print("girdi")
         counter=2
@@ -345,8 +346,8 @@ class Control:
                     counter+=1
                     
         print("cikti")
-        
-    def otoLidar(self):
+  """      
+    def oto(self):
         counter=2
         while True:
             distance = self.sonic.getDistance()
