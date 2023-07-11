@@ -11,7 +11,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <fcntl.h>
-$include <stdio.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <signal.h>
 
@@ -335,6 +335,7 @@ int main(int argc, char *argv[])
                 }
 
             }   
+              fclose(dosya);
             
             ssize_t bytesSent = send(clientSock, point_buffer, sizeof(point_buffer), 0);
             if (bytesSent == -1) {
