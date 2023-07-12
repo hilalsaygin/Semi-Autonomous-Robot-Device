@@ -82,8 +82,10 @@ if __name__ == '__main__':
         myshow=MyWindow()
         if myshow.user_ui==True:
             myshow.show();  
-            os.system("./Mapping/robot/build/robot_lidar") 
+            os.system("./Mapping/robot/build/robot_lidar")
+            os._exit(0) # to prevent lidarport from collapsing . Will be tested
             sys.exit(myshow.app.exec_())
+            
         else:
             try:
                 pass
