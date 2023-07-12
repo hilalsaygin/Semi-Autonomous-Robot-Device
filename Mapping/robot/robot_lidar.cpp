@@ -14,10 +14,12 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <signal.h>
+#include <vector>
+#include <algorithm>
+
 
 constexpr int BUFFER_SIZE = 50000;
 using namespace ydlidar;
-
 #if defined(_MSC_VER)
 #pragma comment(lib, "ydlidar_sdk.lib")
 #endif
@@ -29,13 +31,16 @@ void sigpipeHandler(int signal)
     // Print a message to indicate the signal handling
     std::cerr << "Received SIGPIPE signal" << std::endl;
 }
-
+bool sortcol(const std::vector<double>& v1, const std::vector<double>& v2)
+{
+	return v1[0] < v2[0];
+}
 int main(int argc, char *argv[])
 {
   // Register the signal handler for SIGPIPE
   signal(SIGPIPE, sigpipeHandler);
 
-  int remote_port = 8086;
+  int remote_port = 8081;
 
   // Set lidar usb port
   std::string port;
@@ -251,8 +256,8 @@ int main(int argc, char *argv[])
       // Open the robot location file
       int fd = open("./robot_location.txt",O_RDWR);
         
-      FILE *dosya = fopen("./Mapping/lidardata.txt", "w+");
-      if (dosya == NULL) { printf("Lİdar data file failed to open!"); return 1; }
+      int dosya = open("./lidardata.txt",O_RDWR);
+      if (dosya == -1) { printf("Lidar data file failed to open!"); return 1; }
       
         
       if (fd == -1) {
@@ -313,6 +318,9 @@ int main(int argc, char *argv[])
 
             char buffer[10];
             double point_buffer[point_count][2];
+            //double angle_dist[point_count][2];
+            
+            std::vector<std::vector<double> > vec(point_count);
 
             for (size_t i = 0; i < scan.points.size(); ++i)
             { 
@@ -329,13 +337,38 @@ int main(int argc, char *argv[])
               point_buffer[i][0] = x;
               point_buffer[i][1] = y;
 
-                if(angle_rad >= 30 || angle_rad <= 150){
-                    if( angle_rad <= 85 || angle_rad >=95)
-                        fprintf(dosya, "%lf,%lf\n", distance, angle_rad);
-                }
+              vec[i] = std::vector<double>(2);
+              double angle= (angle_rad*180)/3.1415;
+
+
+               if((angle <= -120.0 && angle >= -175.0 )|| (angle <=180.0 && angle >= 120.0))
+               {
+                        vec[i][0]=distance;
+                        vec[i][1]=angle;
+               }
+                
 
             }   
-              fclose(dosya);
+
+            // sort angle_dist by first demension(dist)
+            std::sort(vec.begin(), vec.end(), sortcol);
+            std::cout << "The Matrix after sorting is:\n";
+            for (int i = 0; i < point_count; i++) {
+              for (int j = 0; j < 2; j++)
+                std::cout << vec[i][j] << " ";
+              std::cout << std::endl;
+            }
+            std::string str = std::to_string(vec[point_count-1][1]);
+            char digits[str.length()];
+            std::strncpy(digits, std::to_string(vec[point_count-1][1]).c_str(), sizeof(digits));
+
+            if(vec[point_count-1][1]<0.0) ssize_t bytes_written = write(dosya, digits,8);
+            else  ssize_t bytes_written = write(dosya, digits, 7);
+            //fprintf(dosya, "%.3f\n", (vec[point_count-1][1]));
+            printf("largest: %.3f\n", vec[point_count-1][1]);
+
+            close(dosya);
+            
             
             ssize_t bytesSent = send(clientSock, point_buffer, sizeof(point_buffer), 0);
             if (bytesSent == -1) {
@@ -353,7 +386,10 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Failed to get Lidar Data\n");
         fflush(stderr);
       }
+
+
     }
+    
   }
   
 
@@ -364,3 +400,4 @@ int main(int argc, char *argv[])
 
   return 0;
 }
+
