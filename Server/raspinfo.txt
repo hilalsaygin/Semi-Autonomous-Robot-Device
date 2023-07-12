@@ -1,0 +1,1553 @@
+System Information
+------------------
+
+Raspberry Pi 3 Model B Rev 1.2
+PRETTY_NAME="Raspbian GNU/Linux 11 (bullseye)"
+NAME="Raspbian GNU/Linux"
+VERSION_ID="11"
+VERSION="11 (bullseye)"
+
+Raspberry Pi reference 2023-02-21
+Generated using pi-gen, https://github.com/RPi-Distro/pi-gen, f2d385517c9631f2ded876deb1115725d0c75995, stage4
+
+Linux raspberrypi 6.1.21-v7+ #1642 SMP Mon Apr  3 17:20:52 BST 2023 armv7l GNU/Linux
+Revision	: a02082
+Serial		: 00000000fa5f590e
+Model		: Raspberry Pi 3 Model B Rev 1.2
+Throttled flag  : throttled=0x0
+Camera          : supported=1 detected=0, libcamera interfaces=0
+
+Videocore information
+---------------------
+
+Mar 17 2023 10:53:39 
+Copyright (c) 2012 Broadcom
+version 82f3750a65fadae9a38077e3c2e217ad158c8d54 (clean) (release) (start_x)
+
+alloc failures:     0
+compactions:        0
+legacy block fails: 0
+
+Filesystem information
+----------------------
+Dosyasistemi    1K-blok    Dolu     Boş Kull% Bağlanılan yer
+/dev/root      14706380 6646032 7404760   48% /
+devtmpfs         412568       0  412568    0% /dev
+tmpfs            445848       0  445848    0% /dev/shm
+tmpfs            178340    1044  177296    1% /run
+tmpfs              5120       0    5120    0% /run/lock
+/dev/mmcblk0p1   261108   51636  209472   20% /boot
+tmpfs             89168      28   89140    1% /run/user/1000
+
+Filename				Type		Size		Used		Priority
+/var/swap                               file		102396		0		-2
+
+Package version information
+---------------------------
+raspberrypi-ui-mods:
+  Kurulu: 1.20230127
+raspberrypi-sys-mods:
+  Kurulu: 20230329
+openbox:
+  Kurulu: 3.6.1-9+rpt1+deb11u1
+lxpanel:
+  Kurulu: 0.10.1-2+rpt19
+pcmanfm:
+  Kurulu: 1.3.2-1+rpt9
+rpd-plym-splash:
+  Kurulu: 0.32
+
+Networking Information
+----------------------
+
+eth0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        ether m.m.m.m  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet x.x.x.x  netmask x.x.x.x
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 24  bytes 2541 (2.4 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 24  bytes 2541 (2.4 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+wlan0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet x.x.x.x  netmask x.x.x.x  broadcast x.x.x.x
+        inet6 y::y.y.y.y  prefixlen 64  scopeid 0x20<link>
+        ether m.m.m.m  txqueuelen 1000  (Ethernet)
+        RX packets 889  bytes 66687 (65.1 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 790  bytes 100970 (98.6 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+USB Information
+---------------
+
+/:  Bus 01.Port 1: Dev 1, Class=root_hub, Driver=dwc_otg/1p, 480M
+    |__ Port 1: Dev 2, If 0, Class=Hub, Driver=hub/5p, 480M
+        |__ Port 1: Dev 3, If 0, Class=Vendor Specific Class, Driver=smsc95xx, 480M
+        |__ Port 2: Dev 4, If 0, Class=Human Interface Device, Driver=usbhid, 12M
+        |__ Port 2: Dev 4, If 1, Class=Human Interface Device, Driver=usbhid, 12M
+
+Display Information
+-------------------
+
+Running Legacy framebuffer
+
+Framebuffer: /dev/fb0
+
+mode "720x480"
+    geometry 720 480 720 480 32
+    timings 0 0 0 0 0 0 0
+    rgba 8/16,8/8,8/0,8/24
+endmode
+
+
+Display:  3
+state 0x40000 [NTSC 4:3], 720x480 @ 60.00Hz, interlaced
+device_name=Unk-Composite dis
+Group CEA has 0 modes:
+Group DMT has 0 modes:
+
+
+config.txt
+----------
+
+aphy_params_current=819
+arm_freq=1200
+arm_freq_min=600
+audio_pwm_mode=514
+camera_auto_detect=-1
+config_hdmi_boost=5
+core_freq=400
+desired_osc_freq=0x387520
+disable_commandline_tags=2
+disable_l2cache=1
+disable_overscan=1
+display_auto_detect=1
+display_hdmi_rotate=-1
+display_lcd_rotate=-1
+dphy_params_current=547
+dvfs=3
+enable_tvout=1
+enable_uart=1
+force_eeprom_read=1
+force_pwm_open=1
+framebuffer_ignore_alpha=1
+framebuffer_swap=1
+gpu_freq=300
+init_uart_clock=0x2dc6c00
+lcd_framerate=60
+max_framebuffers=2
+over_voltage_avs=0x13d62
+pause_burst_frames=1
+program_serial_random=1
+sdram_freq=450
+total_mem=1024
+hdmi_force_cec_address:0=65535
+hdmi_force_cec_address:1=65535
+hdmi_pixel_freq_limit:0=0x9a7ec80
+device_tree=-
+overlay_prefix=overlays/
+hdmi_cvt:0=
+hdmi_cvt:1=
+hdmi_edid_filename:0=
+hdmi_edid_filename:1=
+hdmi_timings:0=
+hdmi_timings:1=
+
+cmdline.txt
+-----------
+coherent_pool=1M 8250.nr_uarts=1 snd_bcm2835.enable_headphones=0 bcm2708_fb.fbwidth=720 bcm2708_fb.fbheight=480 bcm2708_fb.fbswap=1 vc_mem.mem_base=0x3ec00000 vc_mem.mem_size=0x40000000  console=tty1 console=ttyS0,115200 root=PARTUUID=ce585596-02 rootfstype=ext4 fsck.repair=yes rootwait quiet splash plymouth.ignore-serial-consoles
+
+raspi-gpio settings
+-------------------
+
+BANK0 (GPIO 0 to 27):
+GPIO 0: level=0 fsel=0 func=INPUT
+GPIO 1: level=0 fsel=0 func=INPUT
+GPIO 2: level=0 fsel=4 alt=0 func=SDA1
+GPIO 3: level=1 fsel=4 alt=0 func=SCL1
+GPIO 4: level=0 fsel=0 func=INPUT
+GPIO 5: level=1 fsel=0 func=INPUT
+GPIO 6: level=1 fsel=0 func=INPUT
+GPIO 7: level=1 fsel=1 func=OUTPUT
+GPIO 8: level=1 fsel=1 func=OUTPUT
+GPIO 9: level=0 fsel=4 alt=0 func=SPI0_MISO
+GPIO 10: level=0 fsel=4 alt=0 func=SPI0_MOSI
+GPIO 11: level=0 fsel=4 alt=0 func=SPI0_SCLK
+GPIO 12: level=0 fsel=0 func=INPUT
+GPIO 13: level=0 fsel=0 func=INPUT
+GPIO 14: level=1 fsel=2 alt=5 func=TXD1
+GPIO 15: level=1 fsel=2 alt=5 func=RXD1
+GPIO 16: level=0 fsel=0 func=INPUT
+GPIO 17: level=0 fsel=1 func=OUTPUT
+GPIO 18: level=0 fsel=2 alt=5 func=PWM0
+GPIO 19: level=0 fsel=0 func=INPUT
+GPIO 20: level=0 fsel=0 func=INPUT
+GPIO 21: level=0 fsel=0 func=INPUT
+GPIO 22: level=0 fsel=0 func=INPUT
+GPIO 23: level=0 fsel=0 func=INPUT
+GPIO 24: level=0 fsel=0 func=INPUT
+GPIO 25: level=0 fsel=0 func=INPUT
+GPIO 26: level=0 fsel=0 func=INPUT
+GPIO 27: level=0 fsel=1 func=OUTPUT
+BANK1 (GPIO 28 to 45):
+GPIO 28: level=0 fsel=0 func=INPUT
+GPIO 29: level=1 fsel=0 func=INPUT
+GPIO 30: level=0 fsel=0 func=INPUT
+GPIO 31: level=0 fsel=0 func=INPUT
+GPIO 32: level=1 fsel=7 alt=3 func=TXD0
+GPIO 33: level=1 fsel=7 alt=3 func=RXD0
+GPIO 34: level=0 fsel=7 alt=3 func=SD1_CLK
+GPIO 35: level=1 fsel=7 alt=3 func=SD1_CMD
+GPIO 36: level=1 fsel=7 alt=3 func=SD1_DAT0
+GPIO 37: level=1 fsel=7 alt=3 func=SD1_DAT1
+GPIO 38: level=1 fsel=7 alt=3 func=SD1_DAT2
+GPIO 39: level=1 fsel=7 alt=3 func=SD1_DAT3
+GPIO 40: level=0 fsel=4 alt=0 func=PWM0
+GPIO 41: level=0 fsel=4 alt=0 func=PWM1
+GPIO 42: level=1 fsel=4 alt=0 func=GPCLK1
+GPIO 43: level=0 fsel=4 alt=0 func=GPCLK2
+GPIO 44: level=1 fsel=0 func=INPUT
+GPIO 45: level=1 fsel=0 func=INPUT
+BANK2 (GPIO 46 to 53):
+GPIO 46: level=1 fsel=0 func=INPUT
+GPIO 47: level=1 fsel=1 func=OUTPUT
+GPIO 48: level=0 fsel=4 alt=0 func=SD0_CLK
+GPIO 49: level=1 fsel=4 alt=0 func=SD0_CMD
+GPIO 50: level=1 fsel=4 alt=0 func=SD0_DAT0
+GPIO 51: level=1 fsel=4 alt=0 func=SD0_DAT1
+GPIO 52: level=1 fsel=4 alt=0 func=SD0_DAT2
+GPIO 53: level=1 fsel=4 alt=0 func=SD0_DAT3
+
+vcdbg log messages
+------------------
+
+001129.046: brfs: File read: /mfs/sd/config.txt
+001130.387: brfs: File read: 2166 bytes
+001163.303: HDMI0:EDID error reading EDID block 0 attempt 0
+001164.569: HDMI0:EDID error reading EDID block 0 attempt 1
+001165.834: HDMI0:EDID error reading EDID block 0 attempt 2
+001167.097: HDMI0:EDID error reading EDID block 0 attempt 3
+001168.362: HDMI0:EDID error reading EDID block 0 attempt 4
+001169.626: HDMI0:EDID error reading EDID block 0 attempt 5
+001170.891: HDMI0:EDID error reading EDID block 0 attempt 6
+001172.154: HDMI0:EDID error reading EDID block 0 attempt 7
+001173.419: HDMI0:EDID error reading EDID block 0 attempt 8
+001174.683: HDMI0:EDID error reading EDID block 0 attempt 9
+001175.707: HDMI0:EDID giving up on reading EDID block 0
+001178.734: brfs: File read: /mfs/sd/config.txt
+001180.110: gpioman: gpioman_get_pin_num: pin LEDS_PWR_OK not defined
+001373.358: gpioman: gpioman_get_pin_num: pin DISPLAY_DSI_PORT not defined
+001374.711: gpioman: gpioman_get_pin_num: pin LEDS_PWR_OK not defined
+001374.767: *** Restart logging
+001374.793: brfs: File read: 2166 bytes
+001375.998: hdmi: HDMI0:EDID error reading EDID block 0 attempt 0
+001377.268: hdmi: HDMI0:EDID error reading EDID block 0 attempt 1
+001378.536: hdmi: HDMI0:EDID error reading EDID block 0 attempt 2
+001379.805: hdmi: HDMI0:EDID error reading EDID block 0 attempt 3
+001381.072: hdmi: HDMI0:EDID error reading EDID block 0 attempt 4
+001382.342: hdmi: HDMI0:EDID error reading EDID block 0 attempt 5
+001383.610: hdmi: HDMI0:EDID error reading EDID block 0 attempt 6
+001384.879: hdmi: HDMI0:EDID error reading EDID block 0 attempt 7
+001386.146: hdmi: HDMI0:EDID error reading EDID block 0 attempt 8
+001387.415: hdmi: HDMI0:EDID error reading EDID block 0 attempt 9
+001388.441: hdmi: HDMI0:EDID giving up on reading EDID block 0
+001388.772: hdmi: HDMI0:EDID error reading EDID block 0 attempt 0
+001390.042: hdmi: HDMI0:EDID error reading EDID block 0 attempt 1
+001391.310: hdmi: HDMI0:EDID error reading EDID block 0 attempt 2
+001392.580: hdmi: HDMI0:EDID error reading EDID block 0 attempt 3
+001393.848: hdmi: HDMI0:EDID error reading EDID block 0 attempt 4
+001395.117: hdmi: HDMI0:EDID error reading EDID block 0 attempt 5
+001396.385: hdmi: HDMI0:EDID error reading EDID block 0 attempt 6
+001397.654: hdmi: HDMI0:EDID error reading EDID block 0 attempt 7
+001398.921: hdmi: HDMI0:EDID error reading EDID block 0 attempt 8
+001400.190: hdmi: HDMI0:EDID error reading EDID block 0 attempt 9
+001401.218: hdmi: HDMI0:EDID giving up on reading EDID block 0
+001401.513: hdmi: HDMI:hdmi_get_state is deprecated, use hdmi_get_display_state instead
+001401.536: HDMI0: hdmi_pixel_encoding: 162000000
+001401.803: vec: vec_middleware_power_on: vec_base: 0x7e806000 rev-id 0x00002708 @ vec: 0x7e806100 @ 0x00000420 enc: 0x7e806060 @ 0x00000220 cgmsae: 0x7e80605c @ 0x00000000
+001402.703: kernel=
+001481.075: dtb_file 'bcm2710-rpi-3-b.dtb'
+001486.442: brfs: File read: /mfs/sd/bcm2710-rpi-3-b.dtb
+001486.465: Loaded 'bcm2710-rpi-3-b.dtb' to 0x100 size 0x7d8e
+001501.492: brfs: File read: 32142 bytes
+001523.278: brfs: File read: /mfs/sd/overlays/overlay_map.dtb
+001612.092: brfs: File read: 2347 bytes
+001616.900: brfs: File read: /mfs/sd/config.txt
+001617.428: dtparam: i2c_arm=on
+001626.609: dtparam: spi=on
+001636.117: brfs: File read: 2166 bytes
+001665.480: brfs: File read: /mfs/sd/overlays/w1-gpio.dtbo
+001671.724: Loaded overlay 'w1-gpio'
+001671.769: dtparam: i2c1=on
+001680.997: dtparam: i2c_arm=on
+001721.324: brfs: File read: 1036 bytes
+001724.552: brfs: File read: /mfs/sd/cmdline.txt
+001724.613: Read command line from file 'cmdline.txt':
+001724.635: 'console=tty1 console=serial0,115200 root=PARTUUID=ce585596-02 rootfstype=ext4 fsck.repair=yes rootwait quiet splash plymouth.ignore-serial-consoles'
+001740.819: gpioman: gpioman_get_pin_num: pin EMMC_ENABLE not defined
+002286.095: brfs: File read: 148 bytes
+002695.023: brfs: File read: /mfs/sd/kernel7.img
+002695.039: Loaded 'kernel7.img' to 0x8000 size 0x67ebe0
+002695.064: Device tree loaded to 0x2eff7c00 (size 0x83cd)
+002746.549: gpioman: gpioman_get_pin_num: pin SDCARD_CONTROL_POWER not defined
+006524.937: vchiq_core: vchiq_init_state: slot_zero = 0xf4180000, is_master = 1
+012693.818: camsubs: Looking for camera 0: i2c_port = 0, led gpio = 134, power enable gpio = 133
+012989.478: camsubs: Camera not found
+012989.580: camsubs: Looking for camera 0: i2c_port = 0, led gpio = 134, power enable gpio = 133
+012990.290: camsubs: Camera not found
+012990.380: camsubs: Looking for camera 0: i2c_port = 0, led gpio = 134, power enable gpio = 133
+012991.086: camsubs: Camera not found
+012991.173: camsubs: Looking for camera 0: i2c_port = 0, led gpio = 134, power enable gpio = 133
+012991.368: camsubs: Camera not found
+012991.456: camsubs: Looking for camera 0: i2c_port = 0, led gpio = 134, power enable gpio = 133
+012992.162: camsubs: Camera not found
+012992.250: camsubs: Looking for camera 0: i2c_port = 0, led gpio = 134, power enable gpio = 133
+012992.625: camsubs: Camera not found
+
+dmesg log
+---------
+
+[    0.000000] Booting Linux on physical CPU 0x0
+[    0.000000] Linux version 6.1.21-v7+ (dom@buildbot) (arm-linux-gnueabihf-gcc-8 (Ubuntu/Linaro 8.4.0-3ubuntu1) 8.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #1642 SMP Mon Apr  3 17:20:52 BST 2023
+[    0.000000] CPU: ARMv7 Processor [410fd034] revision 4 (ARMv7), cr=10c5383d
+[    0.000000] CPU: div instructions available: patching division code
+[    0.000000] CPU: PIPT / VIPT nonaliasing data cache, VIPT aliasing instruction cache
+[    0.000000] OF: fdt: Machine model: Raspberry Pi 3 Model B Rev 1.2
+[    0.000000] random: crng init done
+[    0.000000] Memory policy: Data cache writealloc
+[    0.000000] Reserved memory: created CMA memory pool at 0x34000000, size 64 MiB
+[    0.000000] OF: reserved mem: initialized node linux,cma, compatible id shared-dma-pool
+[    0.000000] Zone ranges:
+[    0.000000]   DMA      [mem 0x0000000000000000-0x0000000037ffffff]
+[    0.000000]   Normal   empty
+[    0.000000] Movable zone start for each node
+[    0.000000] Early memory node ranges
+[    0.000000]   node   0: [mem 0x0000000000000000-0x0000000037ffffff]
+[    0.000000] Initmem setup node 0 [mem 0x0000000000000000-0x0000000037ffffff]
+[    0.000000] percpu: Embedded 17 pages/cpu s36884 r8192 d24556 u69632
+[    0.000000] pcpu-alloc: s36884 r8192 d24556 u69632 alloc=17*4096
+[    0.000000] pcpu-alloc: [0] 0 [0] 1 [0] 2 [0] 3 
+[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 227360
+[    0.000000] Kernel command line: coherent_pool=1M 8250.nr_uarts=1 snd_bcm2835.enable_headphones=0 bcm2708_fb.fbwidth=720 bcm2708_fb.fbheight=480 bcm2708_fb.fbswap=1 vc_mem.mem_base=0x3ec00000 vc_mem.mem_size=0x40000000  console=tty1 console=ttyS0,115200 root=PARTUUID=ce585596-02 rootfstype=ext4 fsck.repair=yes rootwait quiet splash plymouth.ignore-serial-consoles
+[    0.000000] Unknown kernel command line parameters "splash", will be passed to user space.
+[    0.000000] Dentry cache hash table entries: 131072 (order: 7, 524288 bytes, linear)
+[    0.000000] Inode-cache hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    0.000000] mem auto-init: stack:off, heap alloc:off, heap free:off
+[    0.000000] Memory: 825136K/917504K available (10240K kernel code, 1452K rwdata, 2900K rodata, 1024K init, 613K bss, 26832K reserved, 65536K cma-reserved)
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=4, Nodes=1
+[    0.000000] ftrace: allocating 34800 entries in 103 pages
+[    0.000000] ftrace: allocated 102 pages with 4 groups
+[    0.000000] trace event string verifier disabled
+[    0.000000] rcu: Hierarchical RCU implementation.
+[    0.000000] 	Rude variant of Tasks RCU enabled.
+[    0.000000] 	Tracing variant of Tasks RCU enabled.
+[    0.000000] rcu: RCU calculated value of scheduler-enlistment delay is 10 jiffies.
+[    0.000000] NR_IRQS: 16, nr_irqs: 16, preallocated irqs: 16
+[    0.000000] rcu: srcu_init: Setting srcu_struct sizes based on contention.
+[    0.000000] arch_timer: cp15 timer(s) running at 19.20MHz (phys).
+[    0.000000] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x46d987e47, max_idle_ns: 440795202767 ns
+[    0.000001] sched_clock: 56 bits at 19MHz, resolution 52ns, wraps every 4398046511078ns
+[    0.000018] Switching to timer-based delay loop, resolution 52ns
+[    0.000368] Console: colour dummy device 80x30
+[    0.000442] printk: console [tty1] enabled
+[    0.000496] Calibrating delay loop (skipped), value calculated using timer frequency.. 38.40 BogoMIPS (lpj=192000)
+[    0.000518] pid_max: default: 32768 minimum: 301
+[    0.000664] LSM: Security Framework initializing
+[    0.000874] Mount-cache hash table entries: 2048 (order: 1, 8192 bytes, linear)
+[    0.000897] Mountpoint-cache hash table entries: 2048 (order: 1, 8192 bytes, linear)
+[    0.002014] cgroup: Disabling memory control group subsystem
+[    0.002244] CPU: Testing write buffer coherency: ok
+[    0.002657] CPU0: thread -1, cpu 0, socket 0, mpidr 80000000
+[    0.003490] cblist_init_generic: Setting adjustable number of callback queues.
+[    0.003506] cblist_init_generic: Setting shift to 2 and lim to 1.
+[    0.003617] cblist_init_generic: Setting shift to 2 and lim to 1.
+[    0.003748] Setting up static identity map for 0x100000 - 0x10003c
+[    0.003883] rcu: Hierarchical SRCU implementation.
+[    0.003892] rcu: 	Max phase no-delay instances is 1000.
+[    0.004584] smp: Bringing up secondary CPUs ...
+[    0.005458] CPU1: thread -1, cpu 1, socket 0, mpidr 80000001
+[    0.006383] CPU2: thread -1, cpu 2, socket 0, mpidr 80000002
+[    0.007225] CPU3: thread -1, cpu 3, socket 0, mpidr 80000003
+[    0.007326] smp: Brought up 1 node, 4 CPUs
+[    0.007347] SMP: Total of 4 processors activated (153.60 BogoMIPS).
+[    0.007360] CPU: All CPU(s) started in HYP mode.
+[    0.007368] CPU: Virtualization extensions available.
+[    0.008063] devtmpfs: initialized
+[    0.022768] VFP support v0.3: implementor 41 architecture 3 part 40 variant 3 rev 4
+[    0.022963] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 19112604462750000 ns
+[    0.022993] futex hash table entries: 1024 (order: 4, 65536 bytes, linear)
+[    0.025610] pinctrl core: initialized pinctrl subsystem
+[    0.026749] NET: Registered PF_NETLINK/PF_ROUTE protocol family
+[    0.029637] DMA: preallocated 1024 KiB pool for atomic coherent allocations
+[    0.034657] audit: initializing netlink subsys (disabled)
+[    0.034886] audit: type=2000 audit(0.030:1): state=initialized audit_enabled=0 res=1
+[    0.035488] thermal_sys: Registered thermal governor 'step_wise'
+[    0.036380] hw-breakpoint: found 5 (+1 reserved) breakpoint and 4 watchpoint registers.
+[    0.036397] hw-breakpoint: maximum watchpoint size is 8 bytes.
+[    0.036627] Serial: AMBA PL011 UART driver
+[    0.041844] bcm2835-mbox 3f00b880.mailbox: mailbox enabled
+[    0.060025] raspberrypi-firmware soc:firmware: Attached to firmware from 2023-03-17T10:53:39, variant start_x
+[    0.070033] raspberrypi-firmware soc:firmware: Firmware hash is 82f3750a65fadae9a38077e3c2e217ad158c8d54
+[    0.112236] kprobes: kprobe jump-optimization is enabled. All kprobes are optimized if possible.
+[    0.117373] bcm2835-dma 3f007000.dma: DMA legacy API manager, dmachans=0x1
+[    0.118999] SCSI subsystem initialized
+[    0.119230] usbcore: registered new interface driver usbfs
+[    0.119292] usbcore: registered new interface driver hub
+[    0.119344] usbcore: registered new device driver usb
+[    0.119538] usb_phy_generic phy: supply vcc not found, using dummy regulator
+[    0.119700] usb_phy_generic phy: dummy supplies not allowed for exclusive requests
+[    0.119952] pps_core: LinuxPPS API ver. 1 registered
+[    0.119962] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.119988] PTP clock support registered
+[    1.997706] clocksource: Switched to clocksource arch_sys_counter
+[    2.094732] VFS: Disk quotas dquot_6.6.0
+[    2.094824] VFS: Dquot-cache hash table entries: 1024 (order 0, 4096 bytes)
+[    2.094977] FS-Cache: Loaded
+[    2.095291] CacheFiles: Loaded
+[    2.104813] NET: Registered PF_INET protocol family
+[    2.105078] IP idents hash table entries: 16384 (order: 5, 131072 bytes, linear)
+[    2.107537] tcp_listen_portaddr_hash hash table entries: 512 (order: 0, 4096 bytes, linear)
+[    2.107575] Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    2.107652] TCP established hash table entries: 8192 (order: 3, 32768 bytes, linear)
+[    2.107822] TCP bind hash table entries: 8192 (order: 5, 131072 bytes, linear)
+[    2.108155] TCP: Hash tables configured (established 8192 bind 8192)
+[    2.108285] UDP hash table entries: 512 (order: 2, 16384 bytes, linear)
+[    2.108340] UDP-Lite hash table entries: 512 (order: 2, 16384 bytes, linear)
+[    2.108558] NET: Registered PF_UNIX/PF_LOCAL protocol family
+[    2.109081] RPC: Registered named UNIX socket transport module.
+[    2.109094] RPC: Registered udp transport module.
+[    2.109102] RPC: Registered tcp transport module.
+[    2.109110] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    2.110620] hw perfevents: enabled with armv7_cortex_a7 PMU driver, 7 counters available
+[    2.113641] Initialise system trusted keyrings
+[    2.113872] workingset: timestamp_bits=14 max_order=18 bucket_order=4
+[    2.123018] zbud: loaded
+[    2.125327] NFS: Registering the id_resolver key type
+[    2.125363] Key type id_resolver registered
+[    2.125373] Key type id_legacy registered
+[    2.125512] nfs4filelayout_init: NFSv4 File Layout Driver Registering...
+[    2.125525] nfs4flexfilelayout_init: NFSv4 Flexfile Layout Driver Registering...
+[    2.126779] Key type asymmetric registered
+[    2.126792] Asymmetric key parser 'x509' registered
+[    2.126967] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 247)
+[    2.126981] io scheduler mq-deadline registered
+[    2.126991] io scheduler kyber registered
+[    2.131609] bcm2708_fb soc:fb: FB found 1 display(s)
+[    2.137658] Console: switching to colour frame buffer device 90x30
+[    2.142206] bcm2708_fb soc:fb: Registered framebuffer for display 0, size 720x480
+[    2.144980] Serial: 8250/16550 driver, 1 ports, IRQ sharing enabled
+[    2.146613] bcm2835-rng 3f104000.rng: hwrng registered
+[    2.146931] vc-mem: phys_addr:0x00000000 mem_base=0x3ec00000 mem_size:0x40000000(1024 MiB)
+[    2.147846] gpiomem-bcm2835 3f200000.gpiomem: Initialised: Registers at 0x3f200000
+[    2.159072] brd: module loaded
+[    2.166327] loop: module loaded
+[    2.166880] Loading iSCSI transport class v2.0-870.
+[    2.168360] usbcore: registered new interface driver lan78xx
+[    2.168434] usbcore: registered new interface driver smsc95xx
+[    2.168462] dwc_otg: version 3.00a 10-AUG-2012 (platform bus)
+[    2.896472] Core Release: 2.80a
+[    2.896487] Setting default values for core params
+[    2.896511] Finished setting default values for core params
+[    3.096757] Using Buffer DMA mode
+[    3.096766] Periodic Transfer Interrupt Enhancement - disabled
+[    3.096775] Multiprocessor Interrupt Enhancement - disabled
+[    3.096783] OTG VER PARAM: 0, OTG VER FLAG: 0
+[    3.096820] Dedicated Tx FIFOs mode
+
+[    3.097415] WARN::dwc_otg_hcd_init:1074: FIQ DMA bounce buffers: virt = b4104000 dma = 0xf4104000 len=9024
+[    3.097450] FIQ FSM acceleration enabled for :
+               Non-periodic Split Transactions
+               Periodic Split Transactions
+               High-Speed Isochronous Endpoints
+               Interrupt/Control Split Transaction hack enabled
+[    3.097465] dwc_otg: Microframe scheduler enabled
+
+[    3.097580] WARN::hcd_init_fiq:457: FIQ on core 1
+
+[    3.097597] WARN::hcd_init_fiq:458: FIQ ASM at 807c4360 length 36
+
+[    3.097618] WARN::hcd_init_fiq:497: MPHI regs_base at b8810000
+[    3.097640] dwc_otg 3f980000.usb: DWC OTG Controller
+[    3.097673] dwc_otg 3f980000.usb: new USB bus registered, assigned bus number 1
+[    3.097760] dwc_otg 3f980000.usb: irq 89, io mem 0x00000000
+[    3.097812] Init: Port Power? op_state=1
+[    3.097820] Init: Power Port (0)
+[    3.098033] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 6.01
+[    3.098052] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    3.098067] usb usb1: Product: DWC OTG Controller
+[    3.098079] usb usb1: Manufacturer: Linux 6.1.21-v7+ dwc_otg_hcd
+[    3.098091] usb usb1: SerialNumber: 3f980000.usb
+[    3.098709] hub 1-0:1.0: USB hub found
+[    3.098761] hub 1-0:1.0: 1 port detected
+[    3.099356] dwc_otg: FIQ enabled
+[    3.099367] dwc_otg: NAK holdoff enabled
+[    3.099375] dwc_otg: FIQ split-transaction FSM enabled
+[    3.099389] Module dwc_common_port init
+[    3.099677] usbcore: registered new interface driver usb-storage
+[    3.099881] mousedev: PS/2 mouse device common for all mice
+[    3.102233] sdhci: Secure Digital Host Controller Interface driver
+[    3.102245] sdhci: Copyright(c) Pierre Ossman
+[    3.102486] sdhci-pltfm: SDHCI platform and OF driver helper
+[    3.104321] ledtrig-cpu: registered to indicate activity on CPUs
+[    3.104659] hid: raw HID events driver (C) Jiri Kosina
+[    3.104790] usbcore: registered new interface driver usbhid
+[    3.104801] usbhid: USB HID core driver
+[    3.108550] Initializing XFRM netlink socket
+[    3.108610] NET: Registered PF_PACKET protocol family
+[    3.108727] Key type dns_resolver registered
+[    3.109477] Registering SWP/SWPB emulation handler
+[    3.110151] registered taskstats version 1
+[    3.110203] Loading compiled-in X.509 certificates
+[    3.110985] Key type .fscrypt registered
+[    3.110997] Key type fscrypt-provisioning registered
+[    3.122183] uart-pl011 3f201000.serial: cts_event_workaround enabled
+[    3.122325] 3f201000.serial: ttyAMA0 at MMIO 0x3f201000 (irq = 114, base_baud = 0) is a PL011 rev2
+[    3.123776] bcm2835-aux-uart 3f215040.serial: there is not valid maps for state default
+[    3.124150] printk: console [ttyS0] disabled
+[    3.124242] 3f215040.serial: ttyS0 at MMIO 0x3f215040 (irq = 86, base_baud = 50000000) is a 16550
+[    3.124626] printk: console [ttyS0] enabled
+[    3.125688] bcm2835-wdt bcm2835-wdt: Broadcom BCM2835 watchdog timer
+[    3.125975] bcm2835-power bcm2835-power: Broadcom BCM2835 power domains driver
+[    3.127209] mmc-bcm2835 3f300000.mmcnr: mmc_debug:0 mmc_debug2:0
+[    3.127228] mmc-bcm2835 3f300000.mmcnr: DMA channel allocated
+[    3.158172] sdhost: log_buf @ 13760a16 (f4107000)
+[    3.206516] mmc0: sdhost-bcm2835 loaded - DMA enabled (>1)
+[    3.208828] of_cfs_init
+[    3.209020] of_cfs_init: OK
+[    3.210152] Waiting for root device PARTUUID=ce585596-02...
+[    3.227804] Indeed it is in host mode hprt0 = 00021501
+[    3.241166] mmc0: host does not support reading read-only switch, assuming write-enable
+[    3.244068] mmc0: new high speed SDHC card at address 1234
+[    3.244890] mmcblk0: mmc0:1234 SA16G 14.6 GiB 
+[    3.247544]  mmcblk0: p1 p2
+[    3.248239] mmcblk0: mmc0:1234 SA16G 14.6 GiB
+[    3.282974] EXT4-fs (mmcblk0p2): mounted filesystem with ordered data mode. Quota mode: none.
+[    3.283052] VFS: Mounted root (ext4 filesystem) readonly on device 179:2.
+[    3.284058] devtmpfs: mounted
+[    3.290520] Freeing unused kernel image (initmem) memory: 1024K
+[    3.295625] mmc1: new high speed SDIO card at address 0001
+[    3.338216] Run /sbin/init as init process
+[    3.338229]   with arguments:
+[    3.338238]     /sbin/init
+[    3.338247]     splash
+[    3.338255]   with environment:
+[    3.338263]     HOME=/
+[    3.338271]     TERM=linux
+[    3.437737] usb 1-1: new high-speed USB device number 2 using dwc_otg
+[    3.437893] Indeed it is in host mode hprt0 = 00001101
+[    3.678014] usb 1-1: New USB device found, idVendor=0424, idProduct=9514, bcdDevice= 2.00
+[    3.678050] usb 1-1: New USB device strings: Mfr=0, Product=0, SerialNumber=0
+[    3.678697] hub 1-1:1.0: USB hub found
+[    3.678789] hub 1-1:1.0: 5 ports detected
+[    3.920073] systemd[1]: System time before build time, advancing clock.
+[    3.997735] usb 1-1.1: new high-speed USB device number 3 using dwc_otg
+[    4.128104] usb 1-1.1: New USB device found, idVendor=0424, idProduct=ec00, bcdDevice= 2.00
+[    4.128141] usb 1-1.1: New USB device strings: Mfr=0, Product=0, SerialNumber=0
+[    4.130864] smsc95xx v2.0.0
+[    4.187140] NET: Registered PF_INET6 protocol family
+[    4.188569] Segment Routing with IPv6
+[    4.188625] In-situ OAM (IOAM) with IPv6
+[    4.281114] systemd[1]: systemd 247.3-7+rpi1+deb11u1 running in system mode. (+PAM +AUDIT +SELINUX +IMA +APPARMOR +SMACK +SYSVINIT +UTMP +LIBCRYPTSETUP +GCRYPT +GNUTLS +ACL +XZ +LZ4 +ZSTD +SECCOMP +BLKID +ELFUTILS +KMOD +IDN2 -IDN +PCRE2 default-hierarchy=unified)
+[    4.282158] systemd[1]: Detected architecture arm.
+[    4.289607] SMSC LAN8700 usb-001:003:01: attached PHY driver (mii_bus:phy_addr=usb-001:003:01, irq=199)
+[    4.290650] smsc95xx 1-1.1:1.0 eth0: register 'smsc95xx' at usb-3f980000.usb-1.1, smsc95xx USB 2.0 Ethernet, m.m.m.m
+[    4.292525] systemd[1]: Set hostname to <raspberrypi>.
+[    4.597797] usb 1-1.2: new full-speed USB device number 4 using dwc_otg
+[    4.742007] usb 1-1.2: New USB device found, idVendor=09da, idProduct=2403, bcdDevice= 1.26
+[    4.742046] usb 1-1.2: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+[    4.742064] usb 1-1.2: Product: 2.4G Device
+[    4.742078] usb 1-1.2: Manufacturer: COMPANY
+[    4.749925] input: COMPANY 2.4G Device as /devices/platform/soc/3f980000.usb/usb1/1-1/1-1.2/1-1.2:1.0/0003:09DA:2403.0001/input/input0
+[    4.818610] hid-generic 0003:09DA:2403.0001: input,hidraw0: USB HID v1.11 Keyboard [COMPANY 2.4G Device] on usb-3f980000.usb-1.2/input0
+[    4.829161] input: COMPANY 2.4G Device Mouse as /devices/platform/soc/3f980000.usb/usb1/1-1/1-1.2/1-1.2:1.1/0003:09DA:2403.0002/input/input1
+[    4.829851] input: COMPANY 2.4G Device Keyboard as /devices/platform/soc/3f980000.usb/usb1/1-1/1-1.2/1-1.2:1.1/0003:09DA:2403.0002/input/input2
+[    4.898172] input: COMPANY 2.4G Device as /devices/platform/soc/3f980000.usb/usb1/1-1/1-1.2/1-1.2:1.1/0003:09DA:2403.0002/input/input3
+[    4.898878] hid-generic 0003:09DA:2403.0002: input,hiddev96,hidraw1: USB HID v1.11 Mouse [COMPANY 2.4G Device] on usb-3f980000.usb-1.2/input1
+[    5.217900] systemd[1]: /lib/systemd/system/plymouth-start.service:16: Unit configured to use KillMode=none. This is unsafe, as it disables systemd's process lifecycle management for the service. Please update your service to use a safer KillMode=, such as 'mixed' or 'control-group'. Support for KillMode=none is deprecated and will eventually be removed.
+[    5.508946] systemd[1]: Queued start job for default target Graphical Interface.
+[    5.562116] systemd[1]: Created slice system-getty.slice.
+[    5.563646] systemd[1]: Created slice system-modprobe.slice.
+[    5.564788] systemd[1]: Created slice system-serial\x2dgetty.slice.
+[    5.565859] systemd[1]: Created slice system-systemd\x2dfsck.slice.
+[    5.566674] systemd[1]: Created slice User and Session Slice.
+[    5.567259] systemd[1]: Started Forward Password Requests to Wall Directory Watch.
+[    5.568558] systemd[1]: Set up automount Arbitrary Executable File Formats File System Automount Point.
+[    5.569959] systemd[1]: Reached target Slices.
+[    5.570368] systemd[1]: Reached target Swap.
+[    5.575374] systemd[1]: Listening on Syslog Socket.
+[    5.576170] systemd[1]: Listening on fsck to fsckd communication Socket.
+[    5.576679] systemd[1]: Listening on initctl Compatibility Named Pipe.
+[    5.577970] systemd[1]: Listening on Journal Audit Socket.
+[    5.578795] systemd[1]: Listening on Journal Socket (/dev/log).
+[    5.579643] systemd[1]: Listening on Journal Socket.
+[    5.587287] systemd[1]: Listening on udev Control Socket.
+[    5.588198] systemd[1]: Listening on udev Kernel Socket.
+[    5.589696] systemd[1]: Condition check resulted in Huge Pages File System being skipped.
+[    5.594501] systemd[1]: Mounting POSIX Message Queue File System...
+[    5.599739] systemd[1]: Mounting RPC Pipe File System...
+[    5.605904] systemd[1]: Mounting Kernel Debug File System...
+[    5.612444] systemd[1]: Mounting Kernel Trace File System...
+[    5.613380] systemd[1]: Condition check resulted in Kernel Module supporting RPCSEC_GSS being skipped.
+[    5.626145] systemd[1]: Starting Restore / save the current clock...
+[    5.632775] systemd[1]: Starting Set the console keyboard layout...
+[    5.638787] systemd[1]: Starting Create list of static device nodes for the current kernel...
+[    5.645510] systemd[1]: Starting Load Kernel Module configfs...
+[    5.652672] systemd[1]: Starting Load Kernel Module drm...
+[    5.660653] systemd[1]: Starting Load Kernel Module fuse...
+[    5.667825] systemd[1]: Condition check resulted in Set Up Additional Binary Formats being skipped.
+[    5.674396] systemd[1]: Starting File System Check on Root Device...
+[    5.688709] systemd[1]: Starting Journal Service...
+[    5.706538] systemd[1]: Starting Load Kernel Modules...
+[    5.714269] systemd[1]: Starting Coldplug All udev Devices...
+[    5.733584] systemd[1]: Mounted POSIX Message Queue File System.
+[    5.734371] systemd[1]: Mounted RPC Pipe File System.
+[    5.735058] systemd[1]: Mounted Kernel Debug File System.
+[    5.738072] systemd[1]: Mounted Kernel Trace File System.
+[    5.739969] systemd[1]: Finished Create list of static device nodes for the current kernel.
+[    5.752336] systemd[1]: modprobe@configfs.service: Succeeded.
+[    5.753374] systemd[1]: Finished Load Kernel Module configfs.
+[    5.762052] systemd[1]: Mounting Kernel Configuration File System...
+[    5.777618] systemd[1]: Started File System Check Daemon to report status.
+[    5.839813] systemd[1]: Finished Restore / save the current clock.
+[    5.840777] systemd[1]: Mounted Kernel Configuration File System.
+[    5.846897] fuse: init (API version 7.37)
+[    5.871366] systemd[1]: modprobe@fuse.service: Succeeded.
+[    5.872529] systemd[1]: Finished Load Kernel Module fuse.
+[    5.941897] systemd[1]: Mounting FUSE Control File System...
+[    5.968049] i2c_dev: i2c /dev entries driver
+[    5.972268] systemd[1]: Mounted FUSE Control File System.
+[    5.977608] systemd[1]: modprobe@drm.service: Succeeded.
+[    5.979096] systemd[1]: Finished Load Kernel Module drm.
+[    5.993974] systemd[1]: Finished Load Kernel Modules.
+[    5.999083] systemd[1]: Starting Apply Kernel Variables...
+[    6.075820] systemd[1]: Finished Apply Kernel Variables.
+[    6.095107] systemd[1]: Started Journal Service.
+[    6.292023] EXT4-fs (mmcblk0p2): re-mounted. Quota mode: none.
+[    6.434512] systemd-journald[131]: Received client request to flush runtime journal.
+[    6.475896] systemd-journald[131]: File /var/log/journal/54c7b42d5416418e8a4807e280b462c1/system.journal corrupted or uncleanly shut down, renaming and replacing.
+[    8.712725] Driver for 1-wire Dallas network protocol.
+[    8.746882] gpio-4 (onewire@0): enforced open drain please flag it properly in DT/ACPI DSDT/board file
+[    8.813235] mc: Linux media interface: v0.10
+[    8.815957] vc_sm_cma: module is from the staging directory, the quality is unknown, you have been warned.
+[    8.845815] bcm2835_vc_sm_cma_probe: Videocore shared memory driver
+[    8.845852] [vc_sm_connected_init]: start
+[    8.858104] [vc_sm_connected_init]: installed successfully
+[    9.031518] videodev: Linux video capture interface: v2.00
+[    9.139128] bcm2835_mmal_vchiq: module is from the staging directory, the quality is unknown, you have been warned.
+[    9.255757] bcm2835_v4l2: module is from the staging directory, the quality is unknown, you have been warned.
+[    9.282249] bcm2835_codec: module is from the staging directory, the quality is unknown, you have been warned.
+[    9.329047] bcm2835_isp: module is from the staging directory, the quality is unknown, you have been warned.
+[    9.580288] bcm2835-codec bcm2835-codec: Device registered as /dev/video10
+[    9.580354] bcm2835-codec bcm2835-codec: Loaded V4L2 decode
+[    9.580879] bcm2835-isp bcm2835-isp: Device node output[0] registered as /dev/video13
+[    9.581300] bcm2835-isp bcm2835-isp: Device node capture[0] registered as /dev/video14
+[    9.581604] bcm2835-isp bcm2835-isp: Device node capture[1] registered as /dev/video15
+[    9.581856] bcm2835-isp bcm2835-isp: Device node stats[2] registered as /dev/video16
+[    9.581886] bcm2835-isp bcm2835-isp: Register output node 0 with media controller
+[    9.581908] bcm2835-isp bcm2835-isp: Register capture node 1 with media controller
+[    9.581927] bcm2835-isp bcm2835-isp: Register capture node 2 with media controller
+[    9.581945] bcm2835-isp bcm2835-isp: Register capture node 3 with media controller
+[    9.591965] bcm2835-codec bcm2835-codec: Device registered as /dev/video11
+[    9.592021] bcm2835-codec bcm2835-codec: Loaded V4L2 encode
+[    9.595641] bcm2835-isp bcm2835-isp: Device node output[0] registered as /dev/video20
+[    9.596165] bcm2835-isp bcm2835-isp: Device node capture[0] registered as /dev/video21
+[    9.596615] bcm2835-isp bcm2835-isp: Device node capture[1] registered as /dev/video22
+[    9.596940] bcm2835-isp bcm2835-isp: Device node stats[2] registered as /dev/video23
+[    9.596981] bcm2835-isp bcm2835-isp: Register output node 0 with media controller
+[    9.597006] bcm2835-isp bcm2835-isp: Register capture node 1 with media controller
+[    9.597024] bcm2835-isp bcm2835-isp: Register capture node 2 with media controller
+[    9.597042] bcm2835-isp bcm2835-isp: Register capture node 3 with media controller
+[    9.597236] bcm2835-isp bcm2835-isp: Loaded V4L2 bcm2835-isp
+[    9.628827] bcm2835-codec bcm2835-codec: Device registered as /dev/video12
+[    9.628885] bcm2835-codec bcm2835-codec: Loaded V4L2 isp
+[    9.654571] bcm2835-codec bcm2835-codec: Device registered as /dev/video18
+[    9.654633] bcm2835-codec bcm2835-codec: Loaded V4L2 image_fx
+[    9.661814] bcm2835-codec bcm2835-codec: Device registered as /dev/video31
+[    9.661913] bcm2835-codec bcm2835-codec: Loaded V4L2 encode_image
+[    9.832663] cfg80211: Loading compiled-in X.509 certificates for regulatory database
+[   10.033696] cfg80211: Loaded X.509 cert 'sforshee: 00b28ddf47aef9cea7'
+[   10.093492] cfg80211: loaded regulatory.db is malformed or signature is missing/invalid
+[   10.515646] brcmfmac: F1 signature read @0x18000000=0x1541a9a6
+[   10.542630] brcmfmac: brcmf_fw_alloc_request: using brcm/brcmfmac43430-sdio for chip BCM43430/1
+[   10.543328] usbcore: registered new interface driver brcmfmac
+[   10.822678] brcmfmac: brcmf_c_preinit_dcmds: Firmware: BCM43430/1 wl0: Jul 19 2021 03:24:18 version 7.45.98 (TOB) (56df937 CY) FWID 01-8e14b897
+[   11.656544] w1_master_driver w1_bus_master1: w1_search: max_slave_count 64 reached, will continue next search.
+[   11.926660] 8021q: 802.1Q VLAN Support v1.8
+[   12.059288] uart-pl011 3f201000.serial: no DMA platform data
+[   12.245190] Adding 102396k swap on /var/swap.  Priority:-2 extents:1 across:102396k SSFS
+[   12.351375] smsc95xx 1-1.1:1.0 eth0: hardware isn't capable of remote wakeup
+[   12.357107] smsc95xx 1-1.1:1.0 eth0: Link is Down
+[   13.109811] brcmfmac: brcmf_cfg80211_set_power_mgmt: power save enabled
+[   15.673071] IPv6: ADDRCONF(NETDEV_CHANGE): wlan0: link becomes ready
+[   17.200045] ICMPv6: process `dhcpcd' is using deprecated sysctl (syscall) net.ipv6.neigh.wlan0.retrans_time - use net.ipv6.neigh.wlan0.retrans_time_ms instead
+[   19.270063] Bluetooth: Core ver 2.22
+[   19.270191] NET: Registered PF_BLUETOOTH protocol family
+[   19.270198] Bluetooth: HCI device and connection manager initialized
+[   19.270689] Bluetooth: HCI socket layer initialized
+[   19.270708] Bluetooth: L2CAP socket layer initialized
+[   19.270732] Bluetooth: SCO socket layer initialized
+[   19.324431] Bluetooth: HCI UART driver ver 2.3
+[   19.324459] Bluetooth: HCI UART protocol H4 registered
+[   19.324560] Bluetooth: HCI UART protocol Three-wire (H5) registered
+[   19.324706] Bluetooth: HCI UART protocol Broadcom registered
+[   20.397993] Bluetooth: BNEP (Ethernet Emulation) ver 1.3
+[   20.398018] Bluetooth: BNEP filters: protocol multicast
+[   20.398040] Bluetooth: BNEP socket layer initialized
+[   20.410035] Bluetooth: MGMT ver 1.22
+[   20.433616] NET: Registered PF_ALG protocol family
+[   20.466653] cryptd: max_cpu_qlen set to 1000
+[   20.640732] Bluetooth: RFCOMM TTY layer initialized
+[   20.640772] Bluetooth: RFCOMM socket layer initialized
+[   20.640793] Bluetooth: RFCOMM ver 1.11
+[   35.037696] mmc0: timeout waiting for hardware interrupt.
+[   35.037725] [01aa227c] TCM> 824f0384 0
+[   35.037744] [01aa227c] FDA> 824f02b0 0
+[   35.037758] [01aa227c] DMA> 0 0
+[   35.037771] [01aa227f] TSK< 824f02b0 0
+[   35.037784] [01aa2289] TSK> 824f02b0 0
+[   35.037798] [01aa235b] PRD< 824f0584 0
+[   35.037811] [01aa235b] PRD1 81c49840 0
+[   35.037824] [01aa236a] PRD2 1 0
+[   35.037837] [01aa236d] PRD3 84fb7f04 0
+[   35.037850] [01aa236d] PDM> 824f0584 0
+[   35.037864] [01aa236e] REQ< 824f04b0 10801
+[   35.037877] [01aa236e] CMD< 17 100
+[   35.037890] [01aa2370] FCM< 824f04b0 824f04f4
+[   35.037904] [01aa2372] RSP  900 0
+[   35.037917] [01aa2372] CMD< 12 a59d8
+[   35.037931] [01aa2373] CMDD 100 200
+[   35.037944] [01aa2374] SDMA 824f0584 81c49840
+[   35.037957] [01aa2375] FCM< 824f04b0 824f0524
+[   35.037971] [01aa2376] RSP  900 0
+[   35.037984] [01aa2376] FCM> 824f04b0 0
+[   35.037997] [01aa2377] FCM> 824f04b0 0
+[   35.038010] [01aa2377] CMD  12 200
+[   35.038023] [01aa2377] REQ> 824f04b0 0
+[   35.038036] [01aa3b86] DMA< 824f0584 1
+[   35.038050] [01aa3b86] DMA  52 10834
+[   35.038063] [01aa3b96] FDA< 824f04b0 0
+[   35.038076] [01aa3b97] TCM< 824f0584 0
+[   35.038089] [01aa3b97] WTC< 10804 0
+[   35.038102] [01aa3b97] WTC> 10804 0
+[   35.038115] [01aa3b98] TCM> 824f0584 0
+[   35.038128] [01aa3b98] FDA> 824f04b0 0
+[   35.038141] [01aa3b98] DMA> 0 0
+[   35.038153] [01aa3b9b] TSK< 824f04b0 0
+[   35.038167] [01aa3ba5] TSK> 824f04b0 0
+[   35.038180] [01aa3c81] PRD< 824f0784 0
+[   35.038193] [01aa3c82] PRD1 81c49840 0
+[   35.038206] [01aa3c90] PRD2 1 0
+[   35.038219] [01aa3c93] PRD3 84fb7f04 0
+[   35.038232] [01aa3c94] PDM> 824f0784 0
+[   35.038245] [01aa3c94] REQ< 824f06b0 10801
+[   35.038259] [01aa3c95] CMD< 17 100
+[   35.038272] [01aa3c96] FCM< 824f06b0 824f06f4
+[   35.038285] [01aa3c99] RSP  900 0
+[   35.038298] [01aa3c99] CMD< 12 a6710
+[   35.038311] [01aa3c9a] CMDD 100 200
+[   35.038324] [01aa3c9a] SDMA 824f0784 81c49840
+[   35.038338] [01aa3c9b] FCM< 824f06b0 824f0724
+[   35.038351] [01aa3c9d] RSP  900 0
+[   35.038364] [01aa3c9d] FCM> 824f06b0 0
+[   35.038378] [01aa3c9d] FCM> 824f06b0 0
+[   35.038391] [01aa3c9d] CMD  12 200
+[   35.038404] [01aa3c9e] REQ> 824f06b0 0
+[   35.038417] [01aa5577] DMA< 824f0784 1
+[   35.038430] [01aa5577] DMA  52 10834
+[   35.038443] [01aa5587] FDA< 824f06b0 0
+[   35.038456] [01aa5587] TCM< 824f0784 0
+[   35.038469] [01aa5588] WTC< 10804 0
+[   35.038482] [01aa5588] WTC> 10804 0
+[   35.038495] [01aa5589] TCM> 824f0784 0
+[   35.038508] [01aa5589] FDA> 824f06b0 0
+[   35.038521] [01aa5589] DMA> 0 0
+[   35.038534] [01aa558c] TSK< 824f06b0 0
+[   35.038547] [01aa5595] TSK> 824f06b0 0
+[   35.038560] [01aa56c7] PRD< 824f0984 0
+[   35.038573] [01aa56c7] PRD1 81c49840 0
+[   35.038587] [01aa56c9] PRD2 1 0
+[   35.038599] [01aa56cc] PRD3 84fb7f04 0
+[   35.038612] [01aa56cd] PDM> 824f0984 0
+[   35.038625] [01aa56cd] REQ< 824f08b0 10801
+[   35.038639] [01aa56ce] CMD< 17 8
+[   35.038651] [01aa56cf] FCM< 824f08b0 824f08f4
+[   35.038666] [01aa56d2] RSP  900 0
+[   35.038678] [01aa56d2] CMD< 12 a6da0
+[   35.038692] [01aa56d3] CMDD 8 200
+[   35.038704] [01aa56d3] SDMA 824f0984 81c49840
+[   35.038719] [01aa56d4] FCM< 824f08b0 824f0924
+[   35.038733] [01aa56d6] RSP  900 0
+[   35.038746] [01aa56d6] FCM> 824f08b0 0
+[   35.038759] [01aa56d6] FCM> 824f08b0 0
+[   35.038772] [01aa56d6] CMD  12 200
+[   35.038785] [01aa56d7] REQ> 824f08b0 0
+[   35.038798] [01aa586e] DMA< 824f0984 1
+[   35.038811] [01aa586e] DMA  52 10834
+[   35.038824] [01aa5870] FDA< 824f08b0 0
+[   35.038838] [01aa5871] TCM< 824f0984 0
+[   35.038851] [01aa5871] WTC< 10804 0
+[   35.038863] [01aa5871] WTC> 10804 0
+[   35.038877] [01aa5872] TCM> 824f0984 0
+[   35.038890] [01aa5872] FDA> 824f08b0 0
+[   35.038903] [01aa5872] DMA> 0 0
+[   35.038917] [01aa5875] TSK< 824f08b0 0
+[   35.038930] [01aa587d] TSK> 824f08b0 0
+[   35.038943] [01aa588e] PRD< 824f0b84 0
+[   35.038957] [01aa588f] PRD1 81c49840 0
+[   35.038970] [01aa5898] PRD2 1 0
+[   35.038983] [01aa589a] PRD3 84fb7f04 0
+[   35.038997] [01aa589b] PDM> 824f0b84 0
+[   35.039010] [01aa589b] REQ< 824f0ab0 10801
+[   35.039023] [01aa589c] CMD< 17 90
+[   35.039037] [01aa589d] FCM< 824f0ab0 824f0af4
+[   35.039051] [01aa58a0] RSP  900 0
+[   35.039064] [01aa58a0] CMD< 12 a5ad8
+[   35.039077] [01aa58a1] CMDD 90 200
+[   35.039090] [01aa58a1] SDMA 824f0b84 81c49840
+[   35.039104] [01aa58a2] FCM< 824f0ab0 824f0b24
+[   35.039117] [01aa58a4] RSP  900 0
+[   35.039130] [01aa58a4] FCM> 824f0ab0 0
+[   35.039143] [01aa58a4] FCM> 824f0ab0 0
+[   35.039156] [01aa58a5] CMD  12 200
+[   35.039169] [01aa58a5] REQ> 824f0ab0 0
+[   35.039182] [01aa6763] DMA< 824f0b84 1
+[   35.039195] [01aa6764] DMA  52 10834
+[   35.039209] [01aa676d] FDA< 824f0ab0 0
+[   35.039222] [01aa676e] TCM< 824f0b84 0
+[   35.039236] [01aa676e] WTC< 10804 0
+[   35.039249] [01aa676e] WTC> 10804 0
+[   35.039262] [01aa676f] TCM> 824f0b84 0
+[   35.039275] [01aa676f] FDA> 824f0ab0 0
+[   35.039288] [01aa676f] DMA> 0 0
+[   35.039302] [01aa6772] TSK< 824f0ab0 0
+[   35.039315] [01aa677b] TSK> 824f0ab0 0
+[   35.039328] [01aa6834] PRD< 824f0d84 0
+[   35.039341] [01aa6835] PRD1 81c49840 0
+[   35.039355] [01aa6843] PRD2 1 0
+[   35.039368] [01aa6846] PRD3 84fb7f04 0
+[   35.039381] [01aa6847] PDM> 824f0d84 0
+[   35.039394] [01aa6847] REQ< 824f0cb0 10801
+[   35.039408] [01aa6848] CMD< 17 100
+[   35.039421] [01aa6849] FCM< 824f0cb0 824f0cf4
+[   35.039434] [01aa684c] RSP  900 0
+[   35.039447] [01aa684c] CMD< 12 1a86160
+[   35.039461] [01aa684d] CMDD 100 200
+[   35.039474] [01aa684d] SDMA 824f0d84 81c49840
+[   35.039488] [01aa684e] FCM< 824f0cb0 824f0d24
+[   35.039501] [01aa6850] RSP  900 0
+[   35.039515] [01aa6850] FCM> 824f0cb0 0
+[   35.039528] [01aa6850] FCM> 824f0cb0 0
+[   35.039541] [01aa6850] CMD  12 200
+[   35.039554] [01aa6851] REQ> 824f0cb0 0
+[   35.039567] [01aa8177] DMA< 824f0d84 1
+[   35.039580] [01aa8177] DMA  52 10834
+[   35.039593] [01aa8187] FDA< 824f0cb0 0
+[   35.039606] [01aa8188] TCM< 824f0d84 0
+[   35.039621] [01aa8188] WTC< 10804 0
+[   35.039634] [01aa8188] WTC> 10804 0
+[   35.039647] [01aa8189] TCM> 824f0d84 0
+[   35.039660] [01aa8189] FDA> 824f0cb0 0
+[   35.039673] [01aa8189] DMA> 0 0
+[   35.039686] [01aa818c] TSK< 824f0cb0 0
+[   35.039699] [01aa8196] TSK> 824f0cb0 0
+[   35.039712] [01aa826e] PRD< 824f0f84 0
+[   35.039725] [01aa826e] PRD1 81c49840 0
+[   35.039738] [01aa827c] PRD2 1 0
+[   35.039751] [01aa827f] PRD3 84fb7f04 0
+[   35.039764] [01aa8280] PDM> 824f0f84 0
+[   35.039777] [01aa8280] REQ< 824f0eb0 10801
+[   35.039791] [01aa8281] CMD< 17 100
+[   35.039804] [01aa8282] FCM< 824f0eb0 824f0ef4
+[   35.039817] [01aa8285] RSP  900 0
+[   35.039830] [01aa8285] CMD< 12 1a87170
+[   35.039844] [01aa8286] CMDD 100 200
+[   35.039857] [01aa8286] SDMA 824f0f84 81c49840
+[   35.039871] [01aa8287] FCM< 824f0eb0 824f0f24
+[   35.039885] [01aa8289] RSP  900 0
+[   35.039898] [01aa8289] FCM> 824f0eb0 0
+[   35.039911] [01aa8289] FCM> 824f0eb0 0
+[   35.039924] [01aa828a] CMD  12 200
+[   35.039938] [01aa828a] REQ> 824f0eb0 0
+[   35.039951] [01aa9ad5] DMA< 824f0f84 1
+[   35.039964] [01aa9ad6] DMA  52 10834
+[   35.039977] [01aa9ae6] FDA< 824f0eb0 0
+[   35.039991] [01aa9ae6] TCM< 824f0f84 0
+[   35.040004] [01aa9ae7] WTC< 10804 0
+[   35.040017] [01aa9ae7] WTC> 10804 0
+[   35.040030] [01aa9ae8] TCM> 824f0f84 0
+[   35.040043] [01aa9ae8] FDA> 824f0eb0 0
+[   35.040056] [01aa9ae8] DMA> 0 0
+[   35.040069] [01aa9aea] TSK< 824f0eb0 0
+[   35.040082] [01aa9af4] TSK> 824f0eb0 0
+[   35.040095] [01aa9bb0] PRD< 824f1184 0
+[   35.040109] [01aa9bb1] PRD1 81c49840 0
+[   35.040121] [01aa9bbf] PRD2 1 0
+[   35.040134] [01aa9bc2] PRD3 84fb7f04 0
+[   35.040147] [01aa9bc3] PDM> 824f1184 0
+[   35.040161] [01aa9bc3] REQ< 824f10b0 10801
+[   35.040174] [01aa9bc4] CMD< 17 100
+[   35.040188] [01aa9bc5] FCM< 824f10b0 824f10f4
+[   35.040202] [01aa9bc8] RSP  900 0
+[   35.040215] [01aa9bc8] CMD< 12 1a86e68
+[   35.040228] [01aa9bc9] CMDD 100 200
+[   35.040241] [01aa9bc9] SDMA 824f1184 81c49840
+[   35.040255] [01aa9bca] FCM< 824f10b0 824f1124
+[   35.040269] [01aa9bcc] RSP  900 0
+[   35.040282] [01aa9bcc] FCM> 824f10b0 0
+[   35.040295] [01aa9bcc] FCM> 824f10b0 0
+[   35.040309] [01aa9bcc] CMD  12 200
+[   35.040322] [01aa9bcd] REQ> 824f10b0 0
+[   35.040335] [01aab3f1] DMA< 824f1184 1
+[   35.040348] [01aab3f1] DMA  52 10834
+[   35.040361] [01aab401] FDA< 824f10b0 0
+[   35.040374] [01aab401] TCM< 824f1184 0
+[   35.040387] [01aab402] WTC< 10804 0
+[   35.040400] [01aab402] WTC> 10804 0
+[   35.040413] [01aab402] TCM> 824f1184 0
+[   35.040426] [01aab403] FDA> 824f10b0 0
+[   35.040439] [01aab403] DMA> 0 0
+[   35.040452] [01aab405] TSK< 824f10b0 0
+[   35.040465] [01aab40f] TSK> 824f10b0 0
+[   35.040478] [01aab4d6] PRD< 824f1384 0
+[   35.040491] [01aab4d7] PRD1 81c49840 0
+[   35.040506] [01aab4e5] PRD2 1 0
+[   35.040519] [01aab4e8] PRD3 84fb7f04 0
+[   35.040532] [01aab4e8] PDM> 824f1384 0
+[   35.040545] [01aab4e9] REQ< 824f12b0 10801
+[   35.040558] [01aab4e9] CMD< 17 100
+[   35.040572] [01aab4eb] FCM< 824f12b0 824f12f4
+[   35.040586] [01aab4ed] RSP  900 0
+[   35.040599] [01aab4ee] CMD< 12 1a87ba0
+[   35.040612] [01aab4ee] CMDD 100 200
+[   35.040626] [01aab4ef] SDMA 824f1384 81c49840
+[   35.040640] [01aab4f0] FCM< 824f12b0 824f1324
+[   35.040653] [01aab4f1] RSP  900 0
+[   35.040666] [01aab4f2] FCM> 824f12b0 0
+[   35.040679] [01aab4f2] FCM> 824f12b0 0
+[   35.040692] [01aab4f2] CMD  12 200
+[   35.040705] [01aab4f2] REQ> 824f12b0 0
+[   35.040719] [01aacd2b] DMA< 824f1384 1
+[   35.040732] [01aacd2c] DMA  52 10834
+[   35.040745] [01aacd3c] FDA< 824f12b0 0
+[   35.040757] [01aacd3c] TCM< 824f1384 0
+[   35.040770] [01aacd3d] WTC< 10804 0
+[   35.040784] [01aacd3d] WTC> 10804 0
+[   35.040796] [01aacd3d] TCM> 824f1384 0
+[   35.040810] [01aacd3e] FDA> 824f12b0 0
+[   35.040824] [01aacd3e] DMA> 0 0
+[   35.040837] [01aacd40] TSK< 824f12b0 0
+[   35.040850] [01aacd4b] TSK> 824f12b0 0
+[   35.040863] [01aace08] PRD< 824f1584 0
+[   35.040876] [01aace09] PRD1 81c49840 0
+[   35.040889] [01aace17] PRD2 1 0
+[   35.040902] [01aace1a] PRD3 84fb7f04 0
+[   35.040916] [01aace1a] PDM> 824f1584 0
+[   35.040929] [01aace1b] REQ< 824f14b0 10801
+[   35.040943] [01aace1b] CMD< 17 100
+[   35.040956] [01aace1d] FCM< 824f14b0 824f14f4
+[   35.040970] [01aace1f] RSP  900 0
+[   35.040982] [01aace20] CMD< 12 1a87cc0
+[   35.040996] [01aace20] CMDD 100 200
+[   35.041009] [01aace21] SDMA 824f1584 81c49840
+[   35.041022] [01aace22] FCM< 824f14b0 824f1524
+[   35.041036] [01aace23] RSP  900 0
+[   35.041049] [01aace23] FCM> 824f14b0 0
+[   35.041062] [01aace24] FCM> 824f14b0 0
+[   35.041075] [01aace24] CMD  12 200
+[   35.041088] [01aace24] REQ> 824f14b0 0
+[   35.041101] [024acb73] TIM< 0 0
+[   35.041115] mmc0: sbc op 23 arg 0x100 flags 0x15 - resp 00000900 00000000 00000000 00000000, err 0
+[   35.041137] mmc0: cmd op 18 arg 0x1a87cc0 flags 0xb5 - resp 00000900 00000000 00000000 00000000, err 0
+[   35.041157] mmc0: data blocks 100 blksz 200 - err 0
+[   35.041169] mmc0: stop op 12 arg 0x0 flags 0x95 - resp 00000000 00000000 00000000 00000000, err 0
+[   35.041188] mmc0: =========== REGISTER DUMP ===========
+[   35.041198] mmc0: SDCMD  0x00004052
+[   35.041208] mmc0: SDARG  0x01a87cc0
+[   35.041218] mmc0: SDTOUT 0x017d7840
+[   35.041227] mmc0: SDCDIV 0x00000006
+[   35.041237] mmc0: SDRSP0 0x00000900
+[   35.041246] mmc0: SDRSP1 0x00001269
+[   35.041255] mmc0: SDRSP2 0x7fffffff
+[   35.041266] mmc0: SDRSP3 0x00024007
+[   35.041275] mmc0: SDHSTS 0x00000080
+[   35.041285] mmc0: SDVDD  0x00000001
+[   35.041294] mmc0: SDEDM  0x00010801
+[   35.041304] mmc0: SDHCFG 0x0000040e
+[   35.041313] mmc0: SDHBCT 0x00000200
+[   35.041323] mmc0: SDHBLC 0x00000060
+[   35.041332] mmc0: ===========================================
+[   45.277701] mmc0: timeout waiting for hardware interrupt.
+[   45.277733] [01aa56cd] PDM> 824f0984 0
+[   45.277751] [01aa56cd] REQ< 824f08b0 10801
+[   45.277766] [01aa56ce] CMD< 17 8
+[   45.277781] [01aa56cf] FCM< 824f08b0 824f08f4
+[   45.277795] [01aa56d2] RSP  900 0
+[   45.277808] [01aa56d2] CMD< 12 a6da0
+[   45.277822] [01aa56d3] CMDD 8 200
+[   45.277835] [01aa56d3] SDMA 824f0984 81c49840
+[   45.277849] [01aa56d4] FCM< 824f08b0 824f0924
+[   45.277863] [01aa56d6] RSP  900 0
+[   45.277876] [01aa56d6] FCM> 824f08b0 0
+[   45.277889] [01aa56d6] FCM> 824f08b0 0
+[   45.277903] [01aa56d6] CMD  12 200
+[   45.277916] [01aa56d7] REQ> 824f08b0 0
+[   45.277930] [01aa586e] DMA< 824f0984 1
+[   45.277943] [01aa586e] DMA  52 10834
+[   45.277956] [01aa5870] FDA< 824f08b0 0
+[   45.277971] [01aa5871] TCM< 824f0984 0
+[   45.277985] [01aa5871] WTC< 10804 0
+[   45.277998] [01aa5871] WTC> 10804 0
+[   45.278011] [01aa5872] TCM> 824f0984 0
+[   45.278024] [01aa5872] FDA> 824f08b0 0
+[   45.278040] [01aa5872] DMA> 0 0
+[   45.278052] [01aa5875] TSK< 824f08b0 0
+[   45.278066] [01aa587d] TSK> 824f08b0 0
+[   45.278079] [01aa588e] PRD< 824f0b84 0
+[   45.278092] [01aa588f] PRD1 81c49840 0
+[   45.278106] [01aa5898] PRD2 1 0
+[   45.278118] [01aa589a] PRD3 84fb7f04 0
+[   45.278132] [01aa589b] PDM> 824f0b84 0
+[   45.278145] [01aa589b] REQ< 824f0ab0 10801
+[   45.278158] [01aa589c] CMD< 17 90
+[   45.278171] [01aa589d] FCM< 824f0ab0 824f0af4
+[   45.278185] [01aa58a0] RSP  900 0
+[   45.278198] [01aa58a0] CMD< 12 a5ad8
+[   45.278211] [01aa58a1] CMDD 90 200
+[   45.278226] [01aa58a1] SDMA 824f0b84 81c49840
+[   45.278239] [01aa58a2] FCM< 824f0ab0 824f0b24
+[   45.278253] [01aa58a4] RSP  900 0
+[   45.278266] [01aa58a4] FCM> 824f0ab0 0
+[   45.278279] [01aa58a4] FCM> 824f0ab0 0
+[   45.278293] [01aa58a5] CMD  12 200
+[   45.278306] [01aa58a5] REQ> 824f0ab0 0
+[   45.278320] [01aa6763] DMA< 824f0b84 1
+[   45.278333] [01aa6764] DMA  52 10834
+[   45.278346] [01aa676d] FDA< 824f0ab0 0
+[   45.278360] [01aa676e] TCM< 824f0b84 0
+[   45.278373] [01aa676e] WTC< 10804 0
+[   45.278386] [01aa676e] WTC> 10804 0
+[   45.278399] [01aa676f] TCM> 824f0b84 0
+[   45.278412] [01aa676f] FDA> 824f0ab0 0
+[   45.278425] [01aa676f] DMA> 0 0
+[   45.278438] [01aa6772] TSK< 824f0ab0 0
+[   45.278451] [01aa677b] TSK> 824f0ab0 0
+[   45.278465] [01aa6834] PRD< 824f0d84 0
+[   45.278479] [01aa6835] PRD1 81c49840 0
+[   45.278492] [01aa6843] PRD2 1 0
+[   45.278504] [01aa6846] PRD3 84fb7f04 0
+[   45.278518] [01aa6847] PDM> 824f0d84 0
+[   45.278531] [01aa6847] REQ< 824f0cb0 10801
+[   45.278545] [01aa6848] CMD< 17 100
+[   45.278558] [01aa6849] FCM< 824f0cb0 824f0cf4
+[   45.278571] [01aa684c] RSP  900 0
+[   45.278584] [01aa684c] CMD< 12 1a86160
+[   45.278597] [01aa684d] CMDD 100 200
+[   45.278611] [01aa684d] SDMA 824f0d84 81c49840
+[   45.278625] [01aa684e] FCM< 824f0cb0 824f0d24
+[   45.278638] [01aa6850] RSP  900 0
+[   45.278651] [01aa6850] FCM> 824f0cb0 0
+[   45.278664] [01aa6850] FCM> 824f0cb0 0
+[   45.278677] [01aa6850] CMD  12 200
+[   45.278690] [01aa6851] REQ> 824f0cb0 0
+[   45.278704] [01aa8177] DMA< 824f0d84 1
+[   45.278717] [01aa8177] DMA  52 10834
+[   45.278730] [01aa8187] FDA< 824f0cb0 0
+[   45.278743] [01aa8188] TCM< 824f0d84 0
+[   45.278756] [01aa8188] WTC< 10804 0
+[   45.278769] [01aa8188] WTC> 10804 0
+[   45.278782] [01aa8189] TCM> 824f0d84 0
+[   45.278797] [01aa8189] FDA> 824f0cb0 0
+[   45.278810] [01aa8189] DMA> 0 0
+[   45.278822] [01aa818c] TSK< 824f0cb0 0
+[   45.278836] [01aa8196] TSK> 824f0cb0 0
+[   45.278849] [01aa826e] PRD< 824f0f84 0
+[   45.278862] [01aa826e] PRD1 81c49840 0
+[   45.278875] [01aa827c] PRD2 1 0
+[   45.278888] [01aa827f] PRD3 84fb7f04 0
+[   45.278901] [01aa8280] PDM> 824f0f84 0
+[   45.278914] [01aa8280] REQ< 824f0eb0 10801
+[   45.278929] [01aa8281] CMD< 17 100
+[   45.278943] [01aa8282] FCM< 824f0eb0 824f0ef4
+[   45.278956] [01aa8285] RSP  900 0
+[   45.278969] [01aa8285] CMD< 12 1a87170
+[   45.278983] [01aa8286] CMDD 100 200
+[   45.278996] [01aa8286] SDMA 824f0f84 81c49840
+[   45.279009] [01aa8287] FCM< 824f0eb0 824f0f24
+[   45.279023] [01aa8289] RSP  900 0
+[   45.279036] [01aa8289] FCM> 824f0eb0 0
+[   45.279049] [01aa8289] FCM> 824f0eb0 0
+[   45.279062] [01aa828a] CMD  12 200
+[   45.279075] [01aa828a] REQ> 824f0eb0 0
+[   45.279089] [01aa9ad5] DMA< 824f0f84 1
+[   45.279102] [01aa9ad6] DMA  52 10834
+[   45.279116] [01aa9ae6] FDA< 824f0eb0 0
+[   45.279129] [01aa9ae6] TCM< 824f0f84 0
+[   45.279142] [01aa9ae7] WTC< 10804 0
+[   45.279155] [01aa9ae7] WTC> 10804 0
+[   45.279168] [01aa9ae8] TCM> 824f0f84 0
+[   45.279183] [01aa9ae8] FDA> 824f0eb0 0
+[   45.279197] [01aa9ae8] DMA> 0 0
+[   45.279209] [01aa9aea] TSK< 824f0eb0 0
+[   45.279223] [01aa9af4] TSK> 824f0eb0 0
+[   45.279236] [01aa9bb0] PRD< 824f1184 0
+[   45.279249] [01aa9bb1] PRD1 81c49840 0
+[   45.279262] [01aa9bbf] PRD2 1 0
+[   45.279275] [01aa9bc2] PRD3 84fb7f04 0
+[   45.279288] [01aa9bc3] PDM> 824f1184 0
+[   45.279301] [01aa9bc3] REQ< 824f10b0 10801
+[   45.279315] [01aa9bc4] CMD< 17 100
+[   45.279328] [01aa9bc5] FCM< 824f10b0 824f10f4
+[   45.279342] [01aa9bc8] RSP  900 0
+[   45.279355] [01aa9bc8] CMD< 12 1a86e68
+[   45.279370] [01aa9bc9] CMDD 100 200
+[   45.279383] [01aa9bc9] SDMA 824f1184 81c49840
+[   45.279397] [01aa9bca] FCM< 824f10b0 824f1124
+[   45.279410] [01aa9bcc] RSP  900 0
+[   45.279423] [01aa9bcc] FCM> 824f10b0 0
+[   45.279437] [01aa9bcc] FCM> 824f10b0 0
+[   45.279451] [01aa9bcc] CMD  12 200
+[   45.279464] [01aa9bcd] REQ> 824f10b0 0
+[   45.279477] [01aab3f1] DMA< 824f1184 1
+[   45.279490] [01aab3f1] DMA  52 10834
+[   45.279503] [01aab401] FDA< 824f10b0 0
+[   45.279517] [01aab401] TCM< 824f1184 0
+[   45.279530] [01aab402] WTC< 10804 0
+[   45.279543] [01aab402] WTC> 10804 0
+[   45.279556] [01aab402] TCM> 824f1184 0
+[   45.279569] [01aab403] FDA> 824f10b0 0
+[   45.279582] [01aab403] DMA> 0 0
+[   45.279595] [01aab405] TSK< 824f10b0 0
+[   45.279608] [01aab40f] TSK> 824f10b0 0
+[   45.279622] [01aab4d6] PRD< 824f1384 0
+[   45.279635] [01aab4d7] PRD1 81c49840 0
+[   45.279648] [01aab4e5] PRD2 1 0
+[   45.279661] [01aab4e8] PRD3 84fb7f04 0
+[   45.279674] [01aab4e8] PDM> 824f1384 0
+[   45.279688] [01aab4e9] REQ< 824f12b0 10801
+[   45.279701] [01aab4e9] CMD< 17 100
+[   45.279714] [01aab4eb] FCM< 824f12b0 824f12f4
+[   45.279728] [01aab4ed] RSP  900 0
+[   45.279741] [01aab4ee] CMD< 12 1a87ba0
+[   45.279754] [01aab4ee] CMDD 100 200
+[   45.279767] [01aab4ef] SDMA 824f1384 81c49840
+[   45.279781] [01aab4f0] FCM< 824f12b0 824f1324
+[   45.279794] [01aab4f1] RSP  900 0
+[   45.279807] [01aab4f2] FCM> 824f12b0 0
+[   45.279821] [01aab4f2] FCM> 824f12b0 0
+[   45.279834] [01aab4f2] CMD  12 200
+[   45.279847] [01aab4f2] REQ> 824f12b0 0
+[   45.279860] [01aacd2b] DMA< 824f1384 1
+[   45.279873] [01aacd2c] DMA  52 10834
+[   45.279886] [01aacd3c] FDA< 824f12b0 0
+[   45.279899] [01aacd3c] TCM< 824f1384 0
+[   45.279913] [01aacd3d] WTC< 10804 0
+[   45.279925] [01aacd3d] WTC> 10804 0
+[   45.279939] [01aacd3d] TCM> 824f1384 0
+[   45.279952] [01aacd3e] FDA> 824f12b0 0
+[   45.279965] [01aacd3e] DMA> 0 0
+[   45.279978] [01aacd40] TSK< 824f12b0 0
+[   45.279991] [01aacd4b] TSK> 824f12b0 0
+[   45.280004] [01aace08] PRD< 824f1584 0
+[   45.280017] [01aace09] PRD1 81c49840 0
+[   45.280030] [01aace17] PRD2 1 0
+[   45.280043] [01aace1a] PRD3 84fb7f04 0
+[   45.280056] [01aace1a] PDM> 824f1584 0
+[   45.280070] [01aace1b] REQ< 824f14b0 10801
+[   45.280083] [01aace1b] CMD< 17 100
+[   45.280096] [01aace1d] FCM< 824f14b0 824f14f4
+[   45.280110] [01aace1f] RSP  900 0
+[   45.280123] [01aace20] CMD< 12 1a87cc0
+[   45.280136] [01aace20] CMDD 100 200
+[   45.280149] [01aace21] SDMA 824f1584 81c49840
+[   45.280163] [01aace22] FCM< 824f14b0 824f1524
+[   45.280176] [01aace23] RSP  900 0
+[   45.280189] [01aace23] FCM> 824f14b0 0
+[   45.280203] [01aace24] FCM> 824f14b0 0
+[   45.280216] [01aace24] CMD  12 200
+[   45.280229] [01aace24] REQ> 824f14b0 0
+[   45.280243] [024acb73] TIM< 0 0
+[   45.280255] [024ad9b3] FDA< 824f14b0 0
+[   45.280269] [024ad9b4] TCM< 824f1584 ffffff92
+[   45.280283] [024ad9b5] CMD< c 0
+[   45.280295] [024ad9ba] FCM< 824f14b0 824f1554
+[   45.280309] [024ad9bc] RSP  200b00 0
+[   45.280322] [024ad9be] FCM> 824f14b0 824f1554
+[   45.280336] [024ad9be] TCM> 824f1584 0
+[   45.280349] [024ad9be] FDA> 824f14b0 824f1554
+[   45.280363] [024ad9df] TSK< 824f14b0 0
+[   45.280376] [024ad9f6] TSK> 824f14b0 0
+[   45.280389] [824ada14] REQ< b889dc20 10801
+[   45.280403] [824ada14] CMD< d 12340000
+[   45.280417] [824ada17] FCM< b889dc20 b889dc84
+[   45.280430] [824ada19] RSP  900 0
+[   45.280443] [824ada1e] FCM> b889dc20 0
+[   45.280457] [824ada1f] CMD  d 0
+[   45.280469] [824ada1f] REQ> b889dc20 0
+[   45.280483] [824ada2b] TSK< b889dc20 0
+[   45.280496] [824ada32] TSK> b889dc20 0
+[   45.280509] [824ada3d] PRD< 824fa184 0
+[   45.280522] [824ada3d] PRD1 81c49840 0
+[   45.280536] [824ada45] PRD2 1 0
+[   45.280549] [824ada4c] PRD3 8d857e04 0
+[   45.280562] [824ada4d] PDM> 824fa184 0
+[   45.280575] [824ada4e] REQ< 824fa0b0 10801
+[   45.280589] [824ada4e] CMD< 17 20
+[   45.280602] [824ada50] FCM< 824fa0b0 824fa0f4
+[   45.280615] [824ada52] RSP  900 0
+[   45.280628] [824ada53] CMD< 12 e9c30
+[   45.280642] [824ada54] CMDD 20 200
+[   45.280655] [824ada55] SDMA 824fa184 81c49840
+[   45.280669] [824ada57] FCM< 824fa0b0 824fa124
+[   45.280682] [824ada58] RSP  900 0
+[   45.280695] [824ada58] FCM> 824fa0b0 0
+[   45.280708] [824ada59] FCM> 824fa0b0 0
+[   45.280721] [824ada59] CMD  12 200
+[   45.280734] [824ada59] REQ> 824fa0b0 0
+[   45.280748] [024ae111] DMA< 824fa184 1
+[   45.280761] [024ae112] DMA  52 10834
+[   45.280774] [024ae118] FDA< 824fa0b0 0
+[   45.280788] [024ae118] TCM< 824fa184 0
+[   45.280802] [024ae119] WTC< 10804 0
+[   45.280821] [024ae11a] WTC> 10804 0
+[   45.280837] [024ae11a] TCM> 824fa184 0
+[   45.280851] [024ae11b] FDA> 824fa0b0 0
+[   45.280864] [024ae11b] DMA> 0 0
+[   45.280877] [024ae11f] TSK< 824fa0b0 0
+[   45.280890] [024ae12b] TSK> 824fa0b0 0
+[   45.280903] [824ae144] PRD< 824f1584 0
+[   45.280917] [824ae144] PRD1 81c49840 0
+[   45.280930] [824ae158] PRD2 1 0
+[   45.280943] [824ae15c] PRD3 8d857404 0
+[   45.280956] [824ae15c] PDM> 824f1584 0
+[   45.280969] [824ae15d] REQ< 824f14b0 10801
+[   45.280983] [824ae15d] CMD< 17 100
+[   45.280996] [824ae15f] FCM< 824f14b0 824f14f4
+[   45.281010] [824ae162] RSP  900 0
+[   45.281023] [824ae162] CMD< 12 1a87cc0
+[   45.281037] [824ae163] CMDD 100 200
+[   45.281050] [824ae164] SDMA 824f1584 81c49840
+[   45.281063] [824ae165] FCM< 824f14b0 824f1524
+[   45.281077] [824ae166] RSP  900 0
+[   45.281090] [824ae167] FCM> 824f14b0 0
+[   45.281103] [824ae167] FCM> 824f14b0 0
+[   45.281116] [824ae167] CMD  12 200
+[   45.281129] [824ae168] REQ> 824f14b0 0
+[   45.281143] [82e70b92] TIM< 0 0
+[   45.281156] mmc0: sbc op 23 arg 0x100 flags 0x15 - resp 00000900 00000000 00000000 00000000, err 0
+[   45.281178] mmc0: cmd op 18 arg 0x1a87cc0 flags 0xb5 - resp 00000900 00000000 00000000 00000000, err 0
+[   45.281199] mmc0: data blocks 100 blksz 200 - err 0
+[   45.281211] mmc0: stop op 12 arg 0x0 flags 0x95 - resp 00000000 00000000 00000000 00000000, err 0
+[   45.281230] mmc0: =========== REGISTER DUMP ===========
+[   45.281239] mmc0: SDCMD  0x00004052
+[   45.281249] mmc0: SDARG  0x01a87cc0
+[   45.281259] mmc0: SDTOUT 0x017d7840
+[   45.281268] mmc0: SDCDIV 0x00000006
+[   45.281278] mmc0: SDRSP0 0x00000900
+[   45.281287] mmc0: SDRSP1 0x00001269
+[   45.281297] mmc0: SDRSP2 0x7fffffff
+[   45.281307] mmc0: SDRSP3 0x00024007
+[   45.281316] mmc0: SDHSTS 0x00000080
+[   45.281326] mmc0: SDVDD  0x00000001
+[   45.281335] mmc0: SDEDM  0x00010801
+[   45.281345] mmc0: SDHCFG 0x0000040e
+[   45.281354] mmc0: SDHBCT 0x00000200
+[   45.281364] mmc0: SDHBLC 0x00000060
+[   45.281373] mmc0: ===========================================
+[   55.517698] mmc0: timeout waiting for hardware interrupt.
+[   55.517728] [82e71a0f] TSK< 824f14b0 0
+[   55.517745] [82e71a27] TSK> 824f14b0 0
+[   55.517759] [82e71a36] REQ< b889dc20 10801
+[   55.517773] [82e71a36] CMD< d 12340000
+[   55.517786] [82e71a38] FCM< b889dc20 b889dc84
+[   55.517800] [82e71a3b] RSP  900 0
+[   55.517813] [82e71a42] FCM> b889dc20 0
+[   55.517827] [82e71a43] CMD  d 0
+[   55.517840] [82e71a43] REQ> b889dc20 0
+[   55.517853] [82e71a4f] TSK< b889dc20 0
+[   55.517866] [82e71a56] TSK> b889dc20 0
+[   55.517879] [82e71a63] IOS< 0 0
+[   55.517892] [82e727f8] IOS< 0 0
+[   55.517905] [82e75c85] IOS< 61a80 0
+[   55.517920] [82e7911d] IOS< 61a80 0
+[   55.517933] [82e7962a] REQ< b889db58 10801
+[   55.517946] [82e7962b] CMD< 0 0
+[   55.517959] [82e79630] FCM< b889db58 b889dbbc
+[   55.517973] [82e796ce] FCM> b889db58 0
+[   55.517986] [82e796ce] CMD  0 0
+[   55.517999] [82e796cf] REQ> b889db58 0
+[   55.518012] [82e796db] TSK< b889db58 0
+[   55.518025] [82e796e4] TSK> b889db58 0
+[   55.518039] [82e79be0] IOS< 61a80 0
+[   55.518052] [82e7a0d9] REQ< b889db50 10800
+[   55.518065] [82e7a0da] CMD< 8 1aa
+[   55.518078] [82e7a0dc] FCM< b889db50 b889dbb4
+[   55.518092] [82e7a1f0] RSP  1aa 0
+[   55.518106] [82e7a1f5] FCM> b889db50 0
+[   55.518119] [82e7a1f6] CMD  8 0
+[   55.518132] [82e7a1f6] REQ> b889db50 0
+[   55.518145] [82e7a1ff] TSK< b889db50 0
+[   55.518158] [82e7a209] TSK> b889db50 0
+[   55.518172] [82e7a214] REQ< b889daa0 10800
+[   55.518185] [82e7a215] CMD< 37 0
+[   55.518198] [82e7a217] FCM< b889daa0 b889db04
+[   55.518212] [82e7a32f] RSP  120 0
+[   55.518226] [82e7a334] FCM> b889daa0 0
+[   55.518240] [82e7a335] CMD  37 0
+[   55.518253] [82e7a335] REQ> b889daa0 0
+[   55.518266] [82e7a33d] TSK< b889daa0 0
+[   55.518279] [82e7a347] TSK> b889daa0 0
+[   55.518292] [82e7a350] REQ< b889db48 10800
+[   55.518306] [82e7a351] CMD< 29 40300000
+[   55.518319] [82e7a353] FCM< b889db48 b889dbb4
+[   55.518333] [82e7a476] RSP  ff8000 0
+[   55.518346] [82e7a47a] FCM> b889db48 0
+[   55.518361] [82e7a47b] CMD  29 0
+[   55.518374] [82e7a47b] REQ> b889db48 0
+[   55.518387] [82e7a482] TSK< b889db48 0
+[   55.518400] [82e7a48c] TSK> b889db48 0
+[   55.518413] [82e7cef9] REQ< b889daa0 10800
+[   55.518428] [82e7cefa] CMD< 37 0
+[   55.518442] [82e7cefb] FCM< b889daa0 b889db04
+[   55.518455] [82e7d00f] RSP  120 0
+[   55.518468] [82e7d014] FCM> b889daa0 0
+[   55.518481] [82e7d014] CMD  37 0
+[   55.518494] [82e7d014] REQ> b889daa0 0
+[   55.518507] [82e7d01c] TSK< b889daa0 0
+[   55.518521] [82e7d025] TSK> b889daa0 0
+[   55.518534] [82e7d02c] REQ< b889db48 10800
+[   55.518548] [82e7d02c] CMD< 29 40300000
+[   55.518561] [82e7d02e] FCM< b889db48 b889dbb4
+[   55.518574] [82e7d141] RSP  c0ff8000 0
+[   55.518588] [82e7d145] FCM> b889db48 0
+[   55.518601] [82e7d145] CMD  29 0
+[   55.518615] [82e7d145] REQ> b889db48 0
+[   55.518628] [82e7d14c] TSK< b889db48 0
+[   55.518641] [82e7d155] TSK> b889db48 0
+[   55.518654] [82e7d15c] REQ< b889db80 10800
+[   55.518668] [82e7d15d] CMD< 2 0
+[   55.518682] [82e7d15f] FCM< b889db80 b889dbe4
+[   55.518696] [82e7d356] RSP  2544d53 41313647
+[   55.518709] [82e7d359] FCM> b889db80 0
+[   55.518723] [82e7d35a] CMD  2 0
+[   55.518735] [82e7d35a] REQ> b889db80 0
+[   55.518748] [82e7d361] TSK< b889db80 0
+[   55.518762] [82e7d369] TSK> b889db80 0
+[   55.518775] [82e7d370] REQ< b889db88 10800
+[   55.518789] [82e7d371] CMD< 3 0
+[   55.518801] [82e7d372] FCM< b889db88 b889dbec
+[   55.518815] [82e7d491] RSP  12340500 0
+[   55.518828] [82e7d495] FCM> b889db88 0
+[   55.518841] [82e7d496] CMD  3 0
+[   55.518854] [82e7d496] REQ> b889db88 0
+[   55.518869] [82e7d49d] TSK< b889db88 0
+[   55.518882] [82e7d4a6] TSK> b889db88 0
+[   55.518895] [82e7d4ac] REQ< b889db88 10800
+[   55.518909] [82e7d4ad] CMD< 7 12340000
+[   55.518922] [82e7d4ae] FCM< b889db88 b889dbec
+[   55.518937] [82e7d5ce] RSP  700 0
+[   55.518950] [82e7d5d2] FCM> b889db88 0
+[   55.518963] [82e7d5d2] CMD  7 0
+[   55.518976] [82e7d5d3] REQ> b889db88 0
+[   55.518989] [82e7d5d9] TSK< b889db88 0
+[   55.519002] [82e7d5e1] TSK> b889db88 0
+[   55.519015] [82e7d5ec] REQ< b889db60 10801
+[   55.519029] [82e7d5ed] CMD< 6 fffff0
+[   55.519042] [82e7d5ef] CMDD 1 40
+[   55.519055] [82e7d5f0] FCM< b889db60 b889dba4
+[   55.519068] [82e7d70e] RSP  900 0
+[   55.519081] [82e7d70e] FCM> b889db60 0
+[   55.519095] [82e7d70f] CMD  6 40
+[   55.519107] [82e7d70f] REQ> b889db60 0
+[   55.519121] [02e7d8c6] IRQ< 1 0
+[   55.519134] [02e7d8c7] IRQD b889db28 1
+[   55.519147] [02e7d8c8] XFP< b889db28 1
+[   55.519160] [02e7dc91] XFP> b889db28 1
+[   55.519173] [02e7dc91] FDA< b889db60 0
+[   55.519187] [02e7dc92] TCM< b889db28 0
+[   55.519201] [02e7dc93] WTC< 10805 0
+[   55.519214] [02e7dcc1] WTC> 10801 0
+[   55.519227] [02e7dcc1] TCM> b889db28 0
+[   55.519240] [02e7dcc1] FDA> b889db60 0
+[   55.519254] [02e7dcc2] IRQ> 0 0
+[   55.519267] [02e7dcd0] TSK< b889db60 0
+[   55.519280] [02e7dcda] TSK> b889db60 0
+[   55.519293] [82e7dcec] REQ< b889db68 10801
+[   55.519307] [82e7dcec] CMD< 6 80fffff1
+[   55.519320] [82e7dcee] CMDD 1 40
+[   55.519333] [82e7dcef] FCM< b889db68 b889dbac
+[   55.519347] [82e7de0f] RSP  900 0
+[   55.519360] [82e7de10] FCM> b889db68 0
+[   55.519373] [82e7de10] CMD  6 40
+[   55.519386] [82e7de10] REQ> b889db68 0
+[   55.519399] [02e7e000] IRQ< 1 0
+[   55.519412] [02e7e000] IRQD b889db30 1
+[   55.519425] [02e7e000] XFP< b889db30 1
+[   55.519438] [02e7e3c7] XFP> b889db30 1
+[   55.519451] [02e7e3c7] FDA< b889db68 0
+[   55.519465] [02e7e3c7] TCM< b889db30 0
+[   55.519478] [02e7e3c8] WTC< 10805 0
+[   55.519491] [02e7e3fc] WTC> 10801 0
+[   55.519505] [02e7e3fd] TCM> b889db30 0
+[   55.519518] [02e7e3fd] FDA> b889db68 0
+[   55.519531] [02e7e3fd] IRQ> 0 0
+[   55.519544] [02e7e407] TSK< b889db68 0
+[   55.519557] [02e7e410] TSK> b889db68 0
+[   55.519571] [82e7e41b] IOS< 61a80 0
+[   55.519584] [82e7e41c] IOS< 2faf080 0
+[   55.519597] [82e7e84d] REQ< b889dad8 10801
+[   55.519611] [82e7e84e] CMD< 37 12340000
+[   55.519625] [82e7e850] FCM< b889dad8 b889db3c
+[   55.519638] [82e7e852] RSP  920 0
+[   55.519651] [82e7e856] FCM> b889dad8 0
+[   55.519664] [82e7e856] CMD  37 0
+[   55.519677] [82e7e857] REQ> b889dad8 0
+[   55.519690] [82e7e85e] TSK< b889dad8 0
+[   55.519703] [82e7e864] TSK> b889dad8 0
+[   55.519717] [82e7e86a] REQ< b889db80 10801
+[   55.519730] [82e7e86a] CMD< 6 2
+[   55.519743] [82e7e86b] FCM< b889db80 b889dbec
+[   55.519756] [82e7e86e] RSP  920 0
+[   55.519769] [82e7e86f] FCM> b889db80 0
+[   55.519782] [82e7e86f] CMD  6 0
+[   55.519795] [82e7e86f] REQ> b889db80 0
+[   55.519808] [82e7e876] TSK< b889db80 0
+[   55.519823] [82e7e87b] TSK> b889db80 0
+[   55.519836] [82e7e880] IOS< 2faf080 0
+[   55.519849] [82e7e886] PRD< 824f5984 0
+[   55.519862] [82e7e886] PRD1 81c49840 0
+[   55.519875] [82e7e88d] PRD2 2 0
+[   55.519889] [82e7e896] PRD3 8d857404 0
+[   55.519903] [82e7e897] PDM> 824f5984 0
+[   55.519916] [82e7e897] REQ< 824f58b0 10801
+[   55.519929] [82e7e898] CMD< 19 1ab0000
+[   55.519943] [82e7e899] CMDD 10 200
+[   55.519956] [82e7e89a] SDMA 824f5984 81c49840
+[   55.519969] [82e7e89c] FCM< 824f58b0 824f5924
+[   55.519983] [82e7e89d] RSP  900 0
+[   55.519996] [82e7e89d] FCM> 824f58b0 0
+[   55.520009] [82e7e89d] CMD  19 200
+[   55.520022] [82e7e89e] REQ> 824f58b0 0
+[   55.520035] [02e7ead5] DMA< 824f5984 0
+[   55.520048] [02e7ead6] DMA  99 10801
+[   55.520062] [02e7ead7] FDA< 824f58b0 0
+[   55.520076] [02e7ead8] TCM< 824f5984 0
+[   55.520090] [02e7ead8] CMD< c 0
+[   55.520102] [02e7eada] TCM> 824f5984 0
+[   55.520115] [02e7eada] FDA> 824f58b0 824f5954
+[   55.520129] [02e7eada] DMA> 0 0
+[   55.520144] [02e8078f] IRQ< 400 0
+[   55.520157] [02e8078f] IRQB 824f5954 400
+[   55.520170] [02e80790] FCM< 824f58b0 824f5954
+[   55.520184] [02e80790] RSP  c00 0
+[   55.520197] [02e80791] FCM> 824f58b0 824f5954
+[   55.520211] [02e80792] IRQ> 0 0
+[   55.520223] [02e8079f] TSK< 824f58b0 0
+[   55.520237] [02e807aa] TSK> 824f58b0 0
+[   55.520250] [82e807bd] REQ< b889dc48 10801
+[   55.520263] [82e807be] CMD< d 12340000
+[   55.520277] [82e807bf] FCM< b889dc48 b889dcac
+[   55.520290] [82e807c2] RSP  900 0
+[   55.520303] [82e807c6] FCM> b889dc48 0
+[   55.520316] [82e807c6] CMD  d 0
+[   55.520331] [82e807c6] REQ> b889dc48 0
+[   55.520344] [82e807ce] TSK< b889dc48 0
+[   55.520357] [82e807d3] TSK> b889dc48 0
+[   55.520370] [82e807dd] PRD< 824f5b84 0
+[   55.520383] [82e807dd] PRD1 81c49840 0
+[   55.520398] [82e807e5] PRD2 9 0
+[   55.520411] [82e807ef] PRD3 84e16304 0
+[   55.520424] [82e807ef] PDM> 824f5b84 0
+[   55.520437] [82e807f0] REQ< 824f5ab0 10801
+[   55.520451] [82e807f0] CMD< 19 402670
+[   55.520464] [82e807f2] CMDD 48 200
+[   55.520477] [82e807f2] SDMA 824f5b84 81c49840
+[   55.520491] [82e807f3] FCM< 824f5ab0 824f5b24
+[   55.520504] [82e807f5] RSP  900 0
+[   55.520517] [82e807f5] FCM> 824f5ab0 0
+[   55.520531] [82e807f5] CMD  19 200
+[   55.520544] [82e807f6] REQ> 824f5ab0 0
+[   55.520557] [02e81228] DMA< 824f5b84 0
+[   55.520570] [02e81228] DMA  99 10801
+[   55.520585] [02e8122a] FDA< 824f5ab0 0
+[   55.520598] [02e8122a] TCM< 824f5b84 0
+[   55.520611] [02e8122b] CMD< c 0
+[   55.520624] [02e8122c] TCM> 824f5b84 0
+[   55.520637] [02e8122c] FDA> 824f5ab0 824f5b54
+[   55.520652] [02e8122c] DMA> 0 0
+[   55.520664] [02e81b20] IRQ< 400 0
+[   55.520677] [02e81b21] IRQB 824f5b54 400
+[   55.520691] [02e81b21] FCM< 824f5ab0 824f5b54
+[   55.520705] [02e81b21] RSP  c00 0
+[   55.520718] [02e81b22] FCM> 824f5ab0 824f5b54
+[   55.520732] [02e81b22] IRQ> 0 0
+[   55.520744] [02e81b25] TSK< 824f5ab0 0
+[   55.520758] [02e81b2e] TSK> 824f5ab0 0
+[   55.520771] [82e81b40] REQ< b889dca0 10801
+[   55.520785] [82e81b41] CMD< d 12340000
+[   55.520798] [82e81b42] FCM< b889dca0 b889dd04
+[   55.520811] [82e81b45] RSP  900 0
+[   55.520824] [82e81b48] FCM> b889dca0 0
+[   55.520839] [82e81b49] CMD  d 0
+[   55.520852] [82e81b49] REQ> b889dca0 0
+[   55.520865] [82e81b50] TSK< b889dca0 0
+[   55.520878] [82e81b56] TSK> b889dca0 0
+[   55.520891] [82e81b5c] PRD< 824f1584 0
+[   55.520905] [82e81b5d] PRD1 81c49840 0
+[   55.520918] [82e81b6d] PRD2 1 0
+[   55.520931] [82e81b71] PRD3 8d857304 0
+[   55.520944] [82e81b71] PDM> 824f1584 0
+[   55.520959] [82e81b72] REQ< 824f14b0 10801
+[   55.520972] [82e81b72] CMD< 17 100
+[   55.520985] [82e81b74] FCM< 824f14b0 824f14f4
+[   55.520999] [82e81b76] RSP  900 0
+[   55.521012] [82e81b77] CMD< 12 1a87cc0
+[   55.521025] [82e81b78] CMDD 100 200
+[   55.521039] [82e81b78] SDMA 824f1584 81c49840
+[   55.521052] [82e81b79] FCM< 824f14b0 824f1524
+[   55.521065] [82e81b7b] RSP  900 0
+[   55.521078] [82e81b7b] FCM> 824f14b0 0
+[   55.521093] [82e81b7b] FCM> 824f14b0 0
+[   55.521106] [82e81b7c] CMD  12 200
+[   55.521119] [82e81b7c] REQ> 824f14b0 0
+[   55.521132] [83834baa] TIM< 0 0
+[   55.521146] mmc0: sbc op 23 arg 0x100 flags 0x15 - resp 00000900 00000000 00000000 00000000, err 0
+[   55.521168] mmc0: cmd op 18 arg 0x1a87cc0 flags 0xb5 - resp 00000900 00000000 00000000 00000000, err 0
+[   55.521189] mmc0: data blocks 100 blksz 200 - err 0
+[   55.521201] mmc0: stop op 12 arg 0x0 flags 0x95 - resp 00000000 00000000 00000000 00000000, err 0
+[   55.521220] mmc0: =========== REGISTER DUMP ===========
+[   55.521229] mmc0: SDCMD  0x00004052
+[   55.521239] mmc0: SDARG  0x01a87cc0
+[   55.521249] mmc0: SDTOUT 0x017d7840
+[   55.521258] mmc0: SDCDIV 0x00000006
+[   55.521268] mmc0: SDRSP0 0x00000900
+[   55.521277] mmc0: SDRSP1 0x00001269
+[   55.521286] mmc0: SDRSP2 0x7fffffff
+[   55.521296] mmc0: SDRSP3 0x00024007
+[   55.521306] mmc0: SDHSTS 0x00000080
+[   55.521315] mmc0: SDVDD  0x00000001
+[   55.521325] mmc0: SDEDM  0x00010801
+[   55.521334] mmc0: SDHCFG 0x0000040e
+[   55.521344] mmc0: SDHBCT 0x00000200
+[   55.521354] mmc0: SDHBLC 0x00000060
+[   55.521363] mmc0: ===========================================
+[   55.522499] I/O error, dev mmcblk0, sector 27819200 op 0x0:(READ) flags 0x80700 phys_seg 1 prio class 2
+[   62.821978] w1_master_driver w1_bus_master1: Attaching one wire slave 00.800000000000 crc 8c
+[   62.833345] w1_master_driver w1_bus_master1: Family 0 for 00.800000000000.8c is not registered.
+[  126.400343] w1_master_driver w1_bus_master1: Attaching one wire slave 00.400000000000 crc 46
+[  126.411941] w1_master_driver w1_bus_master1: Family 0 for 00.400000000000.46 is not registered.
+[  177.160220] w1_master_driver w1_bus_master1: Attaching one wire slave 00.c00000000000 crc ca
+[  177.171371] w1_master_driver w1_bus_master1: Family 0 for 00.c00000000000.ca is not registered.
+[  189.686003] usb 1-1.2: reset full-speed USB device number 4 using dwc_otg
+[  253.600158] w1_master_driver w1_bus_master1: Attaching one wire slave 00.200000000000 crc 23
+[  253.610921] w1_master_driver w1_bus_master1: Family 0 for 00.200000000000.23 is not registered.
+[  317.200221] w1_master_driver w1_bus_master1: Attaching one wire slave 00.a00000000000 crc af
+[  317.211025] w1_master_driver w1_bus_master1: Family 0 for 00.a00000000000.af is not registered.
