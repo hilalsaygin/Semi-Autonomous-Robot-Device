@@ -6,6 +6,7 @@ import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget , QPushButton , QLabel
 from PyQt5.QtGui import QPainter, QColor, QPen
 from PyQt5.QtCore import Qt, QPoint , QThread, pyqtSignal , QMutex , pyqtSlot , QMutexLocker
+import math
 
 
 
@@ -79,7 +80,16 @@ class DataReceiverThread(QThread):
                             for i in range(point_count):
                                 point = (point_buffer[i * 2], point_buffer[i * 2 + 1])
                                 with QMutexLocker(self.mutex):
-                                    self.points.append((float(point[0]) + self.robot_x, float(point[1]) + self.robot_y))
+
+                                    # Point'in döndürülme açısını biliyoruz , ve onu döndürülmeden önceki haline çeviriyoruz
+                                    # böylece map dönmeden etkilenmiyor.
+                                    radyan = math.radians(self.robot_angle)
+                                    x = float(point[0]) * math.cos(-radyan) - float(point[1] * math.sin(-radyan)
+                                    y = float(point[0]) * math.sin(-radyan) + float(point[1] * math.cos(-radyan)
+
+                                    # Pointi robot konumunu da dahil ederek ekle
+                                    self.points.append(x + self.robot_x, y + self.robot_y))
+                                    
                                     #  print("Point x : " , float(point[0]) + self.robot_x, "Point y : " , float(point[1]) + self.robot_y)
 
                             with QMutexLocker(self.mutex):
