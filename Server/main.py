@@ -81,8 +81,13 @@ if __name__ == '__main__':
     try:
         myshow=MyWindow()
         if myshow.user_ui==True:
+            result = subprocess.run(["./Mapping/robot/build/robot_lidar"], shell=True, capture_output=True, text=True)
+
             myshow.show();  
-            os.system("./Mapping/robot/build/robot_lidar")
+            #try sub process for lidar execution
+            #os.system("./Mapping/robot/build/robot_lidar")
+            print("robot_lidar process output")
+            print(result)
             os._exit(0) # to prevent lidarport from collapsing . Will be tested
             sys.exit(myshow.app.exec_())
             
