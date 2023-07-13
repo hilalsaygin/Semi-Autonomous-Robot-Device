@@ -11,12 +11,13 @@ from PyQt5.QtCore import Qt, QPoint , QThread, pyqtSignal , QMutex , pyqtSlot , 
 
 class DataReceiverThread(QThread):
 
-    def __init__(self, points ,robot_x ,robot_y):
+    def __init__(self, points ,robot_x ,robot_y, robot_angle):
         super().__init__()
         self.points = points
         self.mutex = QMutex()
         self.robot_x = robot_x
         self.robot_y = robot_y
+        self.robot_angle = robot_angle
         self.ipAddress = "10.1.233.208"
         self.remote_port = 8086
 
@@ -36,7 +37,7 @@ class DataReceiverThread(QThread):
                 # Değerleri sıfırla
                 point_x_d = -1
                 point_y_d = -1
-                robot_location_buffer = (c_double * 2)()
+                robot_location_buffer = (c_double * 3)()
 
                 # Point sayısını al
                 point_count = 0
@@ -58,10 +59,11 @@ class DataReceiverThread(QThread):
                         print("Failed to receive data")
                         sock.close()
                     else:
-                        robot_location_buffer = (c_double * 2).from_buffer(robot_location_bytes)
+                        robot_location_buffer = (c_double * 3).from_buffer(robot_location_bytes)
                         self.robot_x = float(robot_location_buffer[0])
                         self.robot_y = float(robot_location_buffer[1])
-                        robot_location_buffer[:] = (c_double * 2)()
+                        self.robot_angle = float(robot_location_buffer[2])
+                        robot_location_buffer[:] = (c_double * 3)()
                         #print("robot x : " , self.robot_x)
                         #print("robot_y : " , self.robot_y)
 
@@ -92,13 +94,15 @@ class MapWidget(QWidget):
     camera_y = 0
     robot_x = 0
     robot_y = 0
+    robot_angle = 0
     zoom = 45
 
-    def __init__(self,points,robot_x,robot_y):
+    def __init__(self,points,robot_x,robot_y,robot_angle):
         super().__init__()
         self.points = points
         self.robot_x = robot_x
         self.robot_y = robot_y
+        self.robot_angle = robot_angle
         
         self.clicked_coordinate_label = QLabel("",self)
         self.clicked_coordinate_label.setGeometry(10,self.geometry().height(),200,50)
@@ -150,7 +154,8 @@ class MainWindow(QMainWindow):
         self.points = []
         self.robot_x = 0
         self.robot_y = 0
-        self.mapping_widget = MapWidget(self.points ,self.robot_x , self.robot_y)
+        self.robot_angle = 0
+        self.mapping_widget = MapWidget(self.points ,self.robot_x , self.robot_y , self.robot_angle)
         self.setCentralWidget(self.mapping_widget)
 
         self.init_data()
@@ -187,7 +192,7 @@ class MainWindow(QMainWindow):
         self.clear_map_button.clicked.connect(self.clear_map)
 
     def init_data(self):
-        self.receiver_thread = DataReceiverThread(self.points,self.robot_x,self.robot_y)
+        self.receiver_thread = DataReceiverThread(self.points,self.robot_x,self.robot_y,self.robot_angle)
         self.receiver_thread.start()
 
     def update(self):

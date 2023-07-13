@@ -225,8 +225,6 @@ int main(int argc, char *argv[])
 
 
   // Main things start
-  double robot_x = 0;
-  double robot_y = 0;
   const int bufferSize_rl = 30;
   char buffer_rl[bufferSize_rl];
 
@@ -245,16 +243,17 @@ int main(int argc, char *argv[])
     // Main loop
     while (true){
         
-
       LaserScan scan;
+      double robot_location_buffer[3];
+      memset(robot_location_buffer,0,sizeof(robot_location_buffer));
+
+      // Open the file which will be read for otonom
+      FILE *dosya = fopen("./Mapping/lidardata.txt", "w+");
+      if (dosya == NULL) { printf("Lİdar data file failed to open!"); return 1; }
 
       // Open the robot location file
       int fd = open("./robot_location.txt",O_RDWR);
-        
-      FILE *dosya = fopen("./Mapping/lidardata.txt", "w+");
-      if (dosya == NULL) { printf("Lİdar data file failed to open!"); return 1; }
-      
-        
+
       if (fd == -1) {
           std::cerr << "Failed to open the file." << std::endl;
           return 1;
@@ -262,6 +261,14 @@ int main(int argc, char *argv[])
       
       // Read the robot location file
       ssize_t bytesRead = read(fd, buffer_rl, bufferSize_rl);
+
+      // Parse robot location
+      char *token = strtok(line, ",");
+        while (token != NULL) { // Virgülle ayrılan değerleri parçala
+            robot_location_buffer[i] = atof(token);
+            i++;
+            token = strtok(NULL, ",");
+      }
 
       // Close the file using close() function
       close(fd);
@@ -275,13 +282,6 @@ int main(int argc, char *argv[])
       if (laser.doProcessSimple(scan))
       {   
     
-          
-          double robot_location_buffer[2];
-          
-
-          memset(robot_location_buffer,0,sizeof(robot_location_buffer));
-          
-
           // Point sayısını client'a gönder
           int point_count = scan.points.size();
           ssize_t bytesSent_pc = send(clientSock, &point_count, sizeof(point_count), 0);
@@ -297,9 +297,7 @@ int main(int argc, char *argv[])
           // Eğer point sayısı valid ise
           if(point_count > 0 && point_count < 20000) {
 
-            // Robot konumunu gönder
-            robot_location_buffer[0] = robot_x;
-            robot_location_buffer[1] = robot_y;
+            // Robot konumunu ve açısını gönder gönder
             ssize_t bytesSent_rl = send(clientSock, robot_location_buffer, sizeof(robot_location_buffer), 0);
             if (bytesSent_rl == -1) {
               std::cerr << "Failed to send data" << std::endl;
