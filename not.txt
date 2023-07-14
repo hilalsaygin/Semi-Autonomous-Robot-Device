@@ -29,88 +29,53 @@ Kaynak bilgisayar (Raspberry Pi) IP adresini ve hedef bilgisayar (Ubuntu) IP adr
 2. GetCameraVideo.py kodu çalıştırılır. (IP adresinin doğruluğu kontrol edilmelidir.)
 
 
-import io
-import socket
-import struct
-import time
-import picamera
-
-# Raspberry Pi IP address
-RASPBERRY_PI_IP = 'YOUR_RASPBERRY_PI_IP_ADDRESS'
-PORT = 8000
-
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client_socket.connect((RASPBERRY_PI_IP, PORT))
-connection = client_socket.makefile('wb')
-
-try:
-    with picamera.PiCamera() as camera:
-        camera.resolution = (640, 480)
-        camera.framerate = 30
-        time.sleep(2)  # Allow camera to warm up
-        start = time.time()
-        stream = io.BytesIO()
-
-        # Send video stream in a loop
-        for _ in camera.capture_continuous(stream, 'jpeg', use_video_port=True):
-            stream.seek(0)
-            data = stream.read()
-
-            # Send frame length and frame data
-            client_socket.sendall(struct.pack('<L', len(data)) + data)
-            stream.seek(0)
-            stream.truncate()
-
-        # Send termination signal
-        client_socket.sendall(struct.pack('<L', 0))
-finally:
-    connection.close()
-    client_socket.close()
 
 
-
-
-
-
-
+/******************************/
 import cv2
+import picamera
 import numpy as np
 import socket
-import struct
 
-# Laptop IP address
-LAPTOP_IP = 'YOUR_LAPTOP_IP_ADDRESS'
-PORT = 8000
+# Server configuration
+SERVER_IP = '192.168.1.100'  # Replace with the IP address of your remote laptop
+SERVER_PORT = 5000
 
+# Initialize the camera
+camera = picamera.PiCamera()
+camera.resolution = (640, 480)
+camera.framerate = 30
+
+# Start the video capture and stream
+stream = picamera.PiCameraCircularIO(camera, seconds=10)
+camera.start_recording(stream, format='h264')
+
+# Create a socket object
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server_socket.bind((LAPTOP_IP, PORT))
-server_socket.listen(0)
+server_socket.bind((SERVER_IP, SERVER_PORT))
+server_socket.listen(1)
 
-connection, address = server_socket.accept()
-connection = connection.makefile('rb')
+# Accept a client connection
+print('Waiting for a client to connect...')
+client_socket, client_address = server_socket.accept()
+print('Client connected:', client_address)
 
 try:
     while True:
-        # Read frame length
-        image_len = struct.unpack('<L', connection.read(struct.calcsize('<L')))[0]
+        camera.wait_recording(0)
+        frame = stream.getvalue()
 
-        # Break the loop if termination signal is received
-        if not image_len:
-            break
+        # Send the frame size first
+        frame_size = len(frame).to_bytes(4, byteorder='big')
+        client_socket.send(frame_size)
 
-        # Read frame data and convert to NumPy array
-        image_data = connection.read(image_len)
-        image = np.frombuffer(image_data, dtype=np.uint8)
+        # Send the frame content
+        client_socket.sendall(frame)
 
-        # Decode and display the frame
-        frame = cv2.imdecode(image, cv2.IMREAD_COLOR)
-        cv2.imshow('Video Stream', frame)
-        cv2.waitKey(1)
 finally:
-    connection.close()
+    camera.stop_recording()
+    client_socket.close()
     server_socket.close()
-    cv2.destroyAllWindows()
-
 
 
 
