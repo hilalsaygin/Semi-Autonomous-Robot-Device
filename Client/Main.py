@@ -229,9 +229,11 @@ class MyWindow(QMainWindow,Ui_client):
             self.timer.stop()
             stop_thread(self.detection_thread)
             stop_thread(self.instruction)
+            self.mapping_widget.receiver_thread.exit()
         except Exception as e:
             print(e)
         self.client.turn_off_client()
+
         print("close")
         QCoreApplication.instance().quit()
         #os._exit(0)

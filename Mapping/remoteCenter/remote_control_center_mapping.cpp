@@ -242,8 +242,8 @@ bool startClient(std::string ipAddress, int remote_port)
 
 int main()
 {   
-    std::string ipAddress = "192.168.165.156"; 
-    int port = 8086;  // Port number to listen on
+    std::string ipAddress = "192.168.137.25"; 
+    int port = 8094;  // Port number to listen on
     bool success = startClient(ipAddress,port);
     if (!success) {
         std::cerr << "Failed to start the server" << std::endl;

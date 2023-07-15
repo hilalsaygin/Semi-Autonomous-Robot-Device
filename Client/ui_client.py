@@ -23,7 +23,7 @@ class DataReceiverThread(QThread):
         self.robot_y = robot_y
         self.robot_angle = robot_angle
         self.ipAddress = "192.168.137.25"
-        self.remote_port = 8094
+        self.remote_port = 8250
         print("girdi3")
 
     def run(self):
@@ -64,13 +64,18 @@ class DataReceiverThread(QThread):
                         print("Failed to receive data")
                         sock.close()
                     else:
+                        
                         robot_location_buffer = (c_double * 3).from_buffer(robot_location_bytes)
+                        print(robot_location_bytes)
                         self.robot_x = float(robot_location_buffer[0])
                         self.robot_y = float(robot_location_buffer[1])
+                        
                         self.robot_angle = float(robot_location_buffer[2])
-                        robot_location_buffer[:] = (c_double * 3)()
                         #print("robot x : " , self.robot_x)
                         #print("robot_y : " , self.robot_y)
+                        #print("robot_angle : " , robot_location_buffer[2])
+                        robot_location_buffer[:] = (c_double * 3)()
+                        
 
                     # Pointleri al
                     if robot_location_bytes:
@@ -87,17 +92,18 @@ class DataReceiverThread(QThread):
 
                                     # Point'in döndürülme açısını biliyoruz , ve onu döndürülmeden önceki haline çeviriyoruz
                                     # böylece map dönmeden etkilenmiyor.
+                                    """
                                     radyan = math.radians(self.robot_angle)
                                     x = float(point[0]) * math.cos(-radyan) - float(point[1] * math.sin(-radyan))
-                                    y = float(point[0]) * math.sin(-radyan) + float(point[1] * math.cos(-radyan))
+                                    y = float(point[0]) * math.sin(-radyan) + float(point[1] * math.cos(-radyan))"""
 
                                     # Pointi robot konumunu da dahil ederek ekle
-                                    self.points.append([(x + self.robot_x), (y + self.robot_y)])
+                                    self.points.append([(point[0] + self.robot_x), (point[1] + self.robot_y)])
                                     
                                     #  print("Point x : " , float(point[0]) + self.robot_x, "Point y : " , float(point[1]) + self.robot_y)
 
                             with QMutexLocker(self.mutex):
-                                while len(self.points) > 75000:
+                                while len(self.points) > 60000:
                                     self.points.pop(0)
                             
         finally:
@@ -138,6 +144,8 @@ class MapWidget(QWidget):
         # Robotu çiz
         painter.setPen(QPen(Qt.green, self.zoom / 10))
         painter.drawPoint(QPoint(int((self.robot_x * self.zoom) + self.camera_x), int((self.robot_y * self.zoom) + self.camera_y)))
+        #print("robot_x : ",self.robot_x , "\n")
+        #print("robot_y : ",self.robot_y , "\n")
     
     # Mouse tıklandığında koordinatı yaz
     def mouseReleaseEvent(self,event):
