@@ -92,7 +92,12 @@ from picamera2.outputs import FileOutput
 from picamera2.encoders import Quality
 
 
-
+//////////
+import picamera
+from picamera import PiCamera, Preview
+from picamera.encoders import JpegEncoder
+from picamera.outputs import FileOutput
+from picamera.encoders import Quality
 
 
 
