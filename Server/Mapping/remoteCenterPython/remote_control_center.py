@@ -18,7 +18,7 @@ class DataReceiverThread(QThread):
         self.robot_x = robot_x
         self.robot_y = robot_y
         self.ipAddress = "192.168.2.221"
-        self.remote_port = 8086
+        self.remote_port = 8085
 
     def run(self):
         # Open socket

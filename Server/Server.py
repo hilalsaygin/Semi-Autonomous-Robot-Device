@@ -5,10 +5,9 @@ import time
 import fcntl
 import socket
 import struct
-from picamera2 import Picamera2,Preview
-from picamera2.encoders import JpegEncoder
-from picamera2.outputs import FileOutput
-from picamera2.encoders import Quality
+import picamera
+import cv2
+import subprocess
 from threading import Condition
 import threading
 from Led import *
@@ -42,6 +41,7 @@ class Server:
         self.sonic=Ultrasonic()
         self.control.Thread_conditiona.start()
         self.battery_voltage=[8.4,8.4,8.4,8.4,8.4]
+        
     def get_interface_ip(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         return socket.inet_ntoa(fcntl.ioctl(s.fileno(),
@@ -54,7 +54,7 @@ class Server:
         #Port 8001 for video transmission
         self.server_socket = socket.socket()
         self.server_socket.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEPORT,1)
-        self.server_socket.bind((HOST, 8001))              
+        self.server_socket.bind((HOST, 8002))              
         self.server_socket.listen(1)
         
         #Port 5001 is used for instruction sending and receiving
@@ -84,34 +84,40 @@ class Server:
             #print("send",data)
         except Exception as e:
             print(e)
+            
+    def run_raspivid(self):
+        command = "raspivid -o - -t 0 -n -w 640 -h 480 -fps 30 -b 1000000 -fl | cvlc -vvv stream:///dev/stdin --sout '#standard{access=http,mux=ts,dst=:8090}' :demux=h264"
+        #subprocess.call(command, shell=True)
+        #lidar=threading.Thread(run_os()).start()
+        #os.system(command)
+        
     def transmission_video(self):
+        cap = cv2.VideoCapture(0)
+        print("girdi")
         try:
+            print("ilk print")
             self.connection,self.client_address = self.server_socket.accept()
-            self.connection=self.connection.makefile('wb')
-        except:
-            pass
+            #self.connection=self.connection.makefile('wb')
+            #self.server_socket.connect((self.get_interface_ip(),8000))
+            print("try girdi")
+        except Exception as e:
+            print("camera error")
+            print(e)
         self.server_socket.close()
         print ("socket video connected ... ")
-        camera = Picamera2()
-        camera.configure(camera.create_video_configuration(main={"size": (400, 300)}))
-        output = StreamingOutput()
-        encoder = JpegEncoder(q=95)
-        camera.start_recording(encoder, FileOutput(output),quality=Quality.VERY_HIGH) 
         while True:
-            with output.condition:
-                output.condition.wait()
-                frame = output.frame
-            try:                
-                lenFrame = len(output.frame) 
-                #print("output .length:",lenFrame)
-                lengthBin = struct.pack('<I', lenFrame)
-                self.connection.write(lengthBin)
-                self.connection.write(frame)
-            except Exception as e:
-                camera.stop_recording()
-                camera.close()
-                print ("End transmit ... " )
-                break
+            ret, frame = cap.read()  # Read a frame from the camera
+
+            # Serialize frame to a string
+            _, img_encoded = cv2.imencode('.jpg', frame)
+            data = np.array(img_encoded).tobytes()
+
+            # Send frame size and data over the socket
+            size = len(data)
+            self.connection.sendall(size.to_bytes(4, byteorder='big'))
+            self.connection.sendall(data)
+        cap.release()
+        
 
     def measuring_voltage(self,connect):
         try:
