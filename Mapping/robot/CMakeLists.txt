@@ -10,12 +10,6 @@ include_directories(
     ${CMAKE_SOURCE_DIR}
 )
 
-# Find SFML package
-find_package(SFML 2.5 COMPONENTS system window graphics REQUIRED)
-
-# Include directories
-include_directories(${SFML_INCLUDE_DIRS})
-
 ############## YDLIDAR SDK START#####################################
 # Find ydlidar_sdk package
 find_package(ydlidar_sdk REQUIRED)
@@ -31,4 +25,4 @@ link_directories(${YDLIDAR_SDK_LIBRARY_DIRS})
 add_executable(robot_lidar robot_lidar.cpp)
 
 # Link ydlidar_sdk and SFML libraries
-target_link_libraries(robot_lidar ${YDLIDAR_SDK_LIBRARIES} sfml-system sfml-window sfml-graphics)
+target_link_libraries(robot_lidar ${YDLIDAR_SDK_LIBRARIES})

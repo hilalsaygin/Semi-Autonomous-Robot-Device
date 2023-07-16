@@ -11,30 +11,45 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <fcntl.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <signal.h>
+#include <vector>
+#include <algorithm>
+
 
 constexpr int BUFFER_SIZE = 50000;
 using namespace ydlidar;
-
 #if defined(_MSC_VER)
 #pragma comment(lib, "ydlidar_sdk.lib")
 #endif
-
+//Set lidar settings
+CYdLidar laser;
+int serverSock;
 // Function to handle the SIGPIPE signal
 void sigpipeHandler(int signal)
 {
+    //laser.turnOff();
+    //laser.disconnecting();
+    close(serverSock);
+    std::cerr << "Received SIGPIPE signal" << std::endl;
 
     // Print a message to indicate the signal handling
-    std::cerr << "Received SIGPIPE signal" << std::endl;
 }
-
+bool sortcol(const std::vector<double>& v1, const std::vector<double>& v2)
+{
+	return v1[0] < v2[0];
+}
 int main(int argc, char *argv[])
 {
   // Register the signal handler for SIGPIPE
   signal(SIGPIPE, sigpipeHandler);
+  signal(SIGINT, sigpipeHandler);
+  signal(SIGTSTP, sigpipeHandler);
 
-  int remote_port = 8086;
+
+
+  int remote_port = 8555;
 
   // Set lidar usb port
   std::string port;
@@ -105,11 +120,12 @@ int main(int argc, char *argv[])
 
   if (!ydlidar::os_isOk())
   {
+    //laser.turnOff();
+    //laser.disconnecting();
     return 0;
   }
 
-  //Set lidar settings
-  CYdLidar laser;
+  
   //////////////////////string property/////////////////
   /// lidar port
   laser.setlidaropt(LidarPropSerialPort, port.c_str(), port.size());
@@ -182,6 +198,8 @@ int main(int argc, char *argv[])
   {
     fprintf(stderr, "Fail to initialize %s\n", laser.DescribeError());
     fflush(stderr);
+    //laser.turnOff();
+    //laser.disconnecting();
     return -1;
   }
 
@@ -190,12 +208,14 @@ int main(int argc, char *argv[])
   {
     fprintf(stderr, "Fail to start %s\n", laser.DescribeError());
     fflush(stderr);
+   // laser.turnOff();
+    //laser.disconnecting();
     return -1;
   }
 
 
   // Create server socket
-  int serverSock = socket(AF_INET, SOCK_STREAM, 0);
+  serverSock = socket(AF_INET, SOCK_STREAM, 0);
   if (serverSock == -1) {
       std::cerr << "Failed to create socket" << std::endl;
       return false;
@@ -210,6 +230,9 @@ int main(int argc, char *argv[])
   if (bind(serverSock, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0) {
       std::cerr << "Binding failed" << std::endl;
       close(serverSock);
+    //   laser.turnOff();
+    //laser.disconnecting();
+      
       return false;
   }
 
@@ -217,6 +240,8 @@ int main(int argc, char *argv[])
   if (listen(serverSock, 1) < 0) {
       std::cerr << "Listening failed" << std::endl;
       close(serverSock);
+      // laser.turnOff();
+    //laser.disconnecting();
       return false;
   }
 
@@ -235,28 +260,51 @@ int main(int argc, char *argv[])
     int clientSock = accept(serverSock, (struct sockaddr*)&clientAddr, &addrLen);
     if (clientSock < 0) {
         std::cerr << "Failed to accept connection" << std::endl;
+        // laser.turnOff();
+      //  laser.disconnecting();
         return false;
     }
 
     printf("Bağlandı\n");
 
     // Main loop
-    while (true){
+    while (true){       
+
       LaserScan scan;
+      double robot_location_buffer[3];
+      memset(robot_location_buffer,0,sizeof(robot_location_buffer));
 
       // Open the robot location file
-      int fd = open("./robot_location.txt",O_RDWR);
-
-      if (fd == -1) {
+      int fd = open("/home/grup3/Freenove_Robot_Dog_Kit_for_Raspberry_Pi/Code/Server/Mapping/robot/build/robot_location.txt",O_RDWR);
+        
+     int dosya = open("/home/grup3/Freenove_Robot_Dog_Kit_for_Raspberry_Pi/Code/Server/Mapping/robot/build/lidardata.txt",O_RDWR);
+       if (fd == -1) {
           std::cerr << "Failed to open the file." << std::endl;
           return 1;
       }
-      
+     if (dosya == -1) { printf("Lidarr data file failed to open!"); return 1; }
+    
+        
+       memset(buffer_rl,0,sizeof(buffer_rl));
+   
       // Read the robot location file
       ssize_t bytesRead = read(fd, buffer_rl, bufferSize_rl);
+      buffer_rl[bytesRead]='\0';
+      //printf("size: %d  %s ****\n",bytesRead,buffer_rl); 
 
+      char *token = strtok(buffer_rl, ",");
+      int i=0;
+        while (token != NULL) { // Virgülle ayrılan değerleri parçala
+            robot_location_buffer[i] = atof(token);
+            //printf("%d  : %lf\n",i,robot_location_buffer[i] );
+
+            i++;
+            token = strtok(NULL, ",");
+           
+      }
       // Close the file using close() function
       close(fd);
+      
 
       if (bytesRead == -1) {
           std::cerr << "Failed to read the file." << std::endl;
@@ -266,14 +314,6 @@ int main(int argc, char *argv[])
 
       if (laser.doProcessSimple(scan))
       {   
-    
-          
-          double robot_location_buffer[2];
-          
-
-          memset(robot_location_buffer,0,sizeof(robot_location_buffer));
-          
-
           // Point sayısını client'a gönder
           int point_count = scan.points.size();
           ssize_t bytesSent_pc = send(clientSock, &point_count, sizeof(point_count), 0);
@@ -290,8 +330,6 @@ int main(int argc, char *argv[])
           if(point_count > 0 && point_count < 20000) {
 
             // Robot konumunu gönder
-            robot_location_buffer[0] = robot_x;
-            robot_location_buffer[1] = robot_y;
             ssize_t bytesSent_rl = send(clientSock, robot_location_buffer, sizeof(robot_location_buffer), 0);
             if (bytesSent_rl == -1) {
               std::cerr << "Failed to send data" << std::endl;
@@ -299,12 +337,13 @@ int main(int argc, char *argv[])
               break;
             } 
 
-            memset(robot_location_buffer,0,sizeof(robot_location_buffer));
-
             // Bulunan pointleri gönder
 
             char buffer[10];
             double point_buffer[point_count][2];
+            //double angle_dist[point_count][2];
+            
+            std::vector<std::vector<double> > vec(point_count);
 
             for (size_t i = 0; i < scan.points.size(); ++i)
             { 
@@ -313,15 +352,46 @@ int main(int argc, char *argv[])
               const LaserPoint& p = scan.points.at(i);
 
               double angle_rad = p.angle;
+                        
               double distance = p.range;
+              double updated_angle = angle_rad + (robot_location_buffer[2]*3.1415)/180 ;
+              //printf("%lf updated, buffer: %lf\n",updated_angle,robot_location_buffer[2]);
 
-              double x = distance * cos(angle_rad);
-              double y = distance * sin(angle_rad);
+              double x = distance * cos(updated_angle);
+              double y = distance * sin(updated_angle);
 
               point_buffer[i][0] = x;
               point_buffer[i][1] = y;
+              
+              
+              
+              
+              
 
+              vec[i] = std::vector<double>(2);
+              double angle= (angle_rad*180)/3.1415;
+
+               if((angle <= -100.0 && angle >= -175.0 )|| (angle <=175.0 && angle >= 100.0))
+               {
+                        vec[i][0]=distance;
+                        vec[i][1]=angle;
+               }
             }   
+
+            // sort angle_dist by first demension(dist)
+            std::sort(vec.begin(), vec.end(), sortcol);
+        
+            std::string str = std::to_string(vec[point_count-1][1]);
+            char digits[str.length()];
+            std::strncpy(digits, std::to_string(vec[point_count-1][1]).c_str(), sizeof(digits));
+
+           if(vec[point_count-1][1]<0.0) ssize_t bytes_written = write(dosya, digits,8);
+           else  ssize_t bytes_written = write(dosya, digits, 7);
+            //fprintf(dosya, "%.3f\n", (vec[point_count-1][1]));
+            //printf("largest: %.3f\n", vec[point_count-1][1]);
+
+            close(dosya);
+            
             
             ssize_t bytesSent = send(clientSock, point_buffer, sizeof(point_buffer), 0);
             if (bytesSent == -1) {
@@ -329,8 +399,9 @@ int main(int argc, char *argv[])
               close(clientSock);
               break;
             }
-
             memset(point_buffer , 0 , sizeof(point_buffer)); 
+            memset(robot_location_buffer,0,sizeof(robot_location_buffer));
+
           }
 
           fflush(stdout);
@@ -338,8 +409,12 @@ int main(int argc, char *argv[])
       else {
         fprintf(stderr, "Failed to get Lidar Data\n");
         fflush(stderr);
+      
       }
+
+
     }
+    
   }
   
 
@@ -350,3 +425,4 @@ int main(int argc, char *argv[])
 
   return 0;
 }
+
