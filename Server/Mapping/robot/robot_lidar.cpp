@@ -47,9 +47,7 @@ int main(int argc, char *argv[])
   signal(SIGINT, sigpipeHandler);
   signal(SIGTSTP, sigpipeHandler);
 
-
-
-  int remote_port = 8655;
+  int remote_port = 8255;
 
   // Set lidar usb port
   std::string port;
@@ -277,7 +275,7 @@ int main(int argc, char *argv[])
       // Open the robot location file
       int fd = open("/home/grup3/Freenove_Robot_Dog_Kit_for_Raspberry_Pi/Code/Server/Mapping/robot/build/robot_location.txt",O_RDWR);
         
-      int dosya = open("/home/grup3/Freenove_Robot_Dog_Kit_for_Raspberry_Pi/Code/Server/Mapping/robot/build/lidardata.txt",O_RDWR);
+     int dosya = open("/home/grup3/Freenove_Robot_Dog_Kit_for_Raspberry_Pi/Code/Server/Mapping/robot/build/lidardata.txt",O_RDWR);
        if (fd == -1) {
           std::cerr << "Failed to open the file." << std::endl;
           return 1;
@@ -311,25 +309,26 @@ int main(int argc, char *argv[])
           close(fd);
           return 1;
       }
-	int scanCount=0;	
-      if (laser.doProcessSimple(scan))
-      {   
+
+      try {   
+          int scanCount=0;	
+
+          if(laser.doProcessSimple(scan)){
+            
           // Point sayısını client'a gönder
           int point_count = scan.points.size();
-          
+          ssize_t bytesSent_pc = send(clientSock, &point_count, sizeof(point_count), 0);
+          if (bytesSent_pc == -1) {
+            std::cerr << "Failed to send data" << std::endl;
+            close(clientSock);
+            break;
+          } 
           
           //printf("Point count : %d\n",point_count);
           //printf("bytesSent_pc : %lu\n",bytesSent_pc);
 
           // Eğer point sayısı valid ise
-          if(point_count > 0 && point_count < 10000 && scanCount >=360) {
-		  scanCount=0;
-		  ssize_t bytesSent_pc = send(clientSock, &point_count, sizeof(point_count), 0);
-	          if (bytesSent_pc == -1) {
-	            std::cerr << "Failed to send data" << std::endl;
-	            close(clientSock);
-	            break;
-	          } 
+          if(point_count > 0 && point_count < 10000) {
 
             // Robot konumunu gönder
             ssize_t bytesSent_rl = send(clientSock, robot_location_buffer, sizeof(robot_location_buffer), 0);
@@ -346,9 +345,11 @@ int main(int argc, char *argv[])
             //double angle_dist[point_count][2];
             
             std::vector<std::vector<double> > vec(point_count);
+            int scanCount=0;
 
             for (size_t i = 0; i < scan.points.size(); ++i)
             { 
+              
               memset(point_buffer[i],0,sizeof(point_buffer[i]));
 
               const LaserPoint& p = scan.points.at(i);
@@ -361,7 +362,11 @@ int main(int argc, char *argv[])
 
               double x = distance * cos(updated_angle);
               double y = distance * sin(updated_angle);
-
+              
+              //x=((int)(x/100))*100;
+              //y=((int) (x/100))*100;
+              //printf("x: %lf y: %lf\n",x,y); 
+              
               point_buffer[i][0] = x;
               point_buffer[i][1] = y;
               
@@ -389,7 +394,7 @@ int main(int argc, char *argv[])
             //printf("largest: %.3f\n", vec[point_count-1][1]);
 
             close(dosya);
-            
+                        
             ssize_t bytesSent = send(clientSock, point_buffer, sizeof(point_buffer), 0);
             if (bytesSent == -1) {
               std::cerr << "Failed to send data" << std::endl;
@@ -398,16 +403,16 @@ int main(int argc, char *argv[])
             }
             memset(point_buffer , 0 , sizeof(point_buffer)); 
             memset(robot_location_buffer,0,sizeof(robot_location_buffer));
-
           }
 
           fflush(stdout);
-	//increase scan count if smaller than 360
-	      scanCount++;
+        }
       }
-      else {
+      catch(char* exp) {
         fprintf(stderr, "Failed to get Lidar Data\n");
+        printf("ex: %s\n",exp);
         fflush(stderr);
+        continue;
       
       }
 

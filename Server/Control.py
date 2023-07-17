@@ -38,6 +38,8 @@ class Control:
         self.Thread_conditiona=threading.Thread(target=self.condition)
         self.calibration()
         self.relax(True)
+        self.writeRobotCoordinate()
+        
     def readFromTxt(self,filename):
         file1 = open(filename + ".txt", "r")
         list_row = file1.readlines()
@@ -303,6 +305,8 @@ class Control:
             if Y1 > self.height:
                 Y1=self.height
             self.changeCoordinates('backWard',X1,Y1,0,X2,Y2,0)
+            self.y = float(self.y) -0.01  
+            self.writeRobotCoordinate()
             #time.sleep(0.01)
     def writeRobotCoordinate(self):
         file4 = open("./Mapping/robot/build/robot_location.txt","w+")
@@ -321,7 +325,7 @@ class Control:
                 Y1=self.height
             self.changeCoordinates('forWard',X1,Y1,0,X2,Y2,0)
             
-        #self.y = float(self.y)+0.1  
+        self.y = float(self.y) +0.001  
         self.writeRobotCoordinate()
         #time.sleep(0.01)
     """
@@ -357,7 +361,7 @@ class Control:
             print("distance:" +str(distance))
             if (distance <5 and distance>0):
                 break
-            elif distance < 35 and distance > 5:
+            elif ((distance < 35 and distance > 5) or distance ==0):
                 
                 print("geldim " +str(distance))
                 with open('./Mapping/robot/build/lidardata.txt',"r") as f:
@@ -368,6 +372,7 @@ class Control:
                     #longest[0] is the farest point distance, [1] is angle.
                 print( "***" +longest)
                 if(float(longest) >0.0):
+                    self.setpRight()
                     gap = 180-float(longest)
                     stepCount=gap/10 +2
                     print("STEP: " , stepCount)
@@ -376,11 +381,12 @@ class Control:
                         stepCount -=1
                     self.forWard() 
                     self.forWard()
-                    self.forWard()
-                    
+                    counter=1
                       
                 #turn left operation        
                 else:  
+                    self.setpLeft()
+
                     gap = 180+float(longest)
                     stepCount=gap/10 +2
                     print("STEP: " , stepCount)
@@ -389,15 +395,15 @@ class Control:
                         stepCount -=1 
                     self.forWard()
                     self.forWard()
-                    self.forWard()
+                    counter=1
                         
             else:
-                #if(counter%12==0) :
-                 #   self.turnRight()
-                  #  counter+=1
-                #else:
-                self.forWard()
-                 #   counter+=1               
+                if(counter%8==0) :
+                    self.turnRight()
+                    counter+=1
+                else:
+                    self.forWard()
+                    counter+=1               
             
         
     def otoRight(self):
