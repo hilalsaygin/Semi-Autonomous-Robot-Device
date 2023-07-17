@@ -277,7 +277,7 @@ int main(int argc, char *argv[])
       // Open the robot location file
       int fd = open("/home/grup3/Freenove_Robot_Dog_Kit_for_Raspberry_Pi/Code/Server/Mapping/robot/build/robot_location.txt",O_RDWR);
         
-     int dosya = open("/home/grup3/Freenove_Robot_Dog_Kit_for_Raspberry_Pi/Code/Server/Mapping/robot/build/lidardata.txt",O_RDWR);
+      int dosya = open("/home/grup3/Freenove_Robot_Dog_Kit_for_Raspberry_Pi/Code/Server/Mapping/robot/build/lidardata.txt",O_RDWR);
        if (fd == -1) {
           std::cerr << "Failed to open the file." << std::endl;
           return 1;
@@ -311,23 +311,25 @@ int main(int argc, char *argv[])
           close(fd);
           return 1;
       }
-
+	int scanCount=0;	
       if (laser.doProcessSimple(scan))
       {   
           // Point sayısını client'a gönder
           int point_count = scan.points.size();
-          ssize_t bytesSent_pc = send(clientSock, &point_count, sizeof(point_count), 0);
-          if (bytesSent_pc == -1) {
-            std::cerr << "Failed to send data" << std::endl;
-            close(clientSock);
-            break;
-          } 
+          
           
           //printf("Point count : %d\n",point_count);
           //printf("bytesSent_pc : %lu\n",bytesSent_pc);
 
           // Eğer point sayısı valid ise
-          if(point_count > 0 && point_count < 20000) {
+          if(point_count > 0 && point_count < 10000 && scanCount >=360) {
+		  scanCount=0;
+		  ssize_t bytesSent_pc = send(clientSock, &point_count, sizeof(point_count), 0);
+	          if (bytesSent_pc == -1) {
+	            std::cerr << "Failed to send data" << std::endl;
+	            close(clientSock);
+	            break;
+	          } 
 
             // Robot konumunu gönder
             ssize_t bytesSent_rl = send(clientSock, robot_location_buffer, sizeof(robot_location_buffer), 0);
@@ -363,10 +365,6 @@ int main(int argc, char *argv[])
               point_buffer[i][0] = x;
               point_buffer[i][1] = y;
               
-              
-              
-              
-              
 
               vec[i] = std::vector<double>(2);
               double angle= (angle_rad*180)/3.1415;
@@ -392,7 +390,6 @@ int main(int argc, char *argv[])
 
             close(dosya);
             
-            
             ssize_t bytesSent = send(clientSock, point_buffer, sizeof(point_buffer), 0);
             if (bytesSent == -1) {
               std::cerr << "Failed to send data" << std::endl;
@@ -405,6 +402,8 @@ int main(int argc, char *argv[])
           }
 
           fflush(stdout);
+	//increase scan count if smaller than 360
+	      scanCount++;
       }
       else {
         fprintf(stderr, "Failed to get Lidar Data\n");
