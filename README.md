@@ -1,6 +1,6 @@
 # Semi-Autonomous Robot Device (RoboDog)
 
-This repository contains the source code and documentation for a semi-autonomous robotic system developed as a **CSE396 Computer Engineering Project**. The project features a hybrid control system enabling both manual teleoperation and autonomous navigation using AI-driven object detection and Lidar-based mapping.
+Contains the source code and documentation for a semi-autonomous robotic system developed as a **CSE396 Computer Engineering Project**. The project features a hybrid control system enabling both manual teleoperation and autonomous navigation using AI-driven object detection and Lidar-based mapping.
 
 ## 👥 Project Members (Group-3)
 * **Rukiye Hilal Sayğın**
