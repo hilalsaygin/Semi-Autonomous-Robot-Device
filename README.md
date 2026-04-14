@@ -1,6 +1,6 @@
 # Semi-Autonomous Robot Device (RoboDog)
 
-[cite_start]This repository contains the source code and documentation for a semi-autonomous robotic system developed as a **CSE396 Computer Engineering Project**[cite: 1, 2, 3].The project features a hybrid control system enabling both manual teleoperation and autonomous navigation using AI-driven object detection and Lidar-based mapping [cite: 97-105, 120-122].
+This repository contains the source code and documentation for a semi-autonomous robotic system developed as a **CSE396 Computer Engineering Project**[cite: 1, 2, 3].The project features a hybrid control system enabling both manual teleoperation and autonomous navigation using AI-driven object detection and Lidar-based mapping [cite: 97-105, 120-122].
 
 ---
 
@@ -22,7 +22,7 @@ The server logic runs on the robot's Raspberry Pi.
 *The server code in raspberry pi is located at: `/home/grup3/oto_robot/Code`[cite: 31].
 
 ### Client Side (Ubuntu)
-[cite_start]The client requires a computer running **Ubuntu**[cite: 50].
+The client requires a computer running **Ubuntu**[cite: 50].
 1. **Clone the Repository:** Download the client codes from the GitHub repository[cite: 51, 52].
 2. **Install Dependencies:** Run the following commands in order[cite: 54]:
     ```bash
